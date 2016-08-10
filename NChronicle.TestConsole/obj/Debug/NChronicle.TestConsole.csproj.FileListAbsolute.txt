@@ -1,0 +1,12 @@
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.TestConsole.exe.config
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.TestConsole.exe
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.TestConsole.pdb
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.Interface.dll
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.Model.dll
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.SDK.dll
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.Interface.pdb
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.Model.pdb
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.SDK.pdb
+D:\Development\Live\NChronicle\NChronicle.TestConsole\obj\Debug\NChronicle.TestConsole.csprojResolveAssemblyReference.cache
+D:\Development\Live\NChronicle\NChronicle.TestConsole\obj\Debug\NChronicle.TestConsole.exe
+D:\Development\Live\NChronicle\NChronicle.TestConsole\obj\Debug\NChronicle.TestConsole.pdb

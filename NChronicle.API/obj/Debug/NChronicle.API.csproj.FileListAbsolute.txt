@@ -1,0 +1,17 @@
+D:\Development\Live\NChronicle\NChronicle.API\obj\Debug\NChronicle.API.csprojResolveAssemblyReference.cache
+D:\Development\Live\NChronicle\NChronicle.API\bin\NChronicle.API.dll.config
+D:\Development\Live\NChronicle\NChronicle.API\bin\NChronicle.API.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\NChronicle.API.pdb
+D:\Development\Live\NChronicle\NChronicle.API\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\Microsoft.Web.Infrastructure.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\Newtonsoft.Json.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.Net.Http.Formatting.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.Web.Http.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.Web.Http.WebHost.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.IdentityModel.Tokens.Jwt.dll
+D:\Development\Live\NChronicle\NChronicle.API\bin\Newtonsoft.Json.xml
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.Net.Http.Formatting.xml
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.Web.Http.xml
+D:\Development\Live\NChronicle\NChronicle.API\bin\System.Web.Http.WebHost.xml
+D:\Development\Live\NChronicle\NChronicle.API\obj\Debug\NChronicle.API.dll
+D:\Development\Live\NChronicle\NChronicle.API\obj\Debug\NChronicle.API.pdb
