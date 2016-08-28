@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Delegates\ConsoleChronicleLibraryConfigurationDelegate.cs" />
     <Compile Include="ConsoleChronicleLibrary.cs" />
-    <Compile Include="ConsoleChronicleLibraryConfiguration.cs" />
+    <Compile Include="Configuration\ConsoleChronicleLibraryConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
+using NChronicle.Console.Configuration;
 using NChronicle.Console.Delegates;
 using NChronicle.Core.Interfaces;
 using NChronicle.Core.Model;
@@ -22,17 +24,24 @@ namespace NChronicle.Console {
         }
 
         public void Store (ChronicleRecord record) {
-            if (!this._configuration.LevelsStoring.Contains(record.Level)) return;
+            if (!this.ListenTo(record)) return;
             var pattern = this._configuration.OutputPattern;
             var keyMapping = this.FormulateKeyMapping(record);
             var output = this.FormulateOutput(record, keyMapping, pattern);
             this.SendToConsole(output, record.Level);
         }
 
+        private bool ListenTo (ChronicleRecord record) {
+            return (!this._configuration.Tags.Any() || this._configuration.Levels.Contains(record.Level))
+                   && (!this._configuration.Tags.Any() || this._configuration.Tags.Any(record.Tags.Contains))
+
+                   && !this._configuration.IgnoredTags.Any(record.Tags.Contains);
+        }
+
         private Dictionary <string, object> FormulateKeyMapping (ChronicleRecord record) {
             var keyMapping = new Dictionary <string, object> {
-                {"MSG", record.Message != record.Exception?.Message ? record.Message : string.Empty },
-                {"EXC", record.Exception?.ToString() },
+                {"MSG", record.Message != record.Exception?.Message ? record.Message : string.Empty},
+                {"EXC", record.Exception?.ToString()},
                 {"TH", Thread.CurrentThread.ManagedThreadId.ToString()},
                 {"TAGS", this.FormulateTags(record, ", ")}
             };
