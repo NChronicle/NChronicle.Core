@@ -6,12 +6,17 @@ namespace NChronicle.Core.Model {
 
     public class Chronicle : IChronicle {
 
-        private readonly ChronicleConfiguration _configuration;
+        private ChronicleConfiguration _configuration;
         private readonly HashSet <string> _tags;
 
         public Chronicle () {
-            this._configuration = NChronicle.Configuration.Clone();
+            this._configuration = NChronicle.GetConfiguration();
+            NChronicle.SubscribeToChanges(this.ConfigurationSubscriber);
             this._tags = new HashSet <string>();
+        }
+
+        private void ConfigurationSubscriber () {
+            this._configuration = NChronicle.GetConfiguration();
         }
 
         #region Tags

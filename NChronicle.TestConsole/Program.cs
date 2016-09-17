@@ -23,7 +23,11 @@ namespace NChronicle.TestConsole {
                                    l.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById("UTC-09"));
                                }));
                  });
-            Test();
+
+            Core.NChronicle.ConfigureFrom("TestConfiguration.xml");
+            var chronicle = new Chronicle();
+            Thread.Sleep(Timeout.Infinite);
+//            Test();
         }
 
         private static void Test () {

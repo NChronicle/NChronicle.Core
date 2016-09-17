@@ -1,8 +1,9 @@
-﻿using NChronicle.Core.Model;
+﻿using System.Xml.Serialization;
+using NChronicle.Core.Model;
 
 namespace NChronicle.Core.Interfaces {
 
-    public interface IChronicleLibrary {
+    public interface IChronicleLibrary : IXmlSerializable {
 
         void Store(ChronicleRecord record);
 

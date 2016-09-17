@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Xml;
+using System.Xml.Schema;
 using NChronicle.Console.Configuration;
 using NChronicle.Console.Delegates;
 using NChronicle.Core.Interfaces;
@@ -131,6 +133,12 @@ namespace NChronicle.Console {
         }
 
         private delegate string Formatter (ChronicleRecord record, params string[] parameters);
+
+        public XmlSchema GetSchema () => null;
+
+        public void ReadXml (XmlReader reader) => this._configuration.ReadXml(reader);
+
+        public void WriteXml (XmlWriter writer) => this._configuration.WriteXml(writer);
 
     }
 

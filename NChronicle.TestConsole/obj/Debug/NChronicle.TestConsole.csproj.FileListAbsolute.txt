@@ -10,3 +10,4 @@ D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\NChronicle.SDK.p
 D:\Development\Live\NChronicle\NChronicle.TestConsole\obj\Debug\NChronicle.TestConsole.csprojResolveAssemblyReference.cache
 D:\Development\Live\NChronicle\NChronicle.TestConsole\obj\Debug\NChronicle.TestConsole.exe
 D:\Development\Live\NChronicle\NChronicle.TestConsole\obj\Debug\NChronicle.TestConsole.pdb
+D:\Development\Live\NChronicle\NChronicle.TestConsole\bin\Debug\TestConfiguration.xml

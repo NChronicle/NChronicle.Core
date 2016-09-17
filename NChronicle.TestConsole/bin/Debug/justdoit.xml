@@ -1,0 +1,3 @@
+﻿<?xml version="1.0" encoding="utf-8"?><ChronicleConfiguration><Libraries><Library Type="NChronicle.Console.ConsoleChronicleLibrary"><BackgroundColors><Critical>Black</Critical><Warning>Black</Warning><Info>Black</Info><Debug>Black</Debug></BackgroundColors><ForegroundColors><Critical>Red</Critical><Warning>Yellow</Warning><Info>White</Info><Debug>DarkGray</Debug></ForegroundColors><Levels><Level>Critical</Level><Level>Warning</Level><Level>Info</Level><Level>Debug</Level></Levels><Tags><Tag>DoneAgain</Tag></Tags><IgnoredTags /><ListenOverIgnore>True</ListenOverIgnore><OutputPattern>{%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?
+}}{EXC?{EXC}
+}{TAGS?[{TAGS|, }]}</OutputPattern><TimeZone>UTC-09</TimeZone></Library></Libraries></ChronicleConfiguration>

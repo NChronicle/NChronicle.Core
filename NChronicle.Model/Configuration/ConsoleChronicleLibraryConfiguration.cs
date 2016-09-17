@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using NChronicle.Core.Model;
 
 namespace NChronicle.Console.Configuration {
 
-    public class ConsoleChronicleLibraryConfiguration {
+    public class ConsoleChronicleLibraryConfiguration : IXmlSerializable {
 
         internal Dictionary <ChronicleLevel, ConsoleColor> BackgroundColors;
         internal Dictionary <ChronicleLevel, ConsoleColor> ForegroundColors;
@@ -123,6 +126,43 @@ namespace NChronicle.Console.Configuration {
 
         public void WithWarningBackgroundColor (ConsoleColor backgroundColor) {
             this.BackgroundColors[ChronicleLevel.Warning] = backgroundColor;
+        }
+
+        public XmlSchema GetSchema () => null;
+
+        public void ReadXml (XmlReader reader) {
+            throw new NotImplementedException();
+        }
+
+        public void WriteXml (XmlWriter writer) {
+            writer.WriteStartElement(nameof(this.BackgroundColors));
+            foreach (var backgroundColor in this.BackgroundColors) {
+                writer.WriteElementString(backgroundColor.Key.ToString(), backgroundColor.Value.ToString());
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement(nameof(this.ForegroundColors));
+            foreach (var foregroundColor in this.ForegroundColors) {
+                writer.WriteElementString(foregroundColor.Key.ToString(), foregroundColor.Value.ToString());
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement(nameof(this.Levels));
+            foreach (var level in this.Levels) {
+                writer.WriteElementString("Level", level.ToString());
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement(nameof(this.Tags));
+            foreach (var tag in this.Tags) {
+                writer.WriteElementString("Tag", tag);
+            }
+            writer.WriteEndElement();
+            writer.WriteStartElement(nameof(this.IgnoredTags));
+            foreach (var tag in this.IgnoredTags) {
+                writer.WriteElementString("Tag", tag);
+            }
+            writer.WriteEndElement();
+            writer.WriteElementString(nameof(this.ListenOverIgnore), this.ListenOverIgnore.ToString());
+            writer.WriteElementString(nameof(this.OutputPattern), this.OutputPattern);
+            writer.WriteElementString(nameof(this.TimeZone), this.TimeZone.Id);
         }
 
     }

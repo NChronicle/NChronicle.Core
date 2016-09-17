@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Chronicle.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NChronicle.Interface\NChronicle.Core.csproj">
@@ -62,6 +63,11 @@
       <Project>{7EF81D51-1749-4313-BCD3-00A860BC3800}</Project>
       <Name>NChronicle.Live</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

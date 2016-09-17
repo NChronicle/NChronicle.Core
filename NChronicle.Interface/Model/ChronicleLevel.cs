@@ -1,4 +1,6 @@
-﻿namespace NChronicle.Core.Model {
+﻿using System.Xml.Serialization;
+
+namespace NChronicle.Core.Model {
 
     public enum ChronicleLevel {
 

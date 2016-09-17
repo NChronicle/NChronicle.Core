@@ -1,23 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using NChronicle.Core.Interfaces;
 
 namespace NChronicle.Core.Model {
 
-    public class ChronicleConfiguration {
+    public class ChronicleConfiguration : IXmlSerializable {
 
         internal HashSet <IChronicleLibrary> Libraries;
 
-        private HashSet <ChronicleLevel> _storingLevels;
-
         internal ChronicleConfiguration () {
             this.Libraries = new HashSet <IChronicleLibrary>();
-            this._storingLevels = new HashSet <ChronicleLevel>();
-        }
-
-        public void Storing (params ChronicleLevel[] levels) {
-            foreach (var chronicleLevel in levels) {
-                this._storingLevels.Add(chronicleLevel);
-            }
         }
 
         public void WithLibrary (IChronicleLibrary library) {
@@ -27,10 +23,27 @@ namespace NChronicle.Core.Model {
         public ChronicleConfiguration Clone () {
             return new ChronicleConfiguration {
                 Libraries = this.Libraries,
-                _storingLevels = this._storingLevels
             };
         }
 
+        #region Xml Serialization
+        public XmlSchema GetSchema () => null;
+
+        public void ReadXml (XmlReader reader) {
+            Debugger.Break();
+        }
+
+        public void WriteXml (XmlWriter writer) {
+            writer.WriteStartElement(nameof(this.Libraries));
+            foreach (var library in this.Libraries) {
+                writer.WriteStartElement("Library");
+                writer.WriteAttributeString("Type", library.GetType().ToString());
+                library.WriteXml(writer);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+        #endregion
     }
 
 }

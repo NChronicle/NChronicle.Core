@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Delegates\ChronicleConfigurationDelegate.cs" />
+    <Compile Include="Delegates\ConfigurationSubscriberDelegate.cs" />
     <Compile Include="Model\ChronicleConfiguration.cs" />
     <Compile Include="Model\ChronicleLevel.cs" />
     <Compile Include="Model\Chronicle.cs" />
