@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ChronicleConfiguration>
   <Libraries>
-    <Library Type="NChronicle.Console.ConsoleChronicleLibrary">
+    <Library Type="NChronicle.Console.ConsoleChronicleLibrary, NChronicle.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <BackgroundColors>
         <Critical>Black</Critical>
         <Warning>Black</Warning>
@@ -20,12 +20,14 @@
         <Level>Info</Level>
         <Level>Debug</Level>
       </Levels>
-      <Tags>
-        <Tag>DoneAgain</Tag>
-      </Tags>
-      <IgnoredTags/>
+      <Tags />
+      <IgnoredTags />
       <ListenOverIgnore>True</ListenOverIgnore>
-      <OutputPattern>{%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC? }}{EXC?{EXC} }{TAGS?[{TAGS|, }]}</OutputPattern>
+      <OutputPattern>
+        {%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?
+        }}{EXC?{EXC}
+        }{TAGS?[{TAGS|, }]}
+      </OutputPattern>
       <TimeZone>UTC-09</TimeZone>
     </Library>
   </Libraries>

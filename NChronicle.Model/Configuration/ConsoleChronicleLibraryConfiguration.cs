@@ -131,7 +131,244 @@ namespace NChronicle.Console.Configuration {
         public XmlSchema GetSchema () => null;
 
         public void ReadXml (XmlReader reader) {
-            throw new NotImplementedException();
+            while (reader.Read()) {
+                if (reader.NodeType == XmlNodeType.Element) {
+                    switch (reader.Name) {
+                        case nameof(this.BackgroundColors):
+                            if (reader.IsEmptyElement) break;
+                            while (reader.Read()) {
+                                if (reader.IsEmptyElement) continue;
+                                if (reader.NodeType == XmlNodeType.Element) {
+                                    switch (reader.Name) {
+                                        case nameof(ChronicleLevel.Critical):
+                                            var criticalColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(criticalColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Critical)} in {nameof(this.BackgroundColors)}.");
+                                            }
+                                            ConsoleColor criticalColor;
+                                            if (!Enum.TryParse(criticalColorStr, true, out criticalColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{criticalColorStr}' for {nameof(ChronicleLevel.Critical)} in {nameof(this.BackgroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithCriticalBackgroundColor(criticalColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Warning):
+                                            var warningColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(warningColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Warning)} in {nameof(this.BackgroundColors)}.");
+                                            }
+                                            ConsoleColor warningColor;
+                                            if (!Enum.TryParse(warningColorStr, true, out warningColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{warningColorStr}' for {nameof(ChronicleLevel.Warning)} in {nameof(this.BackgroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithWarningBackgroundColor(warningColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Info):
+                                            var infoColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(infoColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Info)} in {nameof(this.BackgroundColors)}.");
+                                            }
+                                            ConsoleColor infoColor;
+                                            if (!Enum.TryParse(infoColorStr, true, out infoColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{infoColorStr}' for {nameof(ChronicleLevel.Info)} in {nameof(this.BackgroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithInfoBackgroundColor(infoColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Debug):
+                                            var debugColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(debugColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Debug)} in {nameof(this.BackgroundColors)}.");
+                                            }
+                                            ConsoleColor debugColor;
+                                            if (!Enum.TryParse(debugColorStr, true, out debugColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{debugColorStr}' for {nameof(ChronicleLevel.Debug)} in {nameof(this.BackgroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithDebugBackgroundColor(debugColor);
+                                            break;
+                                        default:
+                                            reader.Skip();
+                                            break;
+                                    }
+                                } else if (reader.NodeType == XmlNodeType.EndElement) {
+                                    break;
+                                }
+                            }
+                            break;
+                        case nameof(this.ForegroundColors):
+                            if (reader.IsEmptyElement) break;
+                            while (reader.Read()) {
+                                if (reader.IsEmptyElement) continue;
+                                if (reader.NodeType == XmlNodeType.Element) {
+                                    switch (reader.Name) {
+                                        case nameof(ChronicleLevel.Critical):
+                                            var criticalColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(criticalColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Critical)} in {nameof(this.ForegroundColors)}.");
+                                            }
+                                            ConsoleColor criticalColor;
+                                            if (!Enum.TryParse(criticalColorStr, true, out criticalColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{criticalColorStr}' for {nameof(ChronicleLevel.Critical)} in {nameof(this.ForegroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithCriticalForegroundColor(criticalColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Warning):
+                                            var warningColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(warningColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Warning)} in {nameof(this.ForegroundColors)}.");
+                                            }
+                                            ConsoleColor warningColor;
+                                            if (!Enum.TryParse(warningColorStr, true, out warningColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{warningColorStr}' for {nameof(ChronicleLevel.Warning)} in {nameof(this.ForegroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithWarningForegroundColor(warningColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Info):
+                                            var infoColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(infoColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Info)} in {nameof(this.ForegroundColors)}.");
+                                            }
+                                            ConsoleColor infoColor;
+                                            if (!Enum.TryParse(infoColorStr, true, out infoColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{infoColorStr}' for {nameof(ChronicleLevel.Info)} in {nameof(this.ForegroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithInfoForegroundColor(infoColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Debug):
+                                            var debugColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(debugColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Debug)} in {nameof(this.ForegroundColors)}.");
+                                            }
+                                            ConsoleColor debugColor;
+                                            if (!Enum.TryParse(debugColorStr, true, out debugColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{debugColorStr}' for {nameof(ChronicleLevel.Debug)} in {nameof(this.ForegroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithDebugForegroundColor(debugColor);
+                                            break;
+                                        default:
+                                            reader.Skip();
+                                            break;
+                                    }
+                                } else if (reader.NodeType == XmlNodeType.EndElement) {
+                                    break;
+                                }
+                            }
+                            break;
+                        case nameof(this.Levels):
+                            if (reader.IsEmptyElement) break;
+                            while (reader.Read()) {
+                                if (reader.IsEmptyElement) continue;
+                                if (reader.NodeType == XmlNodeType.Element) {
+                                    switch (reader.Name) {
+                                        case "Level":
+                                            var levelStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(levelStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty level in Levels.");
+                                            }
+                                            ChronicleLevel level;
+                                            if (!Enum.TryParse(levelStr, true, out level)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{levelStr}' for level in {nameof(this.Levels)} is not a valid {nameof(ChronicleLevel)}.");
+                                            }
+                                            this.ListeningOnlyTo(level);
+                                            break;
+                                        default:
+                                            reader.Skip();
+                                            break;
+                                    }
+                                } else if (reader.NodeType == XmlNodeType.EndElement) {
+                                    break;
+                                }
+                            }
+                            break;
+                        case nameof(this.Tags):
+                            if (reader.IsEmptyElement) break;
+                            while (reader.Read()) {
+                                if (reader.IsEmptyElement) continue;
+                                if (reader.NodeType == XmlNodeType.Element) {
+                                    switch (reader.Name) {
+                                        case "Tag":
+                                            var tag = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(tag)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty tag in Tags.");
+                                            }
+                                            this.ListeningOnlyTo(tag);
+                                            break;
+                                        default:
+                                            reader.Skip();
+                                            break;
+                                    }
+                                } else if (reader.NodeType == XmlNodeType.EndElement) {
+                                    break;
+                                }
+                            }
+                            break;
+                        case nameof(this.IgnoredTags):
+                            if (reader.IsEmptyElement) break;
+                            while (reader.Read()) {
+                                if (reader.IsEmptyElement) continue;
+                                if (reader.NodeType == XmlNodeType.Element) {
+                                    switch (reader.Name) {
+                                        case "Tag":
+                                            var tag = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(tag)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty tag in IgnoredTags.");
+                                            }
+                                            this.Ignoring(tag);
+                                            break;
+                                        default:
+                                            reader.Skip();
+                                            break;
+                                    }
+                                }
+                                else if (reader.NodeType == XmlNodeType.EndElement) {
+                                    break;
+                                }
+                            }
+                            break;
+                        case nameof(this.ListenOverIgnore):
+                            if (reader.IsEmptyElement) break;
+                            var listenOverIgnoreStr = reader.ReadElementContentAsString();
+                            if (string.IsNullOrWhiteSpace(listenOverIgnoreStr)) {
+                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty ListenOverIgnore.");
+                            }
+                            bool listenOverIgnore;
+                            if (!bool.TryParse(listenOverIgnoreStr, out listenOverIgnore)) {
+                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{listenOverIgnoreStr}' for ListenOverignore is not a valid {nameof(Boolean)}.");
+                            }
+                            if (listenOverIgnore) {
+                                this.PreferListeningOverIgnoring();
+                            }
+                            else {
+                                this.PreferIgnoringOverListening();
+                            }
+                            break;
+                        case nameof(this.OutputPattern):
+                            if (reader.IsEmptyElement) break;
+                            var outputPatten = reader.ReadElementContentAsString();
+                            if (string.IsNullOrWhiteSpace(outputPatten)) {
+                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty OutputPattern.");
+                            }
+                            this.WithOutputPattern(outputPatten.Trim());
+                            break;
+                        case nameof(this.TimeZone):
+                            if (reader.IsEmptyElement) break;
+                            var timeZone = reader.ReadElementContentAsString();
+                            if (string.IsNullOrWhiteSpace(timeZone)) {
+                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty TimeZone.");
+                            }
+                            try {
+                                this.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById(timeZone));
+                            }
+                            catch (TimeZoneNotFoundException e) {
+                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{timeZone}' for {nameof(this.TimeZone)} is not a valid TimeZone ID.");
+                            }
+                            break;
+                        default:
+                            reader.Skip();
+                            break;
+                    }
+                } else if (reader.NodeType == XmlNodeType.EndElement) {
+                    return;
+                }
+            }
         }
 
         public void WriteXml (XmlWriter writer) {

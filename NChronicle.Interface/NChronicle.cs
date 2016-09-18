@@ -38,6 +38,7 @@ namespace NChronicle.Core {
             ConfigureFrom(path);
         }
 
+        //todo When the XML file cannot be serialized during a watcher triggered configure, do not die, instead remove all libraries if file has been removed or return.
         private static void ConfigureFrom (string path) {
             if (!File.Exists(path)) {
                 throw new FileNotFoundException
@@ -52,7 +53,7 @@ namespace NChronicle.Core {
             }
             catch (Exception e) {
                 throw new XmlException
-                    ($"Could not serialize NChronicle Chronicle from file {path}, check inner exception for more information.",
+                    ($"Could not serialize NChronicle Configuration from file {path}, check inner exception for more information.",
                      e);
             }
             if (config == null) {
@@ -63,8 +64,9 @@ namespace NChronicle.Core {
         }
 
         public static void SaveConfigurationTo (string path) {
-            var textWriter = new XmlTextWriter(path, Encoding.UTF8);
-            new XmlSerializer(typeof (ChronicleConfiguration)).Serialize(textWriter, Configuration);
+            using (var textWriter = new XmlTextWriter(path, Encoding.UTF8)) {
+                new XmlSerializer(typeof (ChronicleConfiguration)).Serialize(textWriter, Configuration);
+            }
         }
 
         internal static ChronicleConfiguration GetConfiguration () {
