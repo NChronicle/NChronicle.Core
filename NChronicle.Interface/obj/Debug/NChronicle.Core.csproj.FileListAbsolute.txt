@@ -4,3 +4,9 @@ D:\Development\Live\NChronicle\NChronicle.Interface\bin\Debug\NChronicle.Interfa
 D:\Development\Live\NChronicle\NChronicle.Interface\obj\Debug\NChronicle.Core.csprojResolveAssemblyReference.cache
 D:\Development\Live\NChronicle\NChronicle.Interface\obj\Debug\NChronicle.Interface.dll
 D:\Development\Live\NChronicle\NChronicle.Interface\obj\Debug\NChronicle.Interface.pdb
+D:\Projects\NChronicle\NChronicle.Interface\bin\Debug\NChronicle.Interface.dll.config
+D:\Projects\NChronicle\NChronicle.Interface\bin\Debug\NChronicle.Interface.dll
+D:\Projects\NChronicle\NChronicle.Interface\bin\Debug\NChronicle.Interface.pdb
+D:\Projects\NChronicle\NChronicle.Interface\obj\Debug\NChronicle.Core.csprojResolveAssemblyReference.cache
+D:\Projects\NChronicle\NChronicle.Interface\obj\Debug\NChronicle.Interface.dll
+D:\Projects\NChronicle\NChronicle.Interface\obj\Debug\NChronicle.Interface.pdb

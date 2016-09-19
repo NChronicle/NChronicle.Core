@@ -18,7 +18,8 @@
         <Level>Critical</Level>
         <Level>Warning</Level>
         <Level>Info</Level>
-   </Levels>
+        <Level>Debug</Level>
+      </Levels>
       <Tags />
       <IgnoredTags />
       <ListenOverIgnore>True</ListenOverIgnore>
@@ -27,7 +28,7 @@
         }}{EXC?{EXC}
         }{TAGS?[{TAGS|, }]}
       </OutputPattern>
-      <TimeZone>UTC-08</TimeZone>
+      <TimeZone>UTC-09</TimeZone>
     </Library>
   </Libraries>
 </ChronicleConfiguration>

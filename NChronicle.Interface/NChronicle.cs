@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using NChronicle.Core.Delegates;
@@ -23,7 +24,7 @@ namespace NChronicle.Core {
             configurationDelegate.Invoke(Configuration);
         }
 
-        public static void ConfigureFrom (string path, bool watch = true) {
+        public static void ConfigureFrom (string path, bool watch = true, int watchBufferTime = 1000) {
             if (watch) {
                 var directory = Path.GetDirectoryName(path);
                 if (string.IsNullOrEmpty(directory)) {
@@ -32,15 +33,29 @@ namespace NChronicle.Core {
                 }
                 var watcher = new FileSystemWatcher(directory);
                 watcher.Filter = Path.GetFileName(path);
-                watcher.Changed += (sender, args) => ConfigureFrom(path);
+                watcher.Changed += (sender, args) => {
+                                       Thread.Sleep(new TimeSpan(0, 0, 0, 0, watchBufferTime));
+                                       ConfigureFrom(path, true);
+                                   };
+                watcher.Deleted += (sender, args) => {
+                                       Thread.Sleep(new TimeSpan(0, 0, 0, 0, watchBufferTime));
+                                       ClearConfiguration();
+                                   };
+                watcher.Created += (sender, args) => {
+                                       Thread.Sleep(new TimeSpan(0, 0, 0, 0, watchBufferTime));
+                                       ConfigureFrom(path, true);
+                                   };
                 watcher.EnableRaisingEvents = true;
             }
-            ConfigureFrom(path);
+            ConfigureFrom(path, false);
         }
 
-        //todo When the XML file cannot be serialized during a watcher triggered configure, do not die, instead remove all libraries if file has been removed or return.
-        private static void ConfigureFrom (string path) {
+        private static void ConfigureFrom (string path, bool reconfiguringFromWatch) {
             if (!File.Exists(path)) {
+                if (reconfiguringFromWatch) {
+                    ClearConfiguration();
+                    return;
+                }
                 throw new FileNotFoundException
                     ($"Could not load NChronicle Configuration from file {path}: the file could not be found.");
             }
@@ -52,14 +67,20 @@ namespace NChronicle.Core {
                 }
             }
             catch (Exception e) {
-                throw new XmlException
-                    ($"Could not serialize NChronicle Configuration from file {path}, check inner exception for more information.",
-                     e);
+                if (!reconfiguringFromWatch)
+                    throw new XmlException
+                        ($"Could not serialize NChronicle Configuration from file {path}, check inner exception for more information.",
+                        e);
             }
             if (config == null) {
                 throw new XmlException($"Could not serialize NChronicle Configuration from file {path}.");
             }
             Configuration = config;
+            NotifySubscribers();
+        }
+
+        private static void ClearConfiguration() {
+            Configuration = new ChronicleConfiguration();
             NotifySubscribers();
         }
 
