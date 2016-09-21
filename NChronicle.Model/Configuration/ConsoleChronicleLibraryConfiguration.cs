@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -11,6 +12,7 @@ namespace NChronicle.Console.Configuration {
 
         internal Dictionary <ChronicleLevel, ConsoleColor> BackgroundColors;
         internal Dictionary <ChronicleLevel, ConsoleColor> ForegroundColors;
+        private bool LevelsAreDefault;
         internal HashSet <ChronicleLevel> Levels;
         internal HashSet <string> Tags;
         internal HashSet <string> IgnoredTags;
@@ -25,6 +27,7 @@ namespace NChronicle.Console.Configuration {
                 ChronicleLevel.Warning,
                 ChronicleLevel.Info
             };
+            this.LevelsAreDefault = true;
             this.Tags = new HashSet <string>();
             this.IgnoredTags = new HashSet <string>();
             this.ListenOverIgnore = true;
@@ -61,6 +64,10 @@ namespace NChronicle.Console.Configuration {
         }
 
         public void ListeningOnlyTo (params ChronicleLevel[] levels) {
+            if (this.LevelsAreDefault) {
+                this.Levels.Clear();
+                this.LevelsAreDefault = false;
+            }
             foreach (var level in levels) {
                 this.Levels.Add(level);
             }

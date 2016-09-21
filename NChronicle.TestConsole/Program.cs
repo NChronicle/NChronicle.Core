@@ -8,26 +8,25 @@ namespace NChronicle.TestConsole {
     internal class Program {
 
         private static void Main (string[] args) {
-//            Core.NChronicle.Configure
-//                (c => {
-//                     c.WithLibrary
-//                         (new ConsoleChronicleLibrary().Configure
-//                              (l => {
-//                                   l.ListeningOnlyTo(ChronicleLevel.Critical, ChronicleLevel.Warning, ChronicleLevel.Info, ChronicleLevel.Debug);
+            Core.NChronicle.Configure
+                (c => {
+                     c.WithLibrary
+                         (new ConsoleChronicleLibrary().Configure
+                              (l => {
+                                   l.ListeningOnlyTo(ChronicleLevel.Critical);
 //                                   l.ListeningOnlyTo("DoneAgain");
-//                                   l.WithOutputPattern("{%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}");
-//                                   l.WithCriticalForegroundColor(ConsoleColor.Red);
-//                                   l.WithWarningForegroundColor(ConsoleColor.Yellow);
-//                                   l.WithInfoForegroundColor(ConsoleColor.White);
-//                                   l.WithDebugForegroundColor(ConsoleColor.DarkGray);
-//                                   l.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById("UTC-09"));
-//                               }));
-//                 });
+                                   l.WithOutputPattern("{%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}");
+                                   l.WithCriticalForegroundColor(ConsoleColor.Red);
+                                   l.WithWarningForegroundColor(ConsoleColor.Yellow);
+                                   l.WithInfoForegroundColor(ConsoleColor.White);
+                                   l.WithDebugForegroundColor(ConsoleColor.DarkGray);
+                                   l.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById("UTC-09"));
+                               }));
+                 });
 
-            Core.NChronicle.ConfigureFrom("TestConfiguration.xml");
+//            Core.NChronicle.ConfigureFrom("TestConfiguration.xml");
 //            Core.NChronicle.SaveConfigurationTo("SavedConfiguration.xml");
 
-//            Thread.Sleep(Timeout.Infinite);
             Test();
         }
 
