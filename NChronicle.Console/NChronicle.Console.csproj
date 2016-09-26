@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB62629E-D250-47CB-81F6-7493244583BC}</ProjectGuid>
+    <ProjectGuid>{6908522A-FDD9-450E-9BC9-C3D8FF59540D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NChronicle.Core</RootNamespace>
-    <AssemblyName>NChronicle.Interface</AssemblyName>
+    <RootNamespace>NChronicle.Console</RootNamespace>
+    <AssemblyName>NChronicle.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,19 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delegates\ChronicleConfigurationDelegate.cs" />
-    <Compile Include="Delegates\ConfigurationSubscriberDelegate.cs" />
-    <Compile Include="Model\ChronicleConfiguration.cs" />
-    <Compile Include="Model\ChronicleLevel.cs" />
-    <Compile Include="Model\Chronicle.cs" />
-    <Compile Include="Interfaces\IChronicle.cs" />
-    <Compile Include="Interfaces\IChronicleLibrary.cs" />
-    <Compile Include="Model\ChronicleRecord.cs" />
-    <Compile Include="NChronicle.cs" />
+    <Compile Include="Delegates\ConsoleChronicleLibraryConfigurationDelegate.cs" />
+    <Compile Include="ConsoleChronicleLibrary.cs" />
+    <Compile Include="Configuration\ConsoleChronicleLibraryConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\NChronicle.Core\NChronicle.Core.csproj">
+      <Project>{EB62629E-D250-47CB-81F6-7493244583BC}</Project>
+      <Name>NChronicle.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

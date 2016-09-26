@@ -13,19 +13,14 @@ namespace NChronicle.TestConsole {
                      c.WithLibrary
                          (new ConsoleChronicleLibrary().Configure
                               (l => {
-                                   l.ListeningOnlyTo(ChronicleLevel.Critical);
-//                                   l.ListeningOnlyTo("DoneAgain");
-                                   l.WithOutputPattern("{%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}");
+                                   l.WithOutputPattern("{%dd MMM y yyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}");
                                    l.WithCriticalForegroundColor(ConsoleColor.Red);
                                    l.WithWarningForegroundColor(ConsoleColor.Yellow);
                                    l.WithInfoForegroundColor(ConsoleColor.White);
                                    l.WithDebugForegroundColor(ConsoleColor.DarkGray);
-                                   l.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById("UTC-09"));
+                                   l.WithTimeZone(TimeZoneInfo.Utc);
                                }));
                  });
-
-//            Core.NChronicle.ConfigureFrom("TestConfiguration.xml");
-//            Core.NChronicle.SaveConfigurationTo("SavedConfiguration.xml");
 
             Test();
         }
@@ -34,16 +29,16 @@ namespace NChronicle.TestConsole {
             var chronicle = new Chronicle();
             while (true) {
                 Thread.Sleep(250);
-                chronicle.Debug("Starting division attempt.", "lolDebuggingAgain", "ProbsDon'tWannaDoThis");
+                chronicle.Debug("Starting division attempt.", "tag1", "tag2");
                 try {
                     var a = new Random().Next(0, 9);
                     chronicle.Debug($"Chosen number is {a}.");
                     var b = 100 / a;
                 } catch (Exception e) {
-                    chronicle.Critical(e, "lolException", "MaybeDivideByNumExc??");
+                    chronicle.Critical(e, "test3", "tag4");
                     continue;
                 }
-                chronicle.Info("Successfully performed a division.", "DoneAgain", "ProbWorked");
+                chronicle.Info("Successfully performed a division.", "tag5", "tag6");
             }
         }
 

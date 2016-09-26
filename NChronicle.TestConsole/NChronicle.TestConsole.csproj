@@ -48,20 +48,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Chronicle.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NChronicle.Interface\NChronicle.Core.csproj">
+    <ProjectReference Include="..\NChronicle.Core\NChronicle.Core.csproj">
       <Project>{EB62629E-D250-47CB-81F6-7493244583BC}</Project>
       <Name>NChronicle.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NChronicle.Model\NChronicle.Console.csproj">
+    <ProjectReference Include="..\NChronicle.Console\NChronicle.Console.csproj">
       <Project>{6908522A-FDD9-450E-9BC9-C3D8FF59540D}</Project>
       <Name>NChronicle.Console</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NChronicle.SDK\NChronicle.Live.csproj">
-      <Project>{7EF81D51-1749-4313-BCD3-00A860BC3800}</Project>
-      <Name>NChronicle.Live</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -364,7 +364,7 @@ namespace NChronicle.Console.Configuration {
                             try {
                                 this.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById(timeZone));
                             }
-                            catch (TimeZoneNotFoundException e) {
+                            catch (TimeZoneNotFoundException) {
                                 throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{timeZone}' for {nameof(this.TimeZone)} is not a valid TimeZone ID.");
                             }
                             break;
