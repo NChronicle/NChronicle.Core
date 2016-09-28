@@ -23,6 +23,7 @@ namespace NChronicle.Console.Configuration {
             this.Levels = new HashSet <ChronicleLevel> {
                 ChronicleLevel.Critical,
                 ChronicleLevel.Warning,
+                ChronicleLevel.Success,
                 ChronicleLevel.Info
             };
             this.LevelsAreDefault = true;
@@ -33,12 +34,14 @@ namespace NChronicle.Console.Configuration {
             this.ForegroundColors = new Dictionary <ChronicleLevel, ConsoleColor> {
                 [ChronicleLevel.Critical] = ConsoleColor.Red,
                 [ChronicleLevel.Warning] = ConsoleColor.Yellow,
+                [ChronicleLevel.Success] = ConsoleColor.Green,
                 [ChronicleLevel.Info] = ConsoleColor.White,
                 [ChronicleLevel.Debug] = ConsoleColor.Gray
             };
             this.BackgroundColors = new Dictionary <ChronicleLevel, ConsoleColor> {
                 [ChronicleLevel.Critical] = ConsoleColor.Black,
                 [ChronicleLevel.Warning] = ConsoleColor.Black,
+                [ChronicleLevel.Success] = ConsoleColor.Black,
                 [ChronicleLevel.Info] = ConsoleColor.Black,
                 [ChronicleLevel.Debug] = ConsoleColor.Black
             };
@@ -83,6 +86,7 @@ namespace NChronicle.Console.Configuration {
             this.Levels.Clear();
             this.Levels.Add(ChronicleLevel.Critical);
             this.Levels.Add(ChronicleLevel.Warning);
+            this.Levels.Add(ChronicleLevel.Success);
             this.Levels.Add(ChronicleLevel.Info);
             this.Levels.Add(ChronicleLevel.Debug);
             this.LevelsAreDefault = false;
@@ -121,6 +125,10 @@ namespace NChronicle.Console.Configuration {
             this.ForegroundColors[ChronicleLevel.Debug] = foregroundColor;
         }
 
+        public void WithSuccessForegroundColor (ConsoleColor foregroundColor) {
+            this.ForegroundColors[ChronicleLevel.Success] = foregroundColor;
+        }
+
         public void WithInfoForegroundColor (ConsoleColor foregroundColor) {
             this.ForegroundColors[ChronicleLevel.Info] = foregroundColor;
         }
@@ -135,6 +143,10 @@ namespace NChronicle.Console.Configuration {
 
         public void WithDebugBackgroundColor (ConsoleColor backgroundColor) {
             this.BackgroundColors[ChronicleLevel.Debug] = backgroundColor;
+        }
+
+        public void WithSuccessBackgroundColor (ConsoleColor backgroundColor) {
+            this.BackgroundColors[ChronicleLevel.Success] = backgroundColor;
         }
 
         public void WithInfoBackgroundColor (ConsoleColor backgroundColor) {
@@ -178,6 +190,17 @@ namespace NChronicle.Console.Configuration {
                                                 throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{warningColorStr}' for {nameof(ChronicleLevel.Warning)} in {nameof(this.BackgroundColors)} is not a valid {nameof(ConsoleColor)}.");
                                             }
                                             this.WithWarningBackgroundColor(warningColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Success):
+                                            var successColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(successColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Success)} in {nameof(this.BackgroundColors)}.");
+                                            }
+                                            ConsoleColor successColor;
+                                            if (!Enum.TryParse(successColorStr, true, out successColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{successColorStr}' for {nameof(ChronicleLevel.Success)} in {nameof(this.BackgroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithWarningBackgroundColor(successColor);
                                             break;
                                         case nameof(ChronicleLevel.Info):
                                             var infoColorStr = reader.ReadElementContentAsString();
@@ -237,6 +260,17 @@ namespace NChronicle.Console.Configuration {
                                                 throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{warningColorStr}' for {nameof(ChronicleLevel.Warning)} in {nameof(this.ForegroundColors)} is not a valid {nameof(ConsoleColor)}.");
                                             }
                                             this.WithWarningForegroundColor(warningColor);
+                                            break;
+                                        case nameof(ChronicleLevel.Success):
+                                            var successColorStr = reader.ReadElementContentAsString();
+                                            if (string.IsNullOrWhiteSpace(successColorStr)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty color for {nameof(ChronicleLevel.Success)} in {nameof(this.ForegroundColors)}.");
+                                            }
+                                            ConsoleColor successColor;
+                                            if (!Enum.TryParse(successColorStr, true, out successColor)) {
+                                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{successColorStr}' for {nameof(ChronicleLevel.Success)} in {nameof(this.ForegroundColors)} is not a valid {nameof(ConsoleColor)}.");
+                                            }
+                                            this.WithWarningForegroundColor(successColor);
                                             break;
                                         case nameof(ChronicleLevel.Info):
                                             var infoColorStr = reader.ReadElementContentAsString();

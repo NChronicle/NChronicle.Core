@@ -14,10 +14,6 @@ namespace NChronicle.TestConsole {
                          (new ConsoleChronicleLibrary().Configure
                               (l => {
                                    l.WithOutputPattern("{%dd MMM y yyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}");
-                                   l.WithCriticalForegroundColor(ConsoleColor.Red);
-                                   l.WithWarningForegroundColor(ConsoleColor.Yellow);
-                                   l.WithInfoForegroundColor(ConsoleColor.White);
-                                   l.WithDebugForegroundColor(ConsoleColor.DarkGray);
                                    l.WithTimeZone(TimeZoneInfo.Utc);
                                    l.ListeningToAllLevels();
                                }));
@@ -30,16 +26,19 @@ namespace NChronicle.TestConsole {
             var chronicle = new Chronicle();
             while (true) {
                 Thread.Sleep(250);
-                chronicle.Debug("Starting division attempt.", "tag1", "tag2");
+                chronicle.Info("Starting division attempt.", "tag1", "tag2");
                 try {
                     var a = new Random().Next(0, 9);
                     chronicle.Debug($"Chosen number is {a}.");
+                    if (a == 0) {
+                        chronicle.Warning($"This may result in a DivideByZero excepton.");
+                    }
                     var b = 100 / a;
                 } catch (Exception e) {
                     chronicle.Critical(e, "test3", "tag4");
                     continue;
                 }
-                chronicle.Info("Successfully performed a division.", "tag5", "tag6");
+                chronicle.Success("Successfully performed a division.", "tag5", "tag6");
             }
         }
 

@@ -93,6 +93,26 @@ namespace NChronicle.Core.Model {
         }
         #endregion
 
+        #region Success
+        public void Success (string message, params string[] tags) {
+            this.Success(message, null, tags);
+        }
+
+        public void Success (Exception exception, params string[] tags) {
+            this.Success(exception.Message, exception, tags);
+        }
+
+        public void Success (string message, Exception exception, params string[] tags) {
+            this.SendToLibraries
+                (new ChronicleRecord {
+                    Message = message,
+                    Tags = new HashSet <string>(tags),
+                    Exception = exception,
+                    Level = ChronicleLevel.Success
+            });
+        }
+        #endregion
+
         #region Info
         public void Info (string message, params string[] tags) {
             this.Info(message, null, tags);

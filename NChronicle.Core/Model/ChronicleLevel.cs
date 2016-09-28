@@ -6,6 +6,7 @@ namespace NChronicle.Core.Model {
 
         Critical,
         Warning,
+        Success,
         Info,
         Debug
 
