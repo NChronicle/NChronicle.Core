@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -17,7 +16,6 @@ namespace NChronicle.Console.Configuration {
         internal HashSet <string> Tags;
         internal HashSet <string> IgnoredTags;
 
-        internal bool ListenOverIgnore;
         internal string OutputPattern;
         internal TimeZoneInfo TimeZone;
 
@@ -30,7 +28,6 @@ namespace NChronicle.Console.Configuration {
             this.LevelsAreDefault = true;
             this.Tags = new HashSet <string>();
             this.IgnoredTags = new HashSet <string>();
-            this.ListenOverIgnore = true;
             this.TimeZone = TimeZoneInfo.Local;
             this.OutputPattern = "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}";
             this.ForegroundColors = new Dictionary <ChronicleLevel, ConsoleColor> {
@@ -63,7 +60,7 @@ namespace NChronicle.Console.Configuration {
             this.TimeZone = timeZone;
         }
 
-        public void ListeningOnlyTo (params ChronicleLevel[] levels) {
+        public void ListeningTo (params ChronicleLevel[] levels) {
             if (this.LevelsAreDefault) {
                 this.Levels.Clear();
                 this.LevelsAreDefault = false;
@@ -74,33 +71,46 @@ namespace NChronicle.Console.Configuration {
         }
 
         public void Ignoring (params ChronicleLevel[] levels) {
+            if (this.LevelsAreDefault) {
+                this.ListeningToAllLevels();
+            }
             foreach (var level in levels) {
                 this.Levels.Remove(level);
             }
         }
 
-        public void ListeningOnlyTo (params string[] tags) {
+        public void ListeningToAllLevels() {
+            this.Levels.Clear();
+            this.Levels.Add(ChronicleLevel.Critical);
+            this.Levels.Add(ChronicleLevel.Warning);
+            this.Levels.Add(ChronicleLevel.Info);
+            this.Levels.Add(ChronicleLevel.Debug);
+            this.LevelsAreDefault = false;
+        }
+
+        public void NotListening() {
+            this.Levels.Clear();
+        }
+
+        public void ListeningTo (params string[] tags) {
             foreach (var tag in tags) {
-                this.Tags.Add(tag);
+                if (!this.IgnoredTags.Remove(tag)) {
+                    this.Tags.Add(tag);
+                }
             }
         }
 
         public void Ignoring (params string[] tags) {
             foreach (var tag in tags) {
-                this.IgnoredTags.Add(tag);
+                if (!this.Tags.Remove(tag)) {
+                    this.IgnoredTags.Add(tag);
+                }
             }
         }
 
-        public void IgnoringNoTags () {
+        public void ListeningToAllTags () {
+            this.Tags.Clear();
             this.IgnoredTags.Clear();
-        }
-
-        public void PreferListeningOverIgnoring () {
-            this.ListenOverIgnore = true;
-        }
-
-        public void PreferIgnoringOverListening () {
-            this.ListenOverIgnore = false;
         }
 
         public void WithCriticalForegroundColor (ConsoleColor foregroundColor) {
@@ -274,7 +284,7 @@ namespace NChronicle.Console.Configuration {
                                             if (!Enum.TryParse(levelStr, true, out level)) {
                                                 throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{levelStr}' for level in {nameof(this.Levels)} is not a valid {nameof(ChronicleLevel)}.");
                                             }
-                                            this.ListeningOnlyTo(level);
+                                            this.ListeningTo(level);
                                             break;
                                         default:
                                             reader.Skip();
@@ -296,7 +306,7 @@ namespace NChronicle.Console.Configuration {
                                             if (string.IsNullOrWhiteSpace(tag)) {
                                                 throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty tag in Tags.");
                                             }
-                                            this.ListeningOnlyTo(tag);
+                                            this.ListeningTo(tag);
                                             break;
                                         default:
                                             reader.Skip();
@@ -328,23 +338,6 @@ namespace NChronicle.Console.Configuration {
                                 else if (reader.NodeType == XmlNodeType.EndElement) {
                                     break;
                                 }
-                            }
-                            break;
-                        case nameof(this.ListenOverIgnore):
-                            if (reader.IsEmptyElement) break;
-                            var listenOverIgnoreStr = reader.ReadElementContentAsString();
-                            if (string.IsNullOrWhiteSpace(listenOverIgnoreStr)) {
-                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, empty ListenOverIgnore.");
-                            }
-                            bool listenOverIgnore;
-                            if (!bool.TryParse(listenOverIgnoreStr, out listenOverIgnore)) {
-                                throw new XmlException($"Unexpected library configuration for {nameof(ConsoleChronicleLibrary)}, value '{listenOverIgnoreStr}' for ListenOverignore is not a valid {nameof(Boolean)}.");
-                            }
-                            if (listenOverIgnore) {
-                                this.PreferListeningOverIgnoring();
-                            }
-                            else {
-                                this.PreferIgnoringOverListening();
                             }
                             break;
                         case nameof(this.OutputPattern):
@@ -404,7 +397,6 @@ namespace NChronicle.Console.Configuration {
                 writer.WriteElementString("Tag", tag);
             }
             writer.WriteEndElement();
-            writer.WriteElementString(nameof(this.ListenOverIgnore), this.ListenOverIgnore.ToString());
             writer.WriteElementString(nameof(this.OutputPattern), this.OutputPattern);
             writer.WriteElementString(nameof(this.TimeZone), this.TimeZone.Id);
         }

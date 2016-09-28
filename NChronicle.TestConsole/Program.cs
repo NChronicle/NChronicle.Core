@@ -19,6 +19,7 @@ namespace NChronicle.TestConsole {
                                    l.WithInfoForegroundColor(ConsoleColor.White);
                                    l.WithDebugForegroundColor(ConsoleColor.DarkGray);
                                    l.WithTimeZone(TimeZoneInfo.Utc);
+                                   l.ListeningToAllLevels();
                                }));
                  });
 

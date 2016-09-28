@@ -34,7 +34,7 @@ namespace NChronicle.Console {
         }
 
         private bool ListenTo (ChronicleRecord record) {
-            return (!this._configuration.Levels.Any() || this._configuration.Levels.Contains(record.Level))
+            return (this._configuration.Levels.Any() && this._configuration.Levels.Contains(record.Level))
                    && (!this._configuration.Tags.Any() || this._configuration.Tags.Any(record.Tags.Contains))
                    && !this._configuration.IgnoredTags.Any(record.Tags.Contains);
         }
