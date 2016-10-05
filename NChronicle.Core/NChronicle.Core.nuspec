@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NChronicle.Core</id>
+    <title>NChronicle.Core</title>
+    <version>1.0.1</version>
+    <authors>Andy James</authors>
+    <owners>Andy James</owners>
+    <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
+    <projectUrl>https://git.ikimi.co/andrewj/NChronicle</projectUrl>
+    <iconUrl>https://git.ikimi.co/uploads/project/avatar/2/NChronicle_simple_square.pn</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>
+NChronicle is an extensible logging and output library allowing centralised management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.Core is the core functionality and abstraction layer for all NChronicle Libraries.
+    </summary>
+    <description>
+NChronicle is an extensible logging and output library allowing centralised management and distribution of log messages to a number of logging destinations (known as 'Libraries').
+
+NChronicle.Core is the core functionality and abstraction layer for all of these Libraries.
+NChronicle.Core supports multiple levels of logging (Success, Info, Debug, Warning, Error, and Critical) and custom tagging of messages so logs are more findable and concatenatable. NChronicle allows configuration programmatically or via a live monitored XML configuration file.
+
+NChronicle.Console is available as a highly configurable NChronicle Library dispatching log messages to STDOUT / the Console.
+Further Libraries planned for the NChronicle  logging framework include NChronicle.File, NChronicle.Email, NChronicle.API and NChronicle.Owin.
+    </description>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="net40" />
+    </frameworkAssemblies>
+    <language>en-us</language>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output</tags>
+  </metadata>
+  <files>
+    <file src="bin/Release/NChronicle.Core.dll" target="lib\net40" />
+  </files>
+</package>

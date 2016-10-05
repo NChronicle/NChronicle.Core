@@ -2,5 +2,6 @@
 .idea/
 packages/
 *.csproj.user
+*.nupkg
 */bin/
 */obj/
