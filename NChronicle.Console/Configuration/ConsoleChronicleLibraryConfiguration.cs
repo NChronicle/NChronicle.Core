@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -9,36 +9,36 @@ namespace NChronicle.Console.Configuration {
 
     public class ConsoleChronicleLibraryConfiguration : IXmlSerializable {
 
-        internal Dictionary <ChronicleLevel, ConsoleColor> BackgroundColors;
-        internal Dictionary <ChronicleLevel, ConsoleColor> ForegroundColors;
+        internal ConcurrentDictionary <ChronicleLevel, ConsoleColor> BackgroundColors;
+        internal ConcurrentDictionary <ChronicleLevel, ConsoleColor> ForegroundColors;
         private bool LevelsAreDefault;
-        internal HashSet <ChronicleLevel> Levels;
-        internal HashSet <string> Tags;
-        internal HashSet <string> IgnoredTags;
+        internal ConcurrentDictionary <ChronicleLevel, byte> Levels;
+        internal ConcurrentDictionary <string, byte> Tags;
+        internal ConcurrentDictionary <string, byte> IgnoredTags;
 
         internal string OutputPattern;
         internal TimeZoneInfo TimeZone;
 
         internal ConsoleChronicleLibraryConfiguration () {
-            this.Levels = new HashSet <ChronicleLevel> {
-                ChronicleLevel.Critical,
-                ChronicleLevel.Warning,
-                ChronicleLevel.Success,
-                ChronicleLevel.Info
+            this.Levels = new ConcurrentDictionary<ChronicleLevel, byte> {
+                [ChronicleLevel.Critical] = 0,
+                [ChronicleLevel.Warning] = 0,
+                [ChronicleLevel.Success] = 0,
+                [ChronicleLevel.Info] = 0,
             };
             this.LevelsAreDefault = true;
-            this.Tags = new HashSet <string>();
-            this.IgnoredTags = new HashSet <string>();
+            this.Tags = new ConcurrentDictionary<string, byte>();
+            this.IgnoredTags = new ConcurrentDictionary<string, byte>();
             this.TimeZone = TimeZoneInfo.Local;
             this.OutputPattern = "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}";
-            this.ForegroundColors = new Dictionary <ChronicleLevel, ConsoleColor> {
+            this.ForegroundColors = new ConcurrentDictionary <ChronicleLevel, ConsoleColor> {
                 [ChronicleLevel.Critical] = ConsoleColor.Red,
                 [ChronicleLevel.Warning] = ConsoleColor.Yellow,
                 [ChronicleLevel.Success] = ConsoleColor.Green,
                 [ChronicleLevel.Info] = ConsoleColor.White,
                 [ChronicleLevel.Debug] = ConsoleColor.Gray
             };
-            this.BackgroundColors = new Dictionary <ChronicleLevel, ConsoleColor> {
+            this.BackgroundColors = new ConcurrentDictionary <ChronicleLevel, ConsoleColor> {
                 [ChronicleLevel.Critical] = ConsoleColor.Black,
                 [ChronicleLevel.Warning] = ConsoleColor.Black,
                 [ChronicleLevel.Success] = ConsoleColor.Black,
@@ -65,11 +65,11 @@ namespace NChronicle.Console.Configuration {
 
         public void ListeningTo (params ChronicleLevel[] levels) {
             if (this.LevelsAreDefault) {
-                this.Levels.Clear();
+                this.Levels = new ConcurrentDictionary <ChronicleLevel, byte>();
                 this.LevelsAreDefault = false;
             }
             foreach (var level in levels) {
-                this.Levels.Add(level);
+                this.Levels[level] = 0;
             }
         }
 
@@ -78,17 +78,18 @@ namespace NChronicle.Console.Configuration {
                 this.ListeningToAllLevels();
             }
             foreach (var level in levels) {
-                this.Levels.Remove(level);
+                byte b;
+                this.Levels.TryRemove(level, out b);
             }
         }
 
         public void ListeningToAllLevels() {
             this.Levels.Clear();
-            this.Levels.Add(ChronicleLevel.Critical);
-            this.Levels.Add(ChronicleLevel.Warning);
-            this.Levels.Add(ChronicleLevel.Success);
-            this.Levels.Add(ChronicleLevel.Info);
-            this.Levels.Add(ChronicleLevel.Debug);
+            this.Levels[ChronicleLevel.Critical] = 0;
+            this.Levels[ChronicleLevel.Warning] = 0;
+            this.Levels[ChronicleLevel.Success] = 0;
+            this.Levels[ChronicleLevel.Info] = 0;
+            this.Levels[ChronicleLevel.Debug] = 0;
             this.LevelsAreDefault = false;
         }
 
@@ -98,16 +99,18 @@ namespace NChronicle.Console.Configuration {
 
         public void ListeningTo (params string[] tags) {
             foreach (var tag in tags) {
-                if (!this.IgnoredTags.Remove(tag)) {
-                    this.Tags.Add(tag);
+                byte b;
+                if (!this.IgnoredTags.TryRemove(tag, out b)) {
+                    this.Tags[tag] = 0;
                 }
             }
         }
 
         public void Ignoring (params string[] tags) {
             foreach (var tag in tags) {
-                if (!this.Tags.Remove(tag)) {
-                    this.IgnoredTags.Add(tag);
+                byte b;
+                if (!this.Tags.TryRemove(tag, out b)) {
+                    this.IgnoredTags[tag] = 0;
                 }
             }
         }
@@ -418,17 +421,17 @@ namespace NChronicle.Console.Configuration {
             writer.WriteEndElement();
             writer.WriteStartElement(nameof(this.Levels));
             foreach (var level in this.Levels) {
-                writer.WriteElementString("Level", level.ToString());
+                writer.WriteElementString("Level", level.Key.ToString());
             }
             writer.WriteEndElement();
             writer.WriteStartElement(nameof(this.Tags));
             foreach (var tag in this.Tags) {
-                writer.WriteElementString("Tag", tag);
+                writer.WriteElementString("Tag", tag.Key);
             }
             writer.WriteEndElement();
             writer.WriteStartElement(nameof(this.IgnoredTags));
             foreach (var tag in this.IgnoredTags) {
-                writer.WriteElementString("Tag", tag);
+                writer.WriteElementString("Tag", tag.Key);
             }
             writer.WriteEndElement();
             writer.WriteElementString(nameof(this.OutputPattern), this.OutputPattern);

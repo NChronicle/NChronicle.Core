@@ -16,40 +16,36 @@ namespace NChronicle.Console {
 
         private readonly ConsoleChronicleLibraryConfiguration _configuration;
 
-        private readonly Dictionary <string, Formatter> _methods;
+        private readonly Dictionary <string, MethodHandler> _methods;
+        private readonly Dictionary <string, KeyHandler> _keys;
 
         public ConsoleChronicleLibrary () {
             this._configuration = new ConsoleChronicleLibraryConfiguration();
-            this._methods = new Dictionary <string, Formatter> {
-                {"TAGS", this.FormulateTags}
+            this._methods = new Dictionary <string, MethodHandler> {
+                {"TAGS", this.TagsMethodHandler}
+            };
+            this._keys = new Dictionary <string, KeyHandler> {
+                {"MSG", this.MessageKeyHandler},
+                {"EXC", this.ExceptionKeyHandler},
+                {"TH", this.ThreadKeyHandler},
+                {"TAGS", this.TagsKeyHandler}
             };
         }
 
         public void Store (ChronicleRecord record) {
             if (!this.ListenTo(record)) return;
             var pattern = this._configuration.OutputPattern;
-            var keyMapping = this.FormulateKeyMapping(record);
-            var output = this.FormulateOutput(record, keyMapping, pattern);
+            var output = this.FormulateOutput(record, pattern);
             this.SendToConsole(output, record.Level);
         }
 
         private bool ListenTo (ChronicleRecord record) {
-            return (this._configuration.Levels.Any() && this._configuration.Levels.Contains(record.Level))
-                   && (!this._configuration.Tags.Any() || this._configuration.Tags.Any(record.Tags.Contains))
-                   && !this._configuration.IgnoredTags.Any(record.Tags.Contains);
+            return (this._configuration.Levels.Any() && this._configuration.Levels.ContainsKey(record.Level))
+                   && (!this._configuration.Tags.Any() || this._configuration.Tags.Keys.Any(record.Tags.Contains))
+                   && !this._configuration.IgnoredTags.Keys.Any(record.Tags.Contains);
         }
 
-        private Dictionary <string, object> FormulateKeyMapping (ChronicleRecord record) {
-            var keyMapping = new Dictionary <string, object> {
-                {"MSG", record.Message != record.Exception?.Message ? record.Message : string.Empty},
-                {"EXC", record.Exception?.ToString()},
-                {"TH", Thread.CurrentThread.ManagedThreadId.ToString()},
-                {"TAGS", this.FormulateTags(record, ", ")}
-            };
-            return keyMapping;
-        }
-
-        private string FormulateOutput (ChronicleRecord record, Dictionary <string, object> keyMapping, string pattern) {
+        private string FormulateOutput (ChronicleRecord record, string pattern) {
             var output = pattern;
             var currentTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, this._configuration.TimeZone);
             foreach (var token in this.FindTokens(pattern)) {
@@ -63,13 +59,13 @@ namespace NChronicle.Console {
                 var tokenIsQuery = tokenBody.Contains("?");
                 if (tokenIsQuery) {
                     var queryKey = tokenBody.Split('?')[0];
-                    if (!keyMapping.ContainsKey(queryKey)
-                        || string.IsNullOrEmpty(keyMapping[queryKey] as string)) {
+                    if (!this._keys.ContainsKey(queryKey)
+                        || string.IsNullOrEmpty(this._keys[queryKey](record))) {
                         output = output.Replace(token, string.Empty);
                         continue;
                     }
                     var queryBody = tokenBody.Substring(queryKey.Length + 1);
-                    var queryOutput = this.FormulateOutput(record, keyMapping, queryBody);
+                    var queryOutput = this.FormulateOutput(record, queryBody);
                     output = output.Replace(token, queryOutput);
                     continue;
                 }
@@ -82,8 +78,8 @@ namespace NChronicle.Console {
                         continue;
                     }
                 }
-                if (keyMapping.ContainsKey(tokenBody)) {
-                    output = output.Replace(token, keyMapping[tokenBody] as string);
+                if (this._keys.ContainsKey(tokenBody)) {
+                    output = output.Replace(token, this._keys[tokenBody](record));
                 }
             }
             return output;
@@ -112,18 +108,37 @@ namespace NChronicle.Console {
             return output;
         }
 
-        private string FormulateTags (ChronicleRecord record, params string[] parameters) {
+        private string TagsMethodHandler (ChronicleRecord record, params string[] parameters) {
             return parameters.Length < 1 ? string.Empty : string.Join(parameters[0], record.Tags);
         }
 
+        private string MessageKeyHandler (ChronicleRecord record) {
+            return record.Message != record.Exception?.Message ? record.Message : string.Empty;
+        }
+
+        private string ExceptionKeyHandler (ChronicleRecord record) {
+            return record.Exception?.ToString();
+        }
+
+        private string ThreadKeyHandler(ChronicleRecord record) {
+            return Thread.CurrentThread.ManagedThreadId.ToString();
+        }
+
+        private string TagsKeyHandler (ChronicleRecord record) {
+            return this.TagsMethodHandler(record, ", ");
+        }
+
+
         private void SendToConsole (string output, ChronicleLevel level) {
-            var prevBackgroundColor = System.Console.BackgroundColor;
-            var prevForegroundColor = System.Console.ForegroundColor;
-            System.Console.BackgroundColor = this._configuration.BackgroundColors[level];
-            System.Console.ForegroundColor = this._configuration.ForegroundColors[level];
-            System.Console.WriteLine(output);
-            System.Console.BackgroundColor = prevBackgroundColor;
-            System.Console.ForegroundColor = prevForegroundColor;
+            lock (System.Console.Out) {
+                var prevBackgroundColor = System.Console.BackgroundColor;
+                var prevForegroundColor = System.Console.ForegroundColor;
+                System.Console.BackgroundColor = this._configuration.BackgroundColors[level];
+                System.Console.ForegroundColor = this._configuration.ForegroundColors[level];
+                System.Console.WriteLine(output);
+                System.Console.BackgroundColor = prevBackgroundColor;
+                System.Console.ForegroundColor = prevForegroundColor;
+            }
         }
 
         public ConsoleChronicleLibrary Configure (ConsoleChronicleLibraryConfigurationDelegate configurationDelegate) {
@@ -131,7 +146,9 @@ namespace NChronicle.Console {
             return this;
         }
 
-        private delegate string Formatter (ChronicleRecord record, params string[] parameters);
+        private delegate string MethodHandler (ChronicleRecord record, params string[] parameters);
+        private delegate string KeyHandler (ChronicleRecord record);
+
 
         public XmlSchema GetSchema () => null;
 

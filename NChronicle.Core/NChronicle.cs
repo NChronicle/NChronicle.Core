@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -13,11 +12,10 @@ namespace NChronicle.Core {
     public static class NChronicle {
 
         private static ChronicleConfiguration Configuration { get; set; }
-        private static List <ConfigurationSubscriberDelegate> ConfigurationSubscribers { get; }
+        internal static event ConfigurationSubscriberDelegate ConfigurationChanged;
 
         static NChronicle () {
             Configuration = new ChronicleConfiguration();
-            ConfigurationSubscribers = new List <ConfigurationSubscriberDelegate>();
         }
 
         public static void Configure (ChronicleConfigurationDelegate configurationDelegate) {
@@ -76,12 +74,12 @@ namespace NChronicle.Core {
                 throw new XmlException($"Could not serialize NChronicle Configuration from file {path}.");
             }
             Configuration = config;
-            NotifySubscribers();
+            ConfigurationChanged.Invoke();
         }
 
         private static void ClearConfiguration() {
             Configuration = new ChronicleConfiguration();
-            NotifySubscribers();
+            ConfigurationChanged.Invoke();
         }
 
         public static void SaveConfigurationTo (string path) {
@@ -92,14 +90,6 @@ namespace NChronicle.Core {
 
         internal static ChronicleConfiguration GetConfiguration () {
             return Configuration.Clone();
-        }
-
-        internal static void SubscribeToChanges (ConfigurationSubscriberDelegate subscriber) {
-            ConfigurationSubscribers.Add(subscriber);
-        }
-
-        private static void NotifySubscribers () {
-            foreach (var subscriber in ConfigurationSubscribers) subscriber();
         }
 
     }

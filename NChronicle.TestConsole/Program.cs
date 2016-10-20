@@ -19,7 +19,15 @@ namespace NChronicle.TestConsole {
                                }));
                  });
 
-            Test();
+            MultiThreadTest();
+        }
+
+        private static void MultiThreadTest () {
+            new Thread(Test).Start();
+//            new Thread(Test).Start();
+//            new Thread(Test).Start();
+//            new Thread(Test).Start();
+            Thread.Sleep(Timeout.Infinite);
         }
 
         private static void Test () {

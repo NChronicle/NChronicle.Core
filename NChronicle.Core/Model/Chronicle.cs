@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 using NChronicle.Core.Interfaces;
 
 namespace NChronicle.Core.Model {
@@ -7,27 +8,28 @@ namespace NChronicle.Core.Model {
     public class Chronicle : IChronicle {
 
         private ChronicleConfiguration _configuration;
-        private readonly HashSet <string> _tags;
+        private ConcurrentBag <string> _tags;
 
         public Chronicle () {
             this._configuration = NChronicle.GetConfiguration();
-            NChronicle.SubscribeToChanges(this.ConfigurationSubscriber);
-            this._tags = new HashSet <string>();
+            NChronicle.ConfigurationChanged += this.ConfigurationChangedHandler;
+            this._tags = new ConcurrentBag <string>();
         }
 
-        private void ConfigurationSubscriber () {
+        private void ConfigurationChangedHandler () {
             this._configuration = NChronicle.GetConfiguration();
         }
 
         #region Tags
         public void PersistTags (params string[] tags) {
             foreach (var tag in tags) {
+                if (this._tags.Contains(tag)) continue;
                 this._tags.Add(tag);
             }
         }
 
         public void ClearTags () {
-            this._tags.Clear();
+            this._tags = new ConcurrentBag <string>();
         }
         #endregion
 
@@ -43,13 +45,7 @@ namespace NChronicle.Core.Model {
         }
 
         public void Critical (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries
-                (new ChronicleRecord {
-                    Message = message,
-                    Tags = new HashSet <string>(tags),
-                    Exception = exception,
-                    Level = ChronicleLevel.Critical
-                });
+            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Critical));
         }
         #endregion
 
@@ -63,13 +59,7 @@ namespace NChronicle.Core.Model {
         }
 
         public void Warning (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries
-                (new ChronicleRecord {
-                    Message = message,
-                    Tags = new HashSet <string>(tags),
-                    Exception = exception,
-                    Level = ChronicleLevel.Warning
-                });
+            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Warning));
         }
         #endregion
 
@@ -83,13 +73,7 @@ namespace NChronicle.Core.Model {
         }
 
         public void Debug (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries
-                (new ChronicleRecord {
-                    Message = message,
-                    Tags = new HashSet <string>(tags),
-                    Exception = exception,
-                    Level = ChronicleLevel.Debug
-                });
+            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Debug));
         }
         #endregion
 
@@ -103,13 +87,7 @@ namespace NChronicle.Core.Model {
         }
 
         public void Success (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries
-                (new ChronicleRecord {
-                    Message = message,
-                    Tags = new HashSet <string>(tags),
-                    Exception = exception,
-                    Level = ChronicleLevel.Success
-            });
+            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Success));
         }
         #endregion
 
@@ -123,23 +101,24 @@ namespace NChronicle.Core.Model {
         }
 
         public void Info (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries
-                (new ChronicleRecord {
-                    Message = message,
-                    Tags = new HashSet <string>(tags),
-                    Exception = exception,
-                    Level = ChronicleLevel.Info
-                });
+            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Info));
         }
         #endregion
 
         #endregion
 
         private void SendToLibraries (ChronicleRecord record) {
-            record.Tags.UnionWith(this._tags);
+            foreach (var tag in this._tags) {
+                if (record.Tags.Contains(tag)) continue;
+                (record.Tags as ConcurrentQueue<string>)?.Enqueue(tag);
+            }
             foreach (var library in this._configuration.Libraries) {
                 library.Store(record); 
             }
+        }
+
+        ~Chronicle () {
+            NChronicle.ConfigurationChanged -= this.ConfigurationChangedHandler;
         }
 
     }

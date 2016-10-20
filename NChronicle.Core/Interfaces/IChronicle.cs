@@ -22,6 +22,12 @@ namespace NChronicle.Core.Interfaces {
 
         void Debug(Exception exception, params string[] tags);
 
+        void Success(string message, params string[] tags);
+
+        void Success(string message, Exception exception, params string[] tags);
+
+        void Success(Exception exception, params string[] tags);
+
         void Info(string message, params string[] tags);
 
         void Info(string message, Exception exception, params string[] tags);

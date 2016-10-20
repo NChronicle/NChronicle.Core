@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -9,10 +11,10 @@ namespace NChronicle.Core.Model {
 
     public class ChronicleConfiguration : IXmlSerializable {
 
-        internal HashSet <IChronicleLibrary> Libraries;
+        internal ConcurrentBag <IChronicleLibrary> Libraries;
 
         internal ChronicleConfiguration () {
-            this.Libraries = new HashSet <IChronicleLibrary>();
+            this.Libraries = new ConcurrentBag<IChronicleLibrary>();
         }
 
         public void WithLibrary (IChronicleLibrary library) {
@@ -21,7 +23,7 @@ namespace NChronicle.Core.Model {
 
         public ChronicleConfiguration Clone () {
             return new ChronicleConfiguration {
-                Libraries = new HashSet <IChronicleLibrary>(this.Libraries)
+                Libraries = new ConcurrentBag<IChronicleLibrary>(this.Libraries)
             };
         }
 
