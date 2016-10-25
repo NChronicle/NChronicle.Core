@@ -24,9 +24,9 @@ namespace NChronicle.TestConsole {
 
         private static void MultiThreadTest () {
             new Thread(Test).Start();
-//            new Thread(Test).Start();
-//            new Thread(Test).Start();
-//            new Thread(Test).Start();
+            new Thread(Test).Start();
+            new Thread(Test).Start();
+            new Thread(Test).Start();
             Thread.Sleep(Timeout.Infinite);
         }
 

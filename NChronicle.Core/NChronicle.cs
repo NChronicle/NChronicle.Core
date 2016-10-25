@@ -9,6 +9,9 @@ using NChronicle.Core.Model;
 
 namespace NChronicle.Core {
 
+    /// <summary>
+    /// Container for NChronicle functions and base configuration.
+    /// </summary>
     public static class NChronicle {
 
         private static ChronicleConfiguration Configuration { get; set; }
@@ -18,10 +21,21 @@ namespace NChronicle.Core {
             Configuration = new ChronicleConfiguration();
         }
 
+        /// <summary>
+        /// Configure all new and existing <see cref="Chronicle"/> instances with the given options and <see cref="Interfaces.IChronicleLibrary"/>s.
+        /// </summary> 
+        /// <param name="configurationDelegate">A function to set NChronicle configuration.</param>
         public static void Configure (ChronicleConfigurationDelegate configurationDelegate) {
             configurationDelegate.Invoke(Configuration);
+            ConfigurationChanged.Invoke();
         }
 
+        /// <summary>
+        /// Configure all new and existing <see cref="Chronicle"/> instances with options and libraries from an XML file. 
+        /// </summary>
+        /// <param name="path">Path to the XML file.</param>
+        /// <param name="watch">Watch for changes to the file and reconfigure when it changes.</param>
+        /// <param name="watchBufferTime">Time in milliseconds to wait after a change to the file until reconfiguring.</param>
         public static void ConfigureFrom (string path, bool watch = true, int watchBufferTime = 1000) {
             if (watch) {
                 var directory = Path.GetDirectoryName(path);
@@ -46,6 +60,16 @@ namespace NChronicle.Core {
                 watcher.EnableRaisingEvents = true;
             }
             ConfigureFrom(path, false);
+        }
+
+        /// <summary>
+        /// Save base configuration to an XML configuration file. 
+        /// </summary>
+        /// <param name="path">Path to the XML file.</param>
+        public static void SaveConfigurationTo (string path) {
+            using (var textWriter = new XmlTextWriter(path, Encoding.UTF8)) {
+                new XmlSerializer(typeof (ChronicleConfiguration)).Serialize(textWriter, Configuration);
+            }
         }
 
         private static void ConfigureFrom (string path, bool reconfiguringFromWatch) {
@@ -80,12 +104,6 @@ namespace NChronicle.Core {
         private static void ClearConfiguration() {
             Configuration = new ChronicleConfiguration();
             ConfigurationChanged.Invoke();
-        }
-
-        public static void SaveConfigurationTo (string path) {
-            using (var textWriter = new XmlTextWriter(path, Encoding.UTF8)) {
-                new XmlSerializer(typeof (ChronicleConfiguration)).Serialize(textWriter, Configuration);
-            }
         }
 
         internal static ChronicleConfiguration GetConfiguration () {

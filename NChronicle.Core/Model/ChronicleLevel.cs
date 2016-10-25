@@ -1,7 +1,8 @@
-﻿using System.Xml.Serialization;
+﻿namespace NChronicle.Core.Model {
 
-namespace NChronicle.Core.Model {
-
+    /// <summary>
+    /// Level/severity of a Chronicle record
+    /// </summary>
     public enum ChronicleLevel {
 
         Critical,
