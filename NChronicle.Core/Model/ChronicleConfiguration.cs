@@ -8,7 +8,7 @@ using NChronicle.Core.Interfaces;
 namespace NChronicle.Core.Model {
 
     /// <summary>
-    /// Container for Chronicle configuration.
+    /// Container for <see cref="Chronicle"/> configuration.
     /// </summary>
     public class ChronicleConfiguration : IXmlSerializable {
 
@@ -19,15 +19,15 @@ namespace NChronicle.Core.Model {
         }
         
         /// <summary>
-        /// Adds an <see cref="IChronicleLibrary"/> instance to this configuration
+        /// Add an <see cref="IChronicleLibrary"/> instance to this configuration.
         /// </summary>
-        /// <param name="library">The configired <see cref="IChronicleLibrary"/>.</param>
+        /// <param name="library">The configured <see cref="IChronicleLibrary"/>.</param>
         public void WithLibrary (IChronicleLibrary library) {
             this.Libraries.Add(library);
         }
 
         /// <summary>
-        /// Creates a clone of this Chronicle configuration.
+        /// Create a clone of this <see cref="Chronicle"/> configuration.
         /// </summary>
         /// <returns>The cloned <see cref="ChronicleConfiguration"/>.</returns>
         public ChronicleConfiguration Clone () {
@@ -40,14 +40,14 @@ namespace NChronicle.Core.Model {
         /// <summary>
         /// Required for XML serialization, this method offers no functionality.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a NULL <see cref="XmlSchema"/>.</returns>
         public XmlSchema GetSchema () => null;
 
         /// <summary>
-        /// Populates configuration from XML via the given <see cref="T:System.Xml.XmlReader" />.
+        /// Populate configuration from XML via the specified <see cref="XmlReader" />.
         /// </summary>
-        /// <param name="reader"><see cref="T:System.Xml.XmlReader" /> stream from the configuration file.</param>
-        /// <seealso cref="NChronicle.ConfigureFrom"/>
+        /// <param name="reader"><see cref="XmlReader" /> stream from the configuration file.</param>
+        /// <seealso cref="NChronicle.ConfigureFrom(string, bool, int)"/>
         public void ReadXml (XmlReader reader) {
             if (reader.Name != nameof(ChronicleConfiguration))
                 throw new XmlException($"Unexpected node '{reader.Name}', expected '{nameof(ChronicleConfiguration)}'.");
@@ -107,10 +107,10 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Writes configuration to XML via the given <see cref="T:System.Xml.XmlWriter" />.
+        /// Write configuration to XML via the specified <see cref="XmlWriter" />.
         /// </summary>
-        /// <param name="writer"><see cref="T:System.Xml.XmlWriter" /> stream to the configuration file.</param>
-        /// <seealso cref="NChronicle.ConfigureFrom"/>
+        /// <param name="writer"><see cref="XmlWriter" /> stream to the configuration file.</param>
+        /// <seealso cref="NChronicle.SaveConfigurationTo(string)"/>
         public void WriteXml (XmlWriter writer) {
             writer.WriteStartElement(nameof(this.Libraries));
             foreach (var library in this.Libraries) {

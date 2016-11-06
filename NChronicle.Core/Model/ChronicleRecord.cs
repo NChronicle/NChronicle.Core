@@ -9,7 +9,16 @@ namespace NChronicle.Core.Model {
     /// </summary>
     public class ChronicleRecord {
 
-        public ChronicleRecord(string message, IEnumerable <string> tags, Exception exception, ChronicleLevel level) {
+        /// <summary>
+        /// Create a new Chronicle Record with the specified <paramref name="level"/>,
+        /// <paramref name="message"/> (optional), <paramref name="exception"/> (optional), 
+        /// and <paramref name="tags"/> (optional).
+        /// </summary>
+        /// <param name="level">Level/severity of this record.</param>
+        /// <param name="message">Developer message for this record. Optional.</param>
+        /// <param name="exception">Related <see cref="System.Exception"/> for this record. Optional.</param>
+        /// <param name="tags">Tags to append to this record. Optional.</param>
+        public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, params string[] tags) {
             this.Message = message;
             this.Tags = new ConcurrentQueue <string>(tags);
             this.Exception = exception;

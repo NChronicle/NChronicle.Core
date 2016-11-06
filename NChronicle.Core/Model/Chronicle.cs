@@ -28,7 +28,7 @@ namespace NChronicle.Core.Model {
 
         #region Tags
         /// <summary>
-        /// Append given tags to all records made via this instance.
+        /// Append specified <paramref name="tags"/> to all records made via this instance.
         /// </summary>
         /// <param name="tags">Tags to be appended to records.</param>
         public void PersistTags (params string[] tags) {
@@ -40,6 +40,7 @@ namespace NChronicle.Core.Model {
 
         /// <summary>
         /// Clear all persisted tags, appending no extra tags to records made via this instance.
+        /// Clear all persisted tags, appending no extra tags to records made via this instance.
         /// </summary>
         public void ClearTags () {
             this._tags = new ConcurrentBag <string>();
@@ -50,7 +51,7 @@ namespace NChronicle.Core.Model {
 
         #region Critical
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Critical"/> level message with given tags.
+        /// Record a <see cref="ChronicleLevel.Critical"/> level message with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -59,7 +60,7 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Critical"/> level <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Critical"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -68,19 +69,19 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Critical"/> level message and <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Critical"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Critical (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Critical));
+            this.SendToLibraries(new ChronicleRecord(ChronicleLevel.Critical, message, exception, tags));
         }
         #endregion
 
         #region Warning
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Warning"/> level message with given tags.
+        /// Record a <see cref="ChronicleLevel.Warning"/> level message with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -89,7 +90,7 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Warning"/> level <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Warning"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -98,19 +99,19 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Warning"/> level message and <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Warning"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Warning (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Warning));
+            this.SendToLibraries(new ChronicleRecord(ChronicleLevel.Warning, message, exception, tags));
         }
         #endregion
 
         #region Debug
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Debug"/> level message with given tags.
+        /// Record a <see cref="ChronicleLevel.Debug"/> level message with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -119,7 +120,7 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Debug"/> level exception with given tags.
+        /// Record a <see cref="ChronicleLevel.Debug"/> level exception with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -128,19 +129,19 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Debug"/> level message and <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Debug"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Debug (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Debug));
+            this.SendToLibraries(new ChronicleRecord(ChronicleLevel.Debug, message, exception, tags));
         }
         #endregion
 
         #region Success
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Success"/> level message with given tags.
+        /// Record a <see cref="ChronicleLevel.Success"/> level message with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -149,7 +150,7 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Success"/> level <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Success"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -158,19 +159,19 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Success"/> level message and <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Success"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Success (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Success));
+            this.SendToLibraries(new ChronicleRecord(ChronicleLevel.Success, message, exception, tags));
         }
         #endregion
 
         #region Info
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Info"/> level message with given tags.
+        /// Record a <see cref="ChronicleLevel.Info"/> level message with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -179,7 +180,7 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Info"/> level <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Info"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
@@ -188,13 +189,13 @@ namespace NChronicle.Core.Model {
         }
 
         /// <summary>
-        /// Record a <see cref="ChronicleLevel.Info"/> level message and <see cref="Exception"/> with given tags.
+        /// Record a <see cref="ChronicleLevel.Info"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
         /// </summary>
         /// <param name="message">Message to be recorded.</param>
         /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Info (string message, Exception exception, params string[] tags) {
-            this.SendToLibraries(new ChronicleRecord(message, tags, exception, ChronicleLevel.Info));
+            this.SendToLibraries(new ChronicleRecord(ChronicleLevel.Info, message, exception, tags));
         }
         #endregion
 
@@ -210,6 +211,9 @@ namespace NChronicle.Core.Model {
             }
         }
 
+        /// <summary>
+        /// Destructor for this <see cref="Chronicle"/> instance.
+        /// </summary>
         ~Chronicle () {
             NChronicle.ConfigurationChanged -= this.ConfigurationChangedHandler;
         }

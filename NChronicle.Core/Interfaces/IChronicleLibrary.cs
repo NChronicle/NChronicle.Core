@@ -9,7 +9,7 @@ namespace NChronicle.Core.Interfaces {
     public interface IChronicleLibrary : IXmlSerializable {
 
         /// <summary>
-        /// Store the given <see cref="ChronicleRecord"/> in this library.
+        /// Store the specified <see cref="ChronicleRecord"/> in this library.
         /// </summary>
         /// <param name="record">The NChronicle record to store</param>
         void Store(ChronicleRecord record);

@@ -22,12 +22,12 @@ namespace NChronicle.Core {
         }
 
         /// <summary>
-        /// Configure all new and existing <see cref="Chronicle"/> instances with the given options and <see cref="Interfaces.IChronicleLibrary"/>s.
+        /// Configure all new and existing <see cref="Chronicle"/> instances with the specified options and <see cref="Interfaces.IChronicleLibrary"/>s.
         /// </summary> 
-        /// <param name="configurationDelegate">A function to set NChronicle configuration.</param>
+        /// <param name="configurationDelegate">A function to set <see cref="NChronicle"/> configuration.</param>
         public static void Configure (ChronicleConfigurationDelegate configurationDelegate) {
             configurationDelegate.Invoke(Configuration);
-            ConfigurationChanged.Invoke();
+            ConfigurationChanged?.Invoke();
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace NChronicle.Core {
                 throw new XmlException($"Could not serialize NChronicle Configuration from file {path}.");
             }
             Configuration = config;
-            ConfigurationChanged.Invoke();
+            ConfigurationChanged?.Invoke();
         }
 
         private static void ClearConfiguration() {
             Configuration = new ChronicleConfiguration();
-            ConfigurationChanged.Invoke();
+            ConfigurationChanged?.Invoke();
         }
 
         internal static ChronicleConfiguration GetConfiguration () {
