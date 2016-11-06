@@ -1,7 +1,9 @@
 .vs/
 .idea/
 packages/
+*.DotSettings.user
 *.csproj.user
 *.nupkg
+*.log
 */bin/
 */obj/
