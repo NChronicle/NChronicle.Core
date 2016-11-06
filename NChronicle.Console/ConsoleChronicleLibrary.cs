@@ -12,6 +12,9 @@ using NChronicle.Core.Model;
 
 namespace NChronicle.Console {
 
+    /// <summary>
+    /// A <see cref="IChronicleLibrary"/> writing <see cref="ChronicleRecord"/>s to the Console.
+    /// </summary>
     public class ConsoleChronicleLibrary : IChronicleLibrary {
 
         private readonly ConsoleChronicleLibraryConfiguration _configuration;
@@ -19,6 +22,9 @@ namespace NChronicle.Console {
         private readonly Dictionary <string, MethodHandler> _methods;
         private readonly Dictionary <string, KeyHandler> _keys;
 
+        /// <summary>
+        /// Create a new <see cref="ConsoleChronicleLibrary"/> instance with the default configuration.
+        /// </summary>
         public ConsoleChronicleLibrary () {
             this._configuration = new ConsoleChronicleLibraryConfiguration();
             this._methods = new Dictionary <string, MethodHandler> {
@@ -32,6 +38,10 @@ namespace NChronicle.Console {
             };
         }
 
+        /// <summary>
+        /// Render the record to the console (if not filtered by <see cref="ChronicleLevel"/> or tag ignorance).
+        /// </summary>
+        /// <param name="record">The <see cref="ChronicleRecord"/> to render.</param>
         public void Store (ChronicleRecord record) {
             if (!this.ListenTo(record)) return;
             var pattern = this._configuration.OutputPattern;
@@ -141,6 +151,11 @@ namespace NChronicle.Console {
             }
         }
 
+        /// <summary>
+        /// Configure this <see cref="ConsoleChronicleLibrary"/> with the specified options.
+        /// </summary> 
+        /// <param name="configurationDelegate">A function to set <see cref="ConsoleChronicleLibrary"/> configuration.</param>
+        /// <returns>This <see cref="ConsoleChronicleLibrary"/> instance.</returns>
         public ConsoleChronicleLibrary Configure (ConsoleChronicleLibraryConfigurationDelegate configurationDelegate) {
             configurationDelegate.Invoke(this._configuration);
             return this;
@@ -149,12 +164,27 @@ namespace NChronicle.Console {
         private delegate string MethodHandler (ChronicleRecord record, params string[] parameters);
         private delegate string KeyHandler (ChronicleRecord record);
 
-
+        #region Xml Serialization
+        /// <summary>
+        /// Required for XML serialization, this method offers no functionality.
+        /// </summary>
+        /// <returns>A null <see cref="XmlSchema"/>.</returns>
         public XmlSchema GetSchema () => null;
 
+        /// <summary>
+        /// Populate configuration from XML via the specified <see cref="XmlReader" />.
+        /// </summary>
+        /// <param name="reader"><see cref="XmlReader" /> stream from the configuration file.</param>
+        /// <seealso cref="Core.NChronicle.ConfigureFrom(string, bool, int)"/>
         public void ReadXml (XmlReader reader) => this._configuration.ReadXml(reader);
 
+        /// <summary>
+        /// Write configuration to XML via the specified <see cref="XmlWriter" />.
+        /// </summary>
+        /// <param name="writer"><see cref="XmlWriter" /> stream to the configuration file.</param>
+        /// <seealso cref="Core.NChronicle.SaveConfigurationTo(string)"/>
         public void WriteXml (XmlWriter writer) => this._configuration.WriteXml(writer);
+        #endregion
 
     }
 
