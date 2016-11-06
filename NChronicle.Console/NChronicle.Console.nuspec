@@ -3,7 +3,7 @@
   <metadata>
     <id>NChronicle.Console</id>
     <title>NChronicle.Console</title>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
     <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
@@ -11,18 +11,18 @@
     <iconUrl>https://git.ikimi.co/uploads/project/avatar/2/NChronicle_simple_square.pn</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>
-NChronicle is an extensible logging and output library allowing centralised management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.Console is a highly configurable NChronicle Library dispatching log messages to STDOUT / the Console.
+NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.Console is a highly configurable NChronicle Library dispatching log messages to STDOUT / the Console.
     </summary>
     <description>
-NChronicle is an extensible logging and output library allowing centralised management and distribution of log messages to a number of logging destinations (known as 'Libraries'). 
+NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries'). 
 
-NChronicle.Console is a highly configurable console logging Library for the NChronicle logging framework. NChronicle.Console includes options to ignore and/or listen solely to certain log messages via level and/or tags, completely customise the output format (date/time format specification, conditionals, and arguments), specify time zone, and of course customise colours.
+NChronicle.Console is a highly configurable console logging Library for the NChronicle logging framework. NChronicle.Console includes options to ignore and/or listen solely to certain log messages via level and/or tags, completely customize the output format (date/time format specification, conditionals, and arguments), specify time zone, and of course customize colors.
 
 Further Libraries planned for the NChronicle logging framework include NChronicle.File, NChronicle.Email, NChronicle.API and NChronicle.Owin.
     </description>
     <dependencies> 
       <group targetFramework="net40">
-        <dependency id="NChronicle.Core" version="1.0.0" />
+        <dependency id="NChronicle.Core" version="1.0.2" />
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -30,9 +30,12 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
       <frameworkAssembly assemblyName="System.Xml" targetFramework="net40" />
     </frameworkAssemblies>
     <language>en-us</language>
-    <releaseNotes>Initial release with NChronicle.Core 1.0.0.</releaseNotes>
+    <releaseNotes>
+Improved performance and thread safety.
+Added full documentation.
+    </releaseNotes>
     <copyright>Copyright 2016</copyright>
-    <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output Console Stdout Interactive</tags>
+    <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output Console STDOUT Interactive</tags>
   </metadata>
   <files>
     <file src="bin/Release/NChronicle.Console.dll" target="lib\net40" />

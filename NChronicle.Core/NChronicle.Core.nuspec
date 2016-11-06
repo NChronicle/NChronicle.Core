@@ -3,7 +3,7 @@
   <metadata>
     <id>NChronicle.Core</id>
     <title>NChronicle.Core</title>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
     <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
@@ -17,7 +17,7 @@ NChronicle is an extensible logging and output library allowing centralized mana
 NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries').
 
 NChronicle.Core is the core functionality and abstraction layer for all of these Libraries.
-NChronicle.Core supports multiple levels of logging (Success, Info, Debug, Warning, Error, and Critical) and custom tagging of messages so logs are more findable and concatenatable. NChronicle allows configuration programmatically or via a live monitored XML configuration file.
+NChronicle.Core supports multiple levels of logging (Success, Info, Debug, Warning, Error, and Critical) and custom tagging of messages so logs are more findable and manageable. NChronicle allows configuration programmatically or via a live monitored XML configuration file.
 
 NChronicle.Console is available as a highly configurable NChronicle Library dispatching log messages to STDOUT / the Console.
 Further Libraries planned for the NChronicle  logging framework include NChronicle.File, NChronicle.Email, NChronicle.API and NChronicle.Owin.
@@ -27,7 +27,10 @@ Further Libraries planned for the NChronicle  logging framework include NChronic
       <frameworkAssembly assemblyName="System.Xml" targetFramework="net40" />
     </frameworkAssemblies>
     <language>en-us</language>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>
+Improved performance and thread safety.
+Added full documentation.
+    </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output</tags>
   </metadata>
