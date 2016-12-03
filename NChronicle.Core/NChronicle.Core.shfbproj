@@ -30,7 +30,7 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="NChronicle.Core.csproj" />
     </DocumentationSources>
-    <HelpFileVersion>1.0.2</HelpFileVersion>
+    <HelpFileVersion>1.0.3</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#, Visual Basic, F#</SyntaxFilters>

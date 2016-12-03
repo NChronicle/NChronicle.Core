@@ -58,6 +58,10 @@
       <Project>{6908522A-FDD9-450E-9BC9-C3D8FF59540D}</Project>
       <Name>NChronicle.Console</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NChronicle.File\NChronicle.File.csproj">
+      <Project>{5ccfb68d-d230-48aa-9ddc-bce65ba8ec87}</Project>
+      <Name>NChronicle.File</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestConfiguration.xml">

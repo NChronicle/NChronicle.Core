@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NChronicle.File</id>
+    <title>NChronicle.File</title>
+    <version>1.0.0</version>
+    <authors>Andy James</authors>
+    <owners>Andy James</owners>
+    <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
+    <projectUrl>https://git.ikimi.co/andrewj/NChronicle</projectUrl>
+    <iconUrl>https://git.ikimi.co/uploads/project/avatar/2/NChronicle_simple_square.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>
+NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.File is an extensive NChronicle Library writing log message to a file with flexible retention controls.
+    </summary>
+    <description>
+NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries').
+
+NChronicle.File is an extensive file logging Library for the NChronicle logging framework. NChronicle.File includes options to ignore and/or listen solely to certain log messages via level and/or tags, completely customize the output format (date/time format specification, conditionals, and arguments), specify time zone, and apply retention policies for the output files.
+
+Further Libraries planned for the NChronicle logging framework include NChronicle.Email, NChronicle.API and NChronicle.Owin.
+    </description>
+    <dependencies> 
+      <group targetFramework="net40">
+        <dependency id="NChronicle.Core" version="1.0.2" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="net40" />
+    </frameworkAssemblies>
+    <language>en-us</language>
+    <releaseNotes>
+Initial release.
+    </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output File Archive Retention</tags>
+  </metadata>
+  <files>
+    <file src="bin/Release/NChronicle.File.dll" target="lib\net40" />
+  </files>
+</package>
