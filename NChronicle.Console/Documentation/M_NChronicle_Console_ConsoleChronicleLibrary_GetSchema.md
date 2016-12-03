@@ -3,7 +3,7 @@
 
 Required for XML serialization, this method offers no functionality.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Console.md">NChronicle.Console</a><br />**Assembly:**&nbsp;NChronicle.Console (in NChronicle.Console.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Console.md">NChronicle.Console</a><br />**Assembly:**&nbsp;NChronicle.Console (in NChronicle.Console.dll) Version: 1.0.2.0 (1.0.2.0)
 
 ## Syntax
 

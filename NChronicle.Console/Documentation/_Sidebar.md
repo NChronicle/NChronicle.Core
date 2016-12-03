@@ -39,4 +39,8 @@
         - [ConsoleChronicleLibraryConfiguration.WriteXml Method](M_NChronicle_Console_Configuration_ConsoleChronicleLibraryConfiguration_WriteXml)
   - [NChronicle.Console.Delegates Namespace](N_NChronicle_Console_Delegates)
     - [ConsoleChronicleLibraryConfigurationDelegate Delegate](T_NChronicle_Console_Delegates_ConsoleChronicleLibraryConfigurationDelegate)
+  - [NChronicle.Console.Extensions Namespace](N_NChronicle_Console_Extensions)
+    - [ConfigurationExtensions Class](T_NChronicle_Console_Extensions_ConfigurationExtensions)
+      - [ConfigurationExtensions Methods](Methods_T_NChronicle_Console_Extensions_ConfigurationExtensions)
+        - [ConfigurationExtensions.WithConsoleLibrary Method](M_NChronicle_Console_Extensions_ConfigurationExtensions_WithConsoleLibrary)
 

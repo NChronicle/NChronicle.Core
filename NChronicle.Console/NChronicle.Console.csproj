@@ -41,6 +41,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ConfigurationExtensions.cs" />
     <Compile Include="Delegates\ConsoleChronicleLibraryConfigurationDelegate.cs" />
     <Compile Include="ConsoleChronicleLibrary.cs" />
     <Compile Include="Configuration\ConsoleChronicleLibraryConfiguration.cs" />
@@ -59,6 +60,7 @@
   <ItemGroup>
     <None Include="NChronicle.Console.nuspec" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

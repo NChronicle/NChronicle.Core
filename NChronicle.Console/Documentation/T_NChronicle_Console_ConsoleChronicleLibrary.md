@@ -6,7 +6,7 @@ A IChronicleLibrary writing ChronicleRecords to the Console.
 
 ## Inheritance Hierarchy
 <a href="http://msdn2.microsoft.com/en-us/library/e5kfa45b" target="_blank">System.Object</a><br />&nbsp;&nbsp;NChronicle.Console.ConsoleChronicleLibrary<br />
-**Namespace:**&nbsp;<a href="N_NChronicle_Console.md">NChronicle.Console</a><br />**Assembly:**&nbsp;NChronicle.Console (in NChronicle.Console.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Console.md">NChronicle.Console</a><br />**Assembly:**&nbsp;NChronicle.Console (in NChronicle.Console.dll) Version: 1.0.2.0 (1.0.2.0)
 
 ## Syntax
 
