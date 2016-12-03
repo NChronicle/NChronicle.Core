@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1FE81B6F-309A-430C-97F5-47B7B227B778}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NChronicle.TestConsole</RootNamespace>
-    <AssemblyName>NChronicle.TestConsole</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>NChronicle.File</RootNamespace>
+    <AssemblyName>NChronicle.File</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,51 +21,39 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\NChronicle.File.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\NChronicle.File.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Configuration\FileChronicleLibraryConfiguration.cs" />
+    <Compile Include="Configuration\RetentionPolicyConfiguration.cs" />
+    <Compile Include="RetentionPolicy.cs" />
+    <Compile Include="Delegates\RetentionPolicyConfigurationDelegate.cs" />
+    <Compile Include="Interfaces\IRetentionPolicy.cs" />
+    <Compile Include="Delegates\FileChronicleLibraryConfigurationDelegate.cs" />
+    <Compile Include="Exceptions\InvalidFilePathException.cs" />
+    <Compile Include="Extensions\ConfigurationExtensions.cs" />
+    <Compile Include="FileChronicleLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\NChronicle.Core\NChronicle.Core.csproj">
-      <Project>{EB62629E-D250-47CB-81F6-7493244583BC}</Project>
+      <Project>{eb62629e-d250-47cb-81f6-7493244583bc}</Project>
       <Name>NChronicle.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NChronicle.Console\NChronicle.Console.csproj">
-      <Project>{6908522A-FDD9-450E-9BC9-C3D8FF59540D}</Project>
-      <Name>NChronicle.Console</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NChronicle.File\NChronicle.File.csproj">
-      <Project>{5ccfb68d-d230-48aa-9ddc-bce65ba8ec87}</Project>
-      <Name>NChronicle.File</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestConfiguration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

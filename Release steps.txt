@@ -4,6 +4,7 @@
 4. Build in the Release configuration
 5. Update Nuget package version
 6. Update Nuget package dependencies version
+7. Update Nuget package framework assemblies
 8. Update Nuget package release notes
 9. Pack and test Nuget package
 10. Upload Nuget package to Nuget

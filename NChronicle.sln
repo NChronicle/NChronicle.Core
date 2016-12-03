@@ -21,6 +21,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Release steps.txt = Release steps.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NChronicle.File", "NChronicle.File\NChronicle.File.csproj", "{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87}"
+EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "NChronicle.File", "NChronicle.File\NChronicle.File.shfbproj", "{7D4D4587-76D5-4F06-980A-E9505DFCA7B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E1143494-DCEF-4C65-B7AB-75F2B6FC7060}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\RewriteMdLinks.ps1 = Scripts\RewriteMdLinks.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuSpecs", "NuSpecs", "{311CD567-704E-4A21-9CC9-521E619B1649}"
+	ProjectSection(SolutionItems) = preProject
+		NChronicle.Console\NChronicle.Console.nuspec = NChronicle.Console\NChronicle.Console.nuspec
+		NChronicle.Core\NChronicle.Core.nuspec = NChronicle.Core\NChronicle.Core.nuspec
+		NChronicle.File\NChronicle.File.nuspec = NChronicle.File\NChronicle.File.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +63,14 @@ Global
 		{43BD469C-FFD9-4C4D-8E03-C567B9FECFEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43BD469C-FFD9-4C4D-8E03-C567B9FECFEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43BD469C-FFD9-4C4D-8E03-C567B9FECFEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4D4587-76D5-4F06-980A-E9505DFCA7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4D4587-76D5-4F06-980A-E9505DFCA7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4D4587-76D5-4F06-980A-E9505DFCA7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4D4587-76D5-4F06-980A-E9505DFCA7B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +80,7 @@ Global
 		{EB62629E-D250-47CB-81F6-7493244583BC} = {78C89312-E951-4264-914D-1BD1845BADFA}
 		{42AA9722-20DF-4E5C-B051-ECCB360461D8} = {742C7262-9531-403C-8E8D-0CAA9497C4E1}
 		{43BD469C-FFD9-4C4D-8E03-C567B9FECFEF} = {742C7262-9531-403C-8E8D-0CAA9497C4E1}
+		{5CCFB68D-D230-48AA-9DDC-BCE65BA8EC87} = {78C89312-E951-4264-914D-1BD1845BADFA}
+		{7D4D4587-76D5-4F06-980A-E9505DFCA7B6} = {742C7262-9531-403C-8E8D-0CAA9497C4E1}
 	EndGlobalSection
 EndGlobal

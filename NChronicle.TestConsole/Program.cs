@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Threading;
-using NChronicle.Console;
+using NChronicle.Console.Extensions;
 using NChronicle.Core.Model;
+using NChronicle.File.Extensions;
 
 namespace NChronicle.TestConsole {
 
     internal class Program {
 
-        private static void Main (string[] args) {
+        private static void Main () {
             Core.NChronicle.Configure
                 (c => {
-                     c.WithLibrary
-                         (new ConsoleChronicleLibrary().Configure
-                              (l => {
-                                   l.WithOutputPattern("{%dd MMM y yyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS|, }]}");
-                                   l.WithTimeZone(TimeZoneInfo.Utc);
-                                   l.ListeningToAllLevels();
-                               }));
+                     c.WithConsoleLibrary();
+                     c.WithFileLibrary().Configure(f => {
+                         f.WithOutputPath("NChronicle");
+                         f.WithRetentionPolicy().Configure(p => {
+                                p.WithAgeLimit(TimeSpan.FromSeconds(30));
+                                p.WithFileSizeLimitInMegabytes(50);
+                                p.WithRetentionLimit(2);
+                            });
+                     });
                  });
 
             MultiThreadTest();
@@ -33,13 +36,13 @@ namespace NChronicle.TestConsole {
         private static void Test () {
             var chronicle = new Chronicle();
             while (true) {
-                Thread.Sleep(250);
+                Thread.Sleep(100);
                 chronicle.Info("Starting division attempt.", "tag1", "tag2");
                 try {
                     var a = new Random().Next(0, 9);
                     chronicle.Debug($"Chosen number is {a}.");
                     if (a == 0) {
-                        chronicle.Warning($"This may result in a DivideByZero excepton.");
+                        chronicle.Warning($"This may result in a DivideByZero exception.");
                     }
                     var b = 100 / a;
                 } catch (Exception e) {
