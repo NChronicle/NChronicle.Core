@@ -156,7 +156,7 @@ namespace NChronicle.File.Configuration {
         /// <summary>
         /// Set the file <paramref name="path"/> in which rendered records are appended, the path maybe 
         /// absolute or relative to the application's working directory.  
-        /// The default file path is the application's working direction with the file name 'chronicle.log'.
+        /// The default file path is the application's working directory with the file name 'chronicle.log'.
         /// </summary>
         /// <param name="path">The file path to append records to.</param>
         public void WithOutputPath (string path) {
