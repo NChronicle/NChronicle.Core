@@ -1,34 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChronicleConfiguration>
   <Libraries>
-    <Library Type="NChronicle.Console.ConsoleChronicleLibrary, NChronicle.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Library Type="NChronicle.Console.ConsoleChronicleLibrary, NChronicle.Console, Version=1.0.3.0, Culture=neutral, PublicKeyToken=null">
       <BackgroundColors>
         <Critical>Black</Critical>
         <Warning>Black</Warning>
+        <Success>Black</Success>
         <Info>Black</Info>
         <Debug>Black</Debug>
       </BackgroundColors>
       <ForegroundColors>
         <Critical>Red</Critical>
         <Warning>Yellow</Warning>
+        <Success>Green</Success>
         <Info>White</Info>
-        <Debug>DarkGray</Debug>
+        <Debug>Gray</Debug>
       </ForegroundColors>
       <Levels>
         <Level>Critical</Level>
         <Level>Warning</Level>
+        <Level>Success</Level>
         <Level>Info</Level>
-        <Level>Debug</Level>
       </Levels>
       <Tags />
       <IgnoredTags />
-      <ListenOverIgnore>True</ListenOverIgnore>
-      <OutputPattern>
-        {%dd MMM yyyy hh:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?
-        }}{EXC?{EXC}
-        }{TAGS?[{TAGS|, }]}
-      </OutputPattern>
-      <TimeZone>UTC-09</TimeZone>
+      <OutputPattern>{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?}}{EXC?{EXC}}{TAGS?[{TAGS}]}</OutputPattern>
+      <TimeZone>GMT Standard Time</TimeZone>
+    </Library>
+    <Library Type="NChronicle.SMTP.SmtpChronicleLibrary, NChronicle.SMTP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Levels>
+        <Level>Critical</Level>
+      </Levels>
+      <Tags />
+      <IgnoredTags />
+      <Sender>
+        <DisplayName />
+        <Address>from@nchronicle.io</Address>
+      </Sender>
+      <Recipients>
+        <Recipient>
+          <DisplayName>Andy James</DisplayName>
+          <Address>to@nchronicle.io</Address>
+        </Recipient>
+      </Recipients>
+      <SubjectLine>[{LVL}] {MSG}{MSG!?{EMSG}}</SubjectLine>
+      <Body>
+        <![CDATA[<body style="text-align: center; background-color: #333;"><table style="background-color: #CCC; color: #333; font-family: 'Arial'; width: 800px; margin: 40px auto; text-align: left" cell-spacing="0"><tr><td style="padding: 20px 20px 30px 20px;"><h2 style="margin: 0;"><strong>{LVL}</strong> level record occurred</h2> at <strong>{%yyyy/MM/dd HH:mm:ss.fff}</strong></td></tr><tr><td style="padding: 10px 20px; background-color: #D8D8D8"><strong>{MSG}{MSG!?{EMSG}}</strong></td></tr>{EXC?<tr><td style="padding: 10px 20px; background-color: #D8D8D8; color: #555;">{EXC}</td></tr>}{TAGS?<tr><td style="padding: 10px 20px; background-color: #D8D8D8; color: #666;">This record has the following tags:<br />{TAGS|, }</td></tr>}<tr><td style="padding: 20px 20px 30px 20px; text-align: center;"><small>Brought to you by NChronicle.SMTP.</small></td></tr></table></body>]]>
+      </Body>
+      <TimeZone>GMT Standard Time</TimeZone>
+      <Priorities>
+        <Critical>Low</Critical>
+        <Warning>High</Warning>
+        <Success>High</Success>
+        <Info>High</Info>
+        <Debug>High</Debug>
+      </Priorities>
+      <SendAsynchronously>True</SendAsynchronously>
+      <DeliveryMethod>SpecifiedPickupDirectory</DeliveryMethod>
+      <PickupDirectoryPath>C:\Emails\</PickupDirectoryPath>
+      <SuppressionTime>2073600000</SuppressionTime>
+      <SuppressRecurrences>True</SuppressRecurrences>
     </Library>
   </Libraries>
 </ChronicleConfiguration>

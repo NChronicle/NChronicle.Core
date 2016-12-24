@@ -62,10 +62,15 @@
       <Project>{5ccfb68d-d230-48aa-9ddc-bce65ba8ec87}</Project>
       <Name>NChronicle.File</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NChronicle.SMTP\NChronicle.SMTP.csproj">
+      <Project>{9db05077-5bfc-495a-b7fb-9b01c153cdc6}</Project>
+      <Name>NChronicle.SMTP</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

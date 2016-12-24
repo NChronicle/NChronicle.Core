@@ -1,6 +1,6 @@
 ﻿using NChronicle.Core.Model;
 
-namespace NChronicle.File.Extensions {
+namespace NChronicle.SMTP.Extensions {
 
     /// <summary>
     /// Container for configuration extension methods. 
@@ -8,12 +8,12 @@ namespace NChronicle.File.Extensions {
     public static class ConfigurationExtensions {
 
         /// <summary>
-        /// Create and add a <see cref="FileChronicleLibrary"/> to the specified <see cref="ChronicleConfiguration"/>.
+        /// Create and add a <see cref="SmtpChronicleLibrary"/> to the specified <see cref="ChronicleConfiguration"/>.
         /// </summary>
-        /// <param name="config">The <see cref="ChronicleConfiguration"/> for which to add the <see cref="FileChronicleLibrary"/>.</param>
-        /// <returns>The created <see cref="FileChronicleLibrary"/>.</returns>
-        public static FileChronicleLibrary WithFileLibrary (this ChronicleConfiguration config) {
-            var lib = new FileChronicleLibrary();
+        /// <param name="config">The <see cref="ChronicleConfiguration"/> for which to add the <see cref="SmtpChronicleLibrary"/>.</param>
+        /// <returns>The created <see cref="SmtpChronicleLibrary"/>.</returns>
+        public static SmtpChronicleLibrary WithSmtpLibrary (this ChronicleConfiguration config) {
+            var lib = new SmtpChronicleLibrary();
             config.WithLibrary(lib);
             return lib;
         }

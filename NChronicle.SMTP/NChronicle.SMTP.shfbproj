@@ -15,7 +15,7 @@
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
     <OutputPath>Documentation\</OutputPath>
-    <HtmlHelpName>NChronicle.File</HtmlHelpName>
+    <HtmlHelpName>NChronicle.SMTP</HtmlHelpName>
     <Language>en-US</Language>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -28,9 +28,9 @@
     <SourceCodeBasePath>.\</SourceCodeBasePath>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <DocumentationSources>
-      <DocumentationSource sourceFile="NChronicle.File.csproj" />
+      <DocumentationSource sourceFile="NChronicle.SMTP.csproj" />
     </DocumentationSources>
-    <HelpFileVersion>1.0.2</HelpFileVersion>
+    <HelpFileVersion>1.0.0</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#, Visual Basic, F#</SyntaxFilters>
@@ -39,7 +39,7 @@
     <PresentationStyle>Markdown</PresentationStyle>
     <Preliminary>False</Preliminary>
     <NamingMethod>MemberName</NamingMethod>
-    <HelpTitle>A Sandcastle Documented Class Library</HelpTitle>
+    <HelpTitle>NChronicle.SMTP</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected</VisibleItems>
     <FeedbackEMailLinkText>kana%40ikimi.co</FeedbackEMailLinkText>
@@ -48,7 +48,7 @@
     </FooterText>
     <HeaderText>
     </HeaderText>
-    <RootNamespaceTitle>NChronicle.File</RootNamespaceTitle>
+    <RootNamespaceTitle>NChronicle.SMTP</RootNamespaceTitle>
     <PlugInConfigurations>
       <PlugInConfig id="Additional Reference Links" enabled="True" xmlns="">
         <configuration>

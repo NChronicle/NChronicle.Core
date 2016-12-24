@@ -11,14 +11,14 @@
     <iconUrl>https://git.ikimi.co/uploads/project/avatar/2/NChronicle_simple_square.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>
-NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.File is also available as a extensive NChronicle Library writing log message to a file with flexible retention controls.
+NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.SMTP is a comprehensive SMTP email Library sending log messages in customizable email messages.
     </summary>
     <description>
 NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries').
 
-NChronicle.File is an extensive file logging Library for the NChronicle logging framework. NChronicle.File includes options to ignore and/or listen solely to certain log messages via level and/or tags, completely customize the output format (date/time format specification, conditionals, and arguments), specify time zone, and apply retention policies for the output files.
+NChronicle.SMTP is a comprehensive SMTP email Library sending log messages in customizable email messages. It includes all the expected options to ignore and/or listen solely to certain log messages via level and/or tags, completely customize the email body (with HTML) and/or subject line, sending to one or many recipients. Further features included are sending via an SMTP using SSL, sending via pickup directories, asynchronism, suppression of duplicate logs for a time, and - of course - NChronicle.SMTP is fully configurable programmatically or via watched XML.
 
-Further Libraries planned for the NChronicle logging framework include NChronicle.Email, NChronicle.API and NChronicle.Owin.
+Further Libraries planned for the NChronicle logging framework include NChronicle.API and NChronicle.Owin.
     </description>
     <dependencies> 
       <group targetFramework="net40">
@@ -35,9 +35,9 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
 Initial release.
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
-    <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output File Archive Retention</tags>
+    <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output SMTP Email Iis Output Directory SSL TLS</tags>
   </metadata>
   <files>
-    <file src="bin/Release/NChronicle.File.dll" target="lib\net40" />
+    <file src="bin/Release/NChronicle.SMTP.dll" target="lib\net40" />
   </files>
 </package>

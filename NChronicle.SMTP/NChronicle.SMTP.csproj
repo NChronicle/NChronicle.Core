@@ -32,21 +32,19 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\NChronicle.SMTP.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\FileChronicleLibraryConfiguration.cs" />
-    <Compile Include="Configuration\RetentionPolicyConfiguration.cs" />
-    <Compile Include="RetentionPolicy.cs" />
-    <Compile Include="Delegates\RetentionPolicyConfigurationDelegate.cs" />
-    <Compile Include="Interfaces\IRetentionPolicy.cs" />
-    <Compile Include="Delegates\FileChronicleLibraryConfigurationDelegate.cs" />
-    <Compile Include="Exceptions\InvalidFilePathException.cs" />
+    <Compile Include="Configuration\SmtpChronicleLibraryConfiguration.cs" />
+    <Compile Include="Delegates\SmtpChronicleLibraryConfigurationDelegate.cs" />
     <Compile Include="Extensions\ConfigurationExtensions.cs" />
-    <Compile Include="FileChronicleLibrary.cs" />
+    <Compile Include="SmtpChronicleLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
