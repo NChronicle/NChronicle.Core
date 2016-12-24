@@ -39,7 +39,7 @@
     <PresentationStyle>Markdown</PresentationStyle>
     <Preliminary>False</Preliminary>
     <NamingMethod>MemberName</NamingMethod>
-    <HelpTitle>A Sandcastle Documented Class Library</HelpTitle>
+    <HelpTitle>NChronicle.Core</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected</VisibleItems>
     <FeedbackEMailLinkText>kana%40ikimi.co</FeedbackEMailLinkText>
