@@ -3,10 +3,12 @@
 3. Update File version
 4. Update documentation version
 5. Build in the Release configuration
-6. Update Nuget package version
-7. Update Nuget package dependencies version
-8. Update Nuget package framework assemblies
-9. Update Nuget package release notes
-10. Pack and test Nuget package
-11. Upload Nuget package to Nuget
-12. Commit with version label
+6. Build documentation
+7. Update Nuget package version
+8. Update Nuget package dependencies version
+9. Update Nuget package framework assemblies
+10. Update Nuget package release notes
+11. Pack Nuget package
+12. Test nuget package
+13. Upload Nuget package to Nuget
+14. Commit with version label
