@@ -55,21 +55,30 @@ namespace NChronicle.File.Configuration {
         /// Independently they are replaced in place with their value in the output.
         /// </para>
         /// <para>
-        /// Conditional tokens allow you to only render specific output when a specified standard
+        /// Conditional tokens allow you to only render a part of the pattern when a specified standard
         /// keyword exists and it's value is meaningful. It can be created by starting a token 
-        /// with the standard keyword followed by a <c>?</c> character. The keyword will be tested (not
-        /// rendered) to assess whether it exists or resolves to a non-null or non-empty value, if 
-        /// it does, the sub-pattern - everything after the <c>?</c> character to the end of the token -
-        /// is visited.
+        /// with the standard keyword followed by a question mark (<c>?</c>) character. The keyword will 
+        /// be tested (not rendered) to assess whether it exists or resolves to a non-null or non-empty value, 
+        /// if it does, the sub-pattern - everything after the question mark (<c>?</c>) character to the end 
+        /// of the token - is visited.
+        /// </para>
+        /// <para>
+        /// Inverse conditional tokens can be used as an opposite to conditional tokens, and render
+        /// everything after the question mark (<c>?</c>) character if the keyword does not exist or 
+        /// have a meaningful value. It can be created by placing an exclamation mark (<c>!</c>) 
+        /// character before the question mark character (<c>?</c>) in an otherwise normal conditional
+        /// token (<c>!?</c>).
         /// </para>
         /// <para>
         /// Standard keywords available are:
         /// </para>
         /// <list>
+        ///     <c>LVL</c>     The level of this record.
         ///     <c>TAGS</c>    The tags for the record delimited by a comma and a space (<c>, </c>). 
         ///     <c>TH</c>      The thread ID the record was created in.
-        ///     <c>MSG</c>     The message for the record if any. May be absent.
-        ///     <c>EXC</c>     The exception for the record if any. May be absent.
+        ///     <c>MSG</c>     The developer message for the record if any. May be absent.
+        ///     <c>EMSG</c>    The exception message for the record if any. May be absent.
+        ///     <c>EXC</c>     The full exception for the record if any. May be absent.
         /// </list>
         /// <para>
         /// Functional tokens are tokens which may take in extra arguments to render; these
@@ -99,7 +108,7 @@ namespace NChronicle.File.Configuration {
         /// </remarks>
         /// <example>
         /// <code>
-        /// "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}} [{TAGS| / }]}"
+        /// "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}} [{TAGS| / }]"
         /// </code>
         /// <code>
         /// "{%yyyy/MM/dd HH:mm:ss.fff}"
@@ -130,7 +139,7 @@ namespace NChronicle.File.Configuration {
         /// Next is another conditional, rendering the exception and a new line if there is one.
         /// </para> 
         /// <code>
-        /// [{TAGS| / }]}
+        /// [{TAGS| / }]
         /// </code>
         /// <para>
         /// Lastly - inside square braces - is a functional token with the <c>TAGS</c> functional keyword, 

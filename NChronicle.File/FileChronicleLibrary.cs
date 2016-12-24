@@ -35,8 +35,10 @@ namespace NChronicle.File {
             this._keys = new Dictionary <string, KeyHandler> {
                 {"MSG", this.MessageKeyHandler},
                 {"EXC", this.ExceptionKeyHandler},
+                {"EMSG", this.ExceptionMessageKeyHandler},
                 {"TH", this.ThreadKeyHandler},
-                {"TAGS", this.TagsKeyHandler}
+                {"TAGS", this.TagsKeyHandler},
+                {"LVL", this.LevelKeyHandler}
             };
             this._fileStream = null;
         }
@@ -58,11 +60,11 @@ namespace NChronicle.File {
                    && !this._configuration.IgnoredTags.Keys.Any(record.Tags.Contains);
         }
 
-        private string FormulateOutput (ChronicleRecord record, string pattern) {
+        private string FormulateOutput(ChronicleRecord record, string pattern) {
             var output = pattern;
             var currentTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, this._configuration.TimeZone);
             foreach (var token in this.FindTokens(pattern)) {
-                var tokenBody = token.Remove(token.Length - 1).Remove(0, 1);
+                var tokenBody = token.Substring(1, token.Length - 2);
                 var tokenIsDate = tokenBody.StartsWith("%");
                 if (tokenIsDate) {
                     var dateFormatting = tokenBody.Remove(0, 1);
@@ -72,12 +74,18 @@ namespace NChronicle.File {
                 var tokenIsQuery = tokenBody.Contains("?");
                 if (tokenIsQuery) {
                     var queryKey = tokenBody.Split('?')[0];
-                    if (!this._keys.ContainsKey(queryKey)
-                        || string.IsNullOrEmpty(this._keys[queryKey](record))) {
+                    var tokenIsInverseQuery = false;
+                    if (queryKey.EndsWith("!")) {
+                        queryKey = queryKey.Remove(queryKey.Length - 1);
+                        tokenIsInverseQuery = true;
+                    }
+                    var hasMeaning = this._keys.ContainsKey(queryKey)
+                                     && !string.IsNullOrEmpty(this._keys[queryKey](record));
+                    if (tokenIsInverseQuery == hasMeaning) {
                         output = output.Replace(token, string.Empty);
                         continue;
                     }
-                    var queryBody = tokenBody.Substring(queryKey.Length + 1);
+                    var queryBody = tokenBody.Substring(queryKey.Length + (tokenIsInverseQuery ? 2 : 1));
                     var queryOutput = this.FormulateOutput(record, queryBody);
                     output = output.Replace(token, queryOutput);
                     continue;
@@ -99,7 +107,7 @@ namespace NChronicle.File {
         }
 
         private IEnumerable <string> FindTokens (string input) {
-            var output = new List <string>();
+        var output = new List <string>();
             var nest = 0;
             var position = -1;
             var token = new StringBuilder();
@@ -133,12 +141,20 @@ namespace NChronicle.File {
             return record.Exception?.ToString();
         }
 
+        private string ExceptionMessageKeyHandler (ChronicleRecord record) {
+            return record.Exception?.Message;
+        }
+
         private string ThreadKeyHandler(ChronicleRecord record) {
             return Thread.CurrentThread.ManagedThreadId.ToString();
         }
 
         private string TagsKeyHandler (ChronicleRecord record) {
             return this.TagsMethodHandler(record, ", ");
+        }
+
+        private string LevelKeyHandler(ChronicleRecord record) {
+            return record.Level.ToString();
         }
 
         private void SendToFile (string output) {
