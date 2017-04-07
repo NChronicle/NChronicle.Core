@@ -1,0 +1,7 @@
+stages:
+  - Build
+  - Package
+
+Build Solution:
+  stage: Build
+  script: "powershell .\\Build.ps1"
