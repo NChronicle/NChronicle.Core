@@ -17,7 +17,16 @@ namespace NChronicle.Core.Model {
         internal ChronicleConfiguration () {
             this.Libraries = new ConcurrentBag<IChronicleLibrary>();
         }
-        
+
+        internal void Dispose() {
+            foreach (var library in this.Libraries) {
+                if (library is IDisposable) {
+                    (library as IDisposable).Dispose();
+                }
+            }
+            this.Libraries = new ConcurrentBag<IChronicleLibrary>();
+        }
+
         /// <summary>
         /// Add an <see cref="IChronicleLibrary"/> instance to this configuration.
         /// </summary>

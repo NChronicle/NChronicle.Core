@@ -3,7 +3,7 @@
 
 Create a new <a href="T_NChronicle_File_Exceptions_InvalidFilePathException.md">InvalidFilePathException</a> instance with the specified *message* and *innerException*.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Exceptions.md">NChronicle.File.Exceptions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Exceptions.md">NChronicle.File.Exceptions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

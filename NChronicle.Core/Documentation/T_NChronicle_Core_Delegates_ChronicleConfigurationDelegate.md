@@ -3,7 +3,7 @@
 
 A function to set <a href="T_NChronicle_Core_Model_ChronicleConfiguration.md">ChronicleConfiguration</a>.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Core_Delegates.md">NChronicle.Core.Delegates</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Core_Delegates.md">NChronicle.Core.Delegates</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.3.0 (1.0.3.0)
 
 ## Syntax
 

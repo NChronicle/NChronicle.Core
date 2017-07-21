@@ -6,7 +6,7 @@ The exception that is thrown when the specified file path is invalid.
 
 ## Inheritance Hierarchy
 <a href="http://msdn2.microsoft.com/en-us/library/e5kfa45b" target="_blank">System.Object</a><br />&nbsp;&nbsp;<a href="http://msdn2.microsoft.com/en-us/library/c18k6c59" target="_blank">System.Exception</a><br />&nbsp;&nbsp;&nbsp;&nbsp;NChronicle.File.Exceptions.InvalidFilePathException<br />
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Exceptions.md">NChronicle.File.Exceptions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Exceptions.md">NChronicle.File.Exceptions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

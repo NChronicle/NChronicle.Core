@@ -169,6 +169,7 @@ namespace NChronicle.File.Configuration {
         /// </summary>
         /// <param name="path">The file path to append records to.</param>
         public void WithOutputPath (string path) {
+
             if (path == null) {
                 throw new ArgumentNullException(nameof(path));
             }
@@ -177,7 +178,8 @@ namespace NChronicle.File.Configuration {
                 throw new InvalidFilePathException("The path or file name in the given path contains one or more invalid characters.");
             if (!System.IO.Path.IsPathRooted(path))
                 path = System.IO.Path.Combine(Environment.CurrentDirectory, path);
-            System.IO.File.Create(path).Close();
+            if (!System.IO.File.Exists(path))
+                System.IO.File.Create(path).Close();
             this.OutputPath = path;
         }
 
@@ -464,11 +466,19 @@ namespace NChronicle.File.Configuration {
                                 }
                             }
                             break;
+                        case nameof(this.OutputPath):
+                            if (reader.IsEmptyElement) break;
+                            var outputPath = reader.ReadElementContentAsString();
+                            if (string.IsNullOrWhiteSpace(outputPath)) {
+                                throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, empty {nameof(this.OutputPath)}.");
+                            }
+                            this.WithOutputPath(outputPath);
+                            break;
                         case nameof(this.OutputPattern):
                             if (reader.IsEmptyElement) break;
                             var outputPatten = reader.ReadElementContentAsString();
                             if (string.IsNullOrWhiteSpace(outputPatten)) {
-                                throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, empty OutputPattern.");
+                                throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, empty {nameof(this.OutputPattern)}.");
                             }
                             this.WithOutputPattern(outputPatten.Trim());
                             break;
@@ -476,7 +486,7 @@ namespace NChronicle.File.Configuration {
                             if (reader.IsEmptyElement) break;
                             var timeZone = reader.ReadElementContentAsString();
                             if (string.IsNullOrWhiteSpace(timeZone)) {
-                                throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, empty TimeZone.");
+                                throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, empty {nameof(this.TimeZone)}.");
                             }
                             try {
                                 this.WithTimeZone(TimeZoneInfo.FindSystemTimeZoneById(timeZone));
@@ -484,6 +494,26 @@ namespace NChronicle.File.Configuration {
                             catch (TimeZoneNotFoundException) {
                                 throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, value '{timeZone}' for {nameof(this.TimeZone)} is not a valid TimeZone ID.");
                             }
+                            break;
+                        case nameof(this.RetentionPolicy):
+                            var typeStr = reader.GetAttribute("Type");
+                            if (string.IsNullOrEmpty(typeStr))
+                                throw new XmlException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, type is missing.");
+                            var type = Type.GetType(typeStr, false, true);
+                            if (type == null)
+                                throw new TypeLoadException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, type {typeStr} could not be found.");
+                            if (type.GetInterface(nameof(IRetentionPolicy)) == null)
+                                throw new TypeLoadException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, type {type.Name} does not implement {nameof(IRetentionPolicy)}.");
+                            IRetentionPolicy retentionPolicy = null;
+                            try {
+                                retentionPolicy = Activator.CreateInstance(type) as IRetentionPolicy;
+                            } catch (MissingMethodException e) {
+                                throw new TypeLoadException($"Unexpected library configuration for {nameof(FileChronicleLibrary)}, type {type.Name} does not define a public parameterless constructor.", e);
+                            }
+                            if (retentionPolicy == null)
+                                throw new TypeLoadException($"Unexpected library configuration for {type.Name}, instance could not be cast to {nameof(IRetentionPolicy)}.");
+                            retentionPolicy.ReadXml(reader);
+                            this.WithRetentionPolicy(retentionPolicy);
                             break;
                         default:
                             reader.Skip();
@@ -516,8 +546,15 @@ namespace NChronicle.File.Configuration {
                 writer.WriteElementString("Tag", tag.Key);
             }
             writer.WriteEndElement();
+            writer.WriteElementString(nameof(this.OutputPath), this.OutputPath);
             writer.WriteElementString(nameof(this.OutputPattern), this.OutputPattern);
             writer.WriteElementString(nameof(this.TimeZone), this.TimeZone.Id);
+            if (this.RetentionPolicy != null) {
+                writer.WriteStartElement("RetentionPolicy");
+                writer.WriteAttributeString("Type", this.RetentionPolicy.GetType().AssemblyQualifiedName);
+                this.RetentionPolicy.WriteXml(writer);
+                writer.WriteEndElement();
+            }
         }
         #endregion
 

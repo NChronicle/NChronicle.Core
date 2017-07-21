@@ -3,7 +3,7 @@
 
 Save base configuration to an XML configuration file.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Core.md">NChronicle.Core</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Core.md">NChronicle.Core</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.3.0 (1.0.3.0)
 
 ## Syntax
 

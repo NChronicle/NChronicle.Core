@@ -1,9 +1,9 @@
 # ChronicleConfiguration.WithLibrary Method 
  
 
-Adds an <a href="T_NChronicle_Core_Interfaces_IChronicleLibrary.md">IChronicleLibrary</a> instance to this configuration
+Add an <a href="T_NChronicle_Core_Interfaces_IChronicleLibrary.md">IChronicleLibrary</a> instance to this configuration.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Core_Model.md">NChronicle.Core.Model</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Core_Model.md">NChronicle.Core.Model</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.3.0 (1.0.3.0)
 
 ## Syntax
 
@@ -30,7 +30,7 @@ member WithLibrary :
 
 
 #### Parameters
-&nbsp;<dl><dt>library</dt><dd>Type: <a href="T_NChronicle_Core_Interfaces_IChronicleLibrary.md">NChronicle.Core.Interfaces.IChronicleLibrary</a><br />The configired <a href="T_NChronicle_Core_Interfaces_IChronicleLibrary.md">IChronicleLibrary</a>.</dd></dl>
+&nbsp;<dl><dt>library</dt><dd>Type: <a href="T_NChronicle_Core_Interfaces_IChronicleLibrary.md">NChronicle.Core.Interfaces.IChronicleLibrary</a><br />The configured <a href="T_NChronicle_Core_Interfaces_IChronicleLibrary.md">IChronicleLibrary</a>.</dd></dl>
 
 ## See Also
 

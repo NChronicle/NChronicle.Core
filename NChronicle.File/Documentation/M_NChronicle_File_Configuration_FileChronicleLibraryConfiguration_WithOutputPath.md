@@ -1,9 +1,9 @@
 # FileChronicleLibraryConfiguration.WithOutputPath Method 
  
 
-Set the file *path* in which rendered records are appended, the path maybe absolute or relative to the application's working directory. The default file path is the application's working direction with the file name 'chronicle.log'.
+Set the file *path* in which rendered records are appended, the path maybe absolute or relative to the application's working directory. The default file path is the application's working directory with the file name 'chronicle.log'.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Configuration.md">NChronicle.File.Configuration</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Configuration.md">NChronicle.File.Configuration</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

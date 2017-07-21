@@ -1,9 +1,9 @@
 # Chronicle.Success Method (String, Exception, String[])
  
 
-Record a <a href="T_NChronicle_Core_Model_ChronicleLevel.md">Success</a> level message and <a href="http://msdn2.microsoft.com/en-us/library/c18k6c59" target="_blank">Exception</a> with specified tags.
+Record a <a href="T_NChronicle_Core_Model_ChronicleLevel.md">Success</a> level message and <a href="http://msdn2.microsoft.com/en-us/library/c18k6c59" target="_blank">Exception</a> with the specified *tags*.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Core_Model.md">NChronicle.Core.Model</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Core_Model.md">NChronicle.Core.Model</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.3.0 (1.0.3.0)
 
 ## Syntax
 

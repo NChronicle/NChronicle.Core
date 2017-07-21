@@ -1,9 +1,9 @@
 # FileChronicleLibrary.Finalize Method 
  
 
-The destructor for this <a href="T_NChronicle_File_FileChronicleLibrary.md">FileChronicleLibrary</a>.
+The destructor for this <a href="T_NChronicle_File_FileChronicleLibrary.md">FileChronicleLibrary</a>. Calls <a href="M_NChronicle_File_FileChronicleLibrary_Dispose.md">Dispose()</a>.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File.md">NChronicle.File</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File.md">NChronicle.File</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

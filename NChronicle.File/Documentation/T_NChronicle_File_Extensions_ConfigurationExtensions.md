@@ -6,7 +6,7 @@ Container for configuration extension methods.
 
 ## Inheritance Hierarchy
 <a href="http://msdn2.microsoft.com/en-us/library/e5kfa45b" target="_blank">System.Object</a><br />&nbsp;&nbsp;NChronicle.File.Extensions.ConfigurationExtensions<br />
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Extensions.md">NChronicle.File.Extensions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Extensions.md">NChronicle.File.Extensions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

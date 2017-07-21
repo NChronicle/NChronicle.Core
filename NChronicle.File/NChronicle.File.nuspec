@@ -3,7 +3,7 @@
   <metadata>
     <id>NChronicle.File</id>
     <title>NChronicle.File</title>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
     <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
@@ -18,11 +18,11 @@ NChronicle is an extensible logging and output library allowing centralized mana
 
 NChronicle.File is an extensive file logging Library for the NChronicle logging framework. NChronicle.File includes options to ignore and/or listen solely to certain log messages via level and/or tags, completely customize the output format (date/time format specification, conditionals, and arguments), specify time zone, and apply retention policies for the output files.
 
-Further Libraries planned for the NChronicle logging framework include NChronicle.Email, NChronicle.API and NChronicle.Owin.
+Further Libraries planned for the NChronicle logging framework include NChronicle.API and NChronicle.Owin.
     </description>
     <dependencies> 
       <group targetFramework="net40">
-        <dependency id="NChronicle.Core" version="1.0.2" />
+        <dependency id="NChronicle.Core" version="1.0.3" />
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -32,9 +32,9 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     </frameworkAssemblies>
     <language>en-us</language>
     <releaseNotes>
-Initial release.
+Added support for configuration from XML (including runtime configuration changes).
     </releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output File Archive Retention</tags>
   </metadata>
   <files>

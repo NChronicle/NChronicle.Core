@@ -3,7 +3,7 @@
 
 Check if the output file at the given *path* is still within the configured limits or is to be archived. It is ready if the file - with the pending bytes to be written - is over the configured file size limit or the file is older than the configured file age limit.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File.md">NChronicle.File</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File.md">NChronicle.File</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

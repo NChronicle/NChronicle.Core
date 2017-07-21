@@ -8,6 +8,16 @@ namespace NChronicle.TestConsole {
 
         private static void Main () {
             Core.NChronicle.ConfigureFrom("TestConfiguration.xml");
+//            Core.NChronicle.Configure(c => {
+//                    c.WithFileLibrary().Configure(fc => {
+//                            fc.WithRetentionPolicy().Configure(rp => {
+//                                    rp.WithAgeLimit(TimeSpan.FromDays(301));
+//                                    rp.WithFileSizeLimitInMegabytes(10);
+//                                    rp.WithRetentionLimit(10);
+//                                });
+//                        });
+//                });
+//            Core.NChronicle.SaveConfigurationTo("TestConfiguration.xml");
             MultiThreadTest();
         }
 

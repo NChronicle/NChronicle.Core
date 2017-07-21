@@ -3,7 +3,7 @@
 
 Create and add a <a href="T_NChronicle_File_FileChronicleLibrary.md">FileChronicleLibrary</a> to the specified ChronicleConfiguration.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Extensions.md">NChronicle.File.Extensions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Extensions.md">NChronicle.File.Extensions</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

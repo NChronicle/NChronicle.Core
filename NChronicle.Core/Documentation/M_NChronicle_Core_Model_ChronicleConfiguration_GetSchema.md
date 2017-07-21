@@ -3,7 +3,7 @@
 
 Required for XML serialization, this method offers no functionality.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Core_Model.md">NChronicle.Core.Model</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Core_Model.md">NChronicle.Core.Model</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.3.0 (1.0.3.0)
 
 ## Syntax
 
@@ -25,7 +25,7 @@ override GetSchema : unit -> XmlSchema
 
 
 #### Return Value
-Type: <a href="http://msdn2.microsoft.com/en-us/library/9ta3w88s" target="_blank">XmlSchema</a><br />\[Missing <returns> documentation for "M:NChronicle.Core.Model.ChronicleConfiguration.GetSchema"\]
+Type: <a href="http://msdn2.microsoft.com/en-us/library/9ta3w88s" target="_blank">XmlSchema</a><br />a NULL <a href="http://msdn2.microsoft.com/en-us/library/9ta3w88s" target="_blank">XmlSchema</a>.
 
 #### Implements
 <a href="http://msdn2.microsoft.com/en-us/library/6f7z1347" target="_blank">IXmlSerializable.GetSchema()</a><br />

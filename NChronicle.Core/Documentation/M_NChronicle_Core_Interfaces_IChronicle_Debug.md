@@ -1,9 +1,9 @@
 # IChronicle.Debug Method (Exception, String[])
  
 
-Record a <a href="T_NChronicle_Core_Model_ChronicleLevel.md">Debug</a> level exception with specified tags.
+Record a <a href="T_NChronicle_Core_Model_ChronicleLevel.md">Debug</a> level exception with the specified *tags*.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_Core_Interfaces.md">NChronicle.Core.Interfaces</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.0.0 (1.0.0.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_Core_Interfaces.md">NChronicle.Core.Interfaces</a><br />**Assembly:**&nbsp;NChronicle.Core (in NChronicle.Core.dll) Version: 1.0.3.0 (1.0.3.0)
 
 ## Syntax
 

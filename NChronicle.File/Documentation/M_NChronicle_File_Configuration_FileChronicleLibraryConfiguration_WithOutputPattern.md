@@ -3,7 +3,7 @@
 
 Specify the *pattern* in which records are written to the file via a specified string.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Configuration.md">NChronicle.File.Configuration</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Configuration.md">NChronicle.File.Configuration</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 
@@ -39,10 +39,12 @@ There are a number of keywords and patterns that can be used to describe the for
 
 Standard keywords can be used independently or as part of a conditional. Independently they are replaced in place with their value in the output.
 
-Conditional tokens allow you to only render specific output when a specified standard keyword exists and it's value is meaningful. It can be created by starting a token with the standard keyword followed by a `?` character. The keyword will be tested (not rendered) to assess whether it exists or resolves to a non-null or non-empty value, if it does, the sub-pattern - everything after the `?` character to the end of the token - is visited.
+Conditional tokens allow you to only render a part of the pattern when a specified standard keyword exists and it's value is meaningful. It can be created by starting a token with the standard keyword followed by a question mark (`?`) character. The keyword will be tested (not rendered) to assess whether it exists or resolves to a non-null or non-empty value, if it does, the sub-pattern - everything after the question mark (`?`) character to the end of the token - is visited.
+
+Inverse conditional tokens can be used as an opposite to conditional tokens, and render everything after the question mark (`?`) character if the keyword does not exist or have a meaningful value. It can be created by placing an exclamation mark (`!`) character before the question mark character (`?`) in an otherwise normal conditional token (`!?`).
 
 Standard keywords available are:
-`TAGS` The tags for the record delimited by a comma and a space (`,`). `TH` The thread ID the record was created in. `MSG` The message for the record if any. May be absent. `EXC` The exception for the record if any. May be absent.
+`LVL` The level of this record. `TAGS` The tags for the record delimited by a comma and a space (`,`). `TH` The thread ID the record was created in. `MSG` The developer message for the record if any. May be absent. `EMSG` The exception message for the record if any. May be absent. `EXC` The full exception for the record if any. May be absent.
 Functional tokens are tokens which may take in extra arguments to render; these start with a functional keyword and a `|` character. Arguments follow the `|` character until the end of the token and are split by a `|` character.
 
 Functional keywords available are:
@@ -59,7 +61,7 @@ The default output pattern is:
 ## Examples
 
 ```
-"{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}} [{TAGS| / }]}"
+"{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}} [{TAGS| / }]"
 ```
 
 ```
@@ -87,7 +89,7 @@ Following this is a conditional token testing the `MSG` keyword, if the record's
 Next is another conditional, rendering the exception and a new line if there is one.
 
 ```
-[{TAGS| / }]}
+[{TAGS| / }]
 ```
 
 Lastly - inside square braces - is a functional token with the `TAGS` functional keyword, the argument here is a string containing a `/` character padded by space characters; this is used as the delimiter for the `TAGS` functional keyword. In the output, this would look similar to `"[tag1 / tag2 / tag3]"`.

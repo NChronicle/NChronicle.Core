@@ -3,7 +3,7 @@
 
 A function to configure a <a href="T_NChronicle_File_RetentionPolicy.md">RetentionPolicy</a>.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Delegates.md">NChronicle.File.Delegates</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Delegates.md">NChronicle.File.Delegates</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 

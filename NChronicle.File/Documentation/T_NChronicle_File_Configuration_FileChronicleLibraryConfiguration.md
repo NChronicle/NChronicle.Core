@@ -6,7 +6,7 @@ Container for <a href="T_NChronicle_File_FileChronicleLibrary.md">FileChronicleL
 
 ## Inheritance Hierarchy
 <a href="http://msdn2.microsoft.com/en-us/library/e5kfa45b" target="_blank">System.Object</a><br />&nbsp;&nbsp;NChronicle.File.Configuration.FileChronicleLibraryConfiguration<br />
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Configuration.md">NChronicle.File.Configuration</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Configuration.md">NChronicle.File.Configuration</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 
@@ -58,7 +58,7 @@ Returns a string that represents the current object.
  (Inherited from <a href="http://msdn2.microsoft.com/en-us/library/e5kfa45b" target="_blank">Object</a>.)</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithLocalTime.md">WithLocalTime</a></td><td>
 Set all dates in the output to be rendered in the environments local time zone.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithNoRetentionPolicy.md">WithNoRetentionPolicy</a></td><td>
 Remove any set <a href="T_NChronicle_File_Interfaces_IRetentionPolicy.md">IRetentionPolicy</a> for the output file.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithOutputPath.md">WithOutputPath</a></td><td>
-Set the file *path* in which rendered records are appended, the path maybe absolute or relative to the application's working directory. The default file path is the application's working direction with the file name 'chronicle.log'.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")![Code example](media/CodeExample.png "Code example")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithOutputPattern.md">WithOutputPattern</a></td><td>
+Set the file *path* in which rendered records are appended, the path maybe absolute or relative to the application's working directory. The default file path is the application's working directory with the file name 'chronicle.log'.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")![Code example](media/CodeExample.png "Code example")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithOutputPattern.md">WithOutputPattern</a></td><td>
 Specify the *pattern* in which records are written to the file via a specified string.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithRetentionPolicy.md">WithRetentionPolicy()</a></td><td>
 Set a standard retention policy for the output file.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithRetentionPolicy__1.md">WithRetentionPolicy(T)(T)</a></td><td>
 Set a custom retention *policy* implementation for the output file.</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href="M_NChronicle_File_Configuration_FileChronicleLibraryConfiguration_WithTimeZone.md">WithTimeZone</a></td><td>

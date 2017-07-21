@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using System.Threading;
+using System.Timers;
 using System.Xml;
 using System.Xml.Serialization;
 using NChronicle.Core.Delegates;
@@ -14,11 +14,12 @@ namespace NChronicle.Core {
     /// </summary>
     public static class NChronicle {
 
-        private static ChronicleConfiguration Configuration { get; set; }
+        private static ChronicleConfiguration _configuration { get; set; }
+        private static Timer _updateTimer { get; set; }
         internal static event ConfigurationSubscriberDelegate ConfigurationChanged;
 
         static NChronicle () {
-            Configuration = new ChronicleConfiguration();
+            _configuration = new ChronicleConfiguration();
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace NChronicle.Core {
         /// </summary> 
         /// <param name="configurationDelegate">A function to set <see cref="NChronicle"/> configuration.</param>
         public static void Configure (ChronicleConfigurationDelegate configurationDelegate) {
-            configurationDelegate.Invoke(Configuration);
+            configurationDelegate.Invoke(_configuration);
             ConfigurationChanged?.Invoke();
         }
 
@@ -37,7 +38,16 @@ namespace NChronicle.Core {
         /// <param name="watch">Watch for changes to the file and reconfigure when it changes.</param>
         /// <param name="watchBufferTime">Time in milliseconds to wait after a change to the file until reconfiguring.</param>
         public static void ConfigureFrom (string path, bool watch = true, int watchBufferTime = 1000) {
+            if (_updateTimer != null) {
+                _updateTimer.Stop();
+                _updateTimer.Dispose();
+                _updateTimer = null;
+            }
             if (watch) {
+                _updateTimer = new Timer(watchBufferTime) {
+                    AutoReset = false
+                };
+                _updateTimer.Elapsed += (a, b) => ConfigureFrom(path, true);
                 var directory = Path.GetDirectoryName(path);
                 if (string.IsNullOrEmpty(directory)) {
                     directory = Environment.CurrentDirectory;
@@ -45,18 +55,18 @@ namespace NChronicle.Core {
                 }
                 var watcher = new FileSystemWatcher(directory);
                 watcher.Filter = Path.GetFileName(path);
-                watcher.Changed += (sender, args) => {
-                                       Thread.Sleep(new TimeSpan(0, 0, 0, 0, watchBufferTime));
-                                       ConfigureFrom(path, true);
-                                   };
-                watcher.Deleted += (sender, args) => {
-                                       Thread.Sleep(new TimeSpan(0, 0, 0, 0, watchBufferTime));
-                                       ClearConfiguration();
-                                   };
                 watcher.Created += (sender, args) => {
-                                       Thread.Sleep(new TimeSpan(0, 0, 0, 0, watchBufferTime));
-                                       ConfigureFrom(path, true);
-                                   };
+                    _updateTimer.Stop();
+                    _updateTimer.Start();
+                };
+                watcher.Changed += (sender, args) => {
+                    _updateTimer.Stop();
+                    _updateTimer.Start();
+                };
+                watcher.Deleted += (sender, args) => {
+                    _updateTimer.Stop();
+                    _updateTimer.Start();
+                };
                 watcher.EnableRaisingEvents = true;
             }
             ConfigureFrom(path, false);
@@ -68,7 +78,7 @@ namespace NChronicle.Core {
         /// <param name="path">Path to the XML file.</param>
         public static void SaveConfigurationTo (string path) {
             using (var textWriter = new XmlTextWriter(path, Encoding.UTF8)) {
-                new XmlSerializer(typeof (ChronicleConfiguration)).Serialize(textWriter, Configuration);
+                new XmlSerializer(typeof (ChronicleConfiguration)).Serialize(textWriter, _configuration);
             }
         }
 
@@ -97,17 +107,20 @@ namespace NChronicle.Core {
             if (config == null) {
                 throw new XmlException($"Could not serialize NChronicle Configuration from file {path}.");
             }
-            Configuration = config;
+            _configuration.Dispose();
+            _configuration = config;
             ConfigurationChanged?.Invoke();
         }
 
         private static void ClearConfiguration() {
-            Configuration = new ChronicleConfiguration();
+            var oldConfig = _configuration;
+            _configuration = new ChronicleConfiguration();
             ConfigurationChanged?.Invoke();
+            oldConfig.Dispose();
         }
 
         internal static ChronicleConfiguration GetConfiguration () {
-            return Configuration.Clone();
+            return _configuration.Clone();
         }
 
     }

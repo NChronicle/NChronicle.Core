@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Schema;
 using NChronicle.File.Configuration;
 using NChronicle.File.Delegates;
 using NChronicle.File.Interfaces;
@@ -16,7 +18,7 @@ namespace NChronicle.File {
     /// This retention policy is based on file size and file age. Depending 
     /// on the configuration, when the output file grows to the set size limit, 
     /// or the time since it was created is greater than the set age limit, it 
-    /// will be archived and named with time the output file was created. 
+    /// will be archived and named with the time the output file was created. 
     /// </para>
     /// <para>
     /// If the file name for the archive is already taken it will be appended by
@@ -58,7 +60,7 @@ namespace NChronicle.File {
         /// <returns>A <see cref="bool"/> indicating if the output file is to be archived.</returns>
         public bool CheckPolicy (string path, byte[] pendingBytes) {
             var fileInfo = new FileInfo(path);
-            if (this._configuration.ByteLimit != 0 && fileInfo.Length + pendingBytes.Length > this._configuration.ByteLimit) {
+            if (this._configuration.FileSizeLimit != 0 && fileInfo.Length + pendingBytes.Length > this._configuration.FileSizeLimit) {
                 return true;
             }
             return this._configuration.AgeLimit.HasValue && fileInfo.CreationTimeUtc < DateTime.UtcNow - this._configuration.AgeLimit.Value;
@@ -137,6 +139,28 @@ namespace NChronicle.File {
                    .Replace("?", "\\?")
                    .Replace("#", "\\#");
         }
+
+        #region Xml Serialization
+        /// <summary>
+        /// Required for XML serialization, this method offers no functionality.
+        /// </summary>
+        /// <returns>A null <see cref="XmlSchema"/>.</returns>
+        public XmlSchema GetSchema() => null;
+
+        /// <summary>
+        /// Populate configuration from XML via the specified <see cref="XmlReader" />.
+        /// </summary>
+        /// <param name="reader"><see cref="XmlReader" /> stream from the configuration file.</param>
+        /// <seealso cref="Core.NChronicle.ConfigureFrom(string, bool, int)"/>
+        public void ReadXml(XmlReader reader) => this._configuration.ReadXml(reader);
+
+        /// <summary>
+        /// Write configuration to XML via the specified <see cref="XmlWriter" />.
+        /// </summary>
+        /// <param name="writer"><see cref="XmlWriter" /> stream to the configuration file.</param>
+        /// <seealso cref="Core.NChronicle.SaveConfigurationTo(string)"/>
+        public void WriteXml(XmlWriter writer) => this._configuration.WriteXml(writer);
+        #endregion
 
     }
 

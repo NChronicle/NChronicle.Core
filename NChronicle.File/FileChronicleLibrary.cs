@@ -16,10 +16,11 @@ namespace NChronicle.File {
     /// <summary>
     /// A <see cref="IChronicleLibrary"/> writing <see cref="ChronicleRecord"/>s to a file.
     /// </summary>
-    public class FileChronicleLibrary : IChronicleLibrary {
+    public class FileChronicleLibrary : IChronicleLibrary, IDisposable {
 
         private readonly FileChronicleLibraryConfiguration _configuration;
         private volatile FileStream _fileStream;
+        private string _fileStreamLockKey => string.Intern($"{nameof(FileChronicleLibrary)}.{nameof(this._fileStream)}.{this._configuration.OutputPath}");
 
         private readonly Dictionary <string, MethodHandler> _methods;
         private readonly Dictionary <string, KeyHandler> _keys;
@@ -158,15 +159,16 @@ namespace NChronicle.File {
         }
 
         private void SendToFile (string output) {
+            //if (this._disposed) return;
             if (this._fileStream == null) {
-                lock (string.Intern($"{nameof(FileChronicleLibrary)}.{nameof(this._fileStream)}.{this._configuration.OutputPath}")) {
+                lock (this._fileStreamLockKey) {
                     if (this._fileStream == null) {
                         this._fileStream = new FileStream(this._configuration.OutputPath, FileMode.Append, FileAccess.Write, FileShare.Read);
                     }
                 }
             }
             var bytes = Encoding.UTF8.GetBytes($"{output}\r\n");
-            lock (string.Intern($"{nameof(FileChronicleLibrary)}.{nameof(this._fileStream)}.{this._configuration.OutputPath}")) {
+            lock (this._fileStreamLockKey) {
                 if (this._configuration.RetentionPolicy != null) {
                     if (this._configuration.RetentionPolicy.CheckPolicy(this._configuration.OutputPath, bytes)) {
                         this._fileStream.Close();
@@ -216,16 +218,24 @@ namespace NChronicle.File {
         #endregion
 
         /// <summary>
-        /// The destructor for this <see cref="FileChronicleLibrary"/>. 
+        /// Conclude and close this <see cref="FileChronicleLibrary"/>.
         /// </summary>
-        ~FileChronicleLibrary () {
+        public void Dispose() {
             if (this._fileStream != null) {
-                lock (this._fileStream) {
+                lock (this._fileStreamLockKey) {
                     this._fileStream.Flush();
                     this._fileStream.Close();
                 }
             }
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// The destructor for this <see cref="FileChronicleLibrary"/>. 
+        /// Calls <see cref="FileChronicleLibrary.Dispose"/>.
+        /// </summary>
+        ~FileChronicleLibrary () {
+            this.Dispose();
         }
 
     }

@@ -3,7 +3,7 @@
   <metadata>
     <id>NChronicle.Core</id>
     <title>NChronicle.Core</title>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
     <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
@@ -21,7 +21,8 @@ NChronicle.Core supports multiple levels of logging (Success, Info, Debug, Warni
 
 NChronicle.Console is available as a highly configurable NChronicle Library dispatching log messages to STDOUT / the Console.
 NChronicle.File is also available as a extensive NChronicle Library writing log message to a file with flexible retention controls. 
-Further Libraries planned for the NChronicle logging framework include NChronicle.Email, NChronicle.API and NChronicle.Owin.
+NChronicle.SMTP is a comprehensive SMTP email NChronicle Library sending log messages in customizable email messages.
+Further Libraries planned for the NChronicle logging framework include NChronicle.EventVwr, NChronicle.API and NChronicle.Owin.
     </description>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net40" />
@@ -29,8 +30,7 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     </frameworkAssemblies>
     <language>en-us</language>
     <releaseNotes>
-Improved performance and thread safety.
-Added full documentation.
+Added handling for chronicle libraries implementing IDisposable.
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output</tags>

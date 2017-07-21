@@ -3,7 +3,7 @@
 
 Check whether the output file at the given *path* should have the file retention policy invoked upon it.
 
-**Namespace:**&nbsp;<a href="N_NChronicle_File_Interfaces.md">NChronicle.File.Interfaces</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.3.0 (1.0.3.0)
+**Namespace:**&nbsp;<a href="N_NChronicle_File_Interfaces.md">NChronicle.File.Interfaces</a><br />**Assembly:**&nbsp;NChronicle.File (in NChronicle.File.dll) Version: 1.0.1.0 (1.0.1.0)
 
 ## Syntax
 
