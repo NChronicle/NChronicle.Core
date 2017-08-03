@@ -1,4 +1,4 @@
-﻿Param([string] $msbuild)
+﻿Param([string] $target, [string] $msbuild)
 
 $PROGRAM_FILES_32 = ${env:ProgramFiles(x86)}
 $DEFAULT_LOCATION_FOR_BUILDTOOLS = "$PROGRAM_FILES_32\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe"
@@ -26,4 +26,4 @@ if (![String]::IsNullOrEmpty($msbuild)) {
     }
 }
 
-&$msbuild
+&$msbuild $target

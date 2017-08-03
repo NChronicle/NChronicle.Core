@@ -4,4 +4,4 @@ stages:
 
 Build Solution:
   stage: Build
-  script: "powershell .\\Build.ps1"
+  script: "powershell .\\Build.ps1 NChronicle.Core.sln"
