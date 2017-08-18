@@ -28,7 +28,7 @@
     <SourceCodeBasePath>NChronicle.Console\</SourceCodeBasePath>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <DocumentationSources>
-      <DocumentationSource sourceFile="NChronicle.Core.csproj" />
+      <DocumentationSource sourceFile="NChronicle.Core_NetFx.csproj" />
     </DocumentationSources>
     <HelpFileVersion>1.0.3</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>

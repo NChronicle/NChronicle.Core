@@ -3,11 +3,11 @@
   <metadata>
     <id>NChronicle.Core</id>
     <title>NChronicle.Core</title>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
-    <licenseUrl>https://git.ikimi.co/andrewj/NChronicle/raw/master/LICENSE</licenseUrl>
-    <projectUrl>https://git.ikimi.co/andrewj/NChronicle</projectUrl>
+    <licenseUrl>https://git.ikimi.co/NChronicle/NChronicle.Core/raw/master/LICENSE</licenseUrl>
+    <projectUrl>https://git.ikimi.co/NChronicle/NChronicle.Core</projectUrl>
     <iconUrl>https://git.ikimi.co/uploads/project/avatar/2/NChronicle_simple_square.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>
@@ -24,18 +24,29 @@ NChronicle.File is also available as a extensive NChronicle Library writing log 
 NChronicle.SMTP is a comprehensive SMTP email NChronicle Library sending log messages in customizable email messages.
 Further Libraries planned for the NChronicle logging framework include NChronicle.EventVwr, NChronicle.API and NChronicle.Owin.
     </description>
+    <dependencies>
+      <group targetFramework="netstandard1.4">
+        <dependency id="System.IO.FileSystem" version="4.3.0" />
+        <dependency id="System.IO.FileSystem.Watcher" version="4.3.0" />
+        <dependency id="System.Reflection" version="4.3.0" />
+        <dependency id="System.Threading.Timer" version="4.3.0" />
+        <dependency id="System.Xml.ReaderWriter" version="4.3.0" />
+        <dependency id="System.Xml.XmlSerializer" version="4.3.0" />
+      </group>
+    </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Xml" targetFramework="net40" />
     </frameworkAssemblies>
-    <language>en-us</language>
+    <language>en-US</language>
     <releaseNotes>
-Added handling for chronicle libraries implementing IDisposable.
+Added support for .NET Standard
     </releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output</tags>
   </metadata>
   <files>
-    <file src="bin/Release/NChronicle.Core.dll" target="lib\net40" />
+    <file src="bin/Release/netfx4.0/NChronicle.Core.dll" target="lib\net40" />
+    <file src="bin/Release/netstandard1.4/NChronicle.Core.dll" target="lib\netstandard1.4" />
   </files>
 </package>

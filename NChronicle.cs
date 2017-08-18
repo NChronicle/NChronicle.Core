@@ -1,11 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using System.Timers;
 using System.Xml;
 using System.Xml.Serialization;
 using NChronicle.Core.Delegates;
 using NChronicle.Core.Model;
+#if NETFX
+using System.Timers;
+#else
+using System.Threading;
+#endif
 
 namespace NChronicle.Core {
 
@@ -43,35 +47,44 @@ namespace NChronicle.Core {
 		/// <param name="watchBufferTime">Time in milliseconds to wait after a change to the file until reconfiguring.</param>
 		public static void ConfigureFrom (string path, bool watch = true, int watchBufferTime = 1000) {
 			if (_updateTimer != null) {
-				_updateTimer.Stop ();
-				_updateTimer.Dispose ();
-				_updateTimer = null;
+#if NETFX
+                _updateTimer.Stop ();
+#else
+                _updateTimer.Change(Timeout.Infinite, Timeout.Infinite);
+#endif
+                _updateTimer.Dispose ();
+                _updateTimer = null;
 			}
 			if (watch) {
-				_updateTimer = new Timer (watchBufferTime) {
-					AutoReset = false
-				};
-				_updateTimer.Elapsed += (a, b) => ConfigureFrom (path, true);
+#if NETFX
+                _updateTimer = new Timer(watchBufferTime) {
+                    AutoReset = false
+                };
+                _updateTimer.Elapsed += (a, b) => ConfigureFrom(path, true);
+#else
+                var autoResetEvent = new AutoResetEvent(false);
+				TimerCallback callBack = (s) => ConfigureFrom (path, true);
+				_updateTimer = new Timer (callBack, null, watchBufferTime, Timeout.Infinite);
+#endif
 				var directory = Path.GetDirectoryName (path);
 				if (string.IsNullOrEmpty (directory)) {
-					directory = Environment.CurrentDirectory;
-					path = Path.Combine (Environment.CurrentDirectory, path);
+					directory = Directory.GetCurrentDirectory();
+					path = Path.Combine (directory, path);
 				}
 				var watcher = new FileSystemWatcher (directory);
 				watcher.Filter = Path.GetFileName (path);
-				watcher.Created += (sender, args) => {
-					_updateTimer.Stop ();
+                FileSystemEventHandler resetUpdateTimer = (sender, args) => {
+#if NETFX
+                    _updateTimer.Stop ();
 					_updateTimer.Start ();
-				};
-				watcher.Changed += (sender, args) => {
-					_updateTimer.Stop ();
-					_updateTimer.Start ();
-				};
-				watcher.Deleted += (sender, args) => {
-					_updateTimer.Stop ();
-					_updateTimer.Start ();
-				};
-				watcher.EnableRaisingEvents = true;
+#else
+                    _updateTimer.Change(watchBufferTime, Timeout.Infinite);
+#endif
+                };
+                watcher.Created += resetUpdateTimer;
+                watcher.Changed += resetUpdateTimer;
+                watcher.Deleted += resetUpdateTimer;
+                watcher.EnableRaisingEvents = true;
 			}
 			ConfigureFrom (path, false);
 		}
@@ -81,10 +94,15 @@ namespace NChronicle.Core {
 		/// </summary>
 		/// <param name="path">Path to the XML file.</param>
 		public static void SaveConfigurationTo (string path) {
-			using (var textWriter = new XmlTextWriter (path, Encoding.UTF8)) {
-				new XmlSerializer (typeof (ChronicleConfiguration)).Serialize (textWriter, _configuration);
-			}
-		}
+#if NETFX
+            using (var textWriter = new XmlTextWriter (path, Encoding.UTF8)) {
+#else
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            using (var textWriter = XmlWriter.Create(fileStream, new XmlWriterSettings() { Encoding = Encoding.UTF8 })) {
+#endif
+                new XmlSerializer(typeof(ChronicleConfiguration)).Serialize(textWriter, _configuration);
+            }
+        }
 
 		private static void ConfigureFrom (string path, bool reconfiguringFromWatch) {
 			if (!File.Exists (path)) {
@@ -98,8 +116,13 @@ namespace NChronicle.Core {
 			var xmlSerializer = new XmlSerializer (typeof (ChronicleConfiguration));
 			ChronicleConfiguration config = null;
 			try {
-				using (var textReader = new XmlTextReader (path)) {
-					config = xmlSerializer.Deserialize (textReader) as ChronicleConfiguration;
+#if NETFX
+                using (var textReader = new XmlTextReader (path)) {
+#else
+                using (var fileStream = new FileStream(path, FileMode.Open))
+                using (var textReader = XmlReader.Create(fileStream)) {
+#endif
+                    config = xmlSerializer.Deserialize (textReader) as ChronicleConfiguration;
 				}
 			}
 			catch (Exception e) {

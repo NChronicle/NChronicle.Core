@@ -4,6 +4,9 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using NChronicle.Core.Interfaces;
+#if !NETFX
+using System.Reflection;
+#endif
 
 namespace NChronicle.Core.Model {
 
@@ -45,7 +48,7 @@ namespace NChronicle.Core.Model {
             };
         }
 
-        #region Xml Serialization
+#region Xml Serialization
         /// <summary>
         /// Required for XML serialization, this method offers no functionality.
         /// </summary>
@@ -76,8 +79,12 @@ namespace NChronicle.Core.Model {
                                             if (type == null)
                                                 throw new TypeLoadException
                                                     ($"Unexpected library configuration, type {typeStr} could not be found.");
-                                            if (type.GetInterface(nameof(IChronicleLibrary)) == null)
-                                                throw new TypeLoadException
+#if NETFX
+                                            if (!typeof(IChronicleLibrary).IsAssignableFrom(type))
+#else
+                                            if (!typeof(IChronicleLibrary).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
+#endif
+                                                    throw new TypeLoadException
                                                     ($"Unexpected library configuration, type {type.Name} does not implement {nameof(IChronicleLibrary)}.");
                                             IChronicleLibrary library = null;
                                             try {
@@ -85,8 +92,7 @@ namespace NChronicle.Core.Model {
                                             }
                                             catch (MissingMethodException e) {
                                                 throw new TypeLoadException
-                                                    ($"Unexpected library configuration for {type.Name}, type does not define a public parameterless constructor.",
-                                                     e);
+                                                    ($"Unexpected library configuration for {type.Name}, type does not define a public parameterless constructor.", e);
                                             }
                                             if (library == null)
                                                 throw new TypeLoadException
@@ -130,7 +136,7 @@ namespace NChronicle.Core.Model {
             }
             writer.WriteEndElement();
         }
-        #endregion
+#endregion
     }
 
 }
