@@ -6,9 +6,9 @@
     <version>1.1.0</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
-    <licenseUrl>https://git.ikimi.co/NChronicle/NChronicle.Core/raw/master/LICENSE</licenseUrl>
-    <projectUrl>https://git.ikimi.co/NChronicle/NChronicle.Core</projectUrl>
-    <iconUrl>https://git.ikimi.co/uploads/project/avatar/2/NChronicle_simple_square.png</iconUrl>
+    <licenseUrl>https://git.npanda.io/NChronicle/NChronicle.Core/raw/master/LICENSE</licenseUrl>
+    <projectUrl>https://git.npanda.io/NChronicle/NChronicle.Core</projectUrl>
+    <iconUrl>https://git.npanda.io/uploads/-/system/project/avatar/9/NChronicle_Logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>
 NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries'). NChronicle.Core is the core functionality and abstraction layer for all NChronicle Libraries.
