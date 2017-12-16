@@ -12,6 +12,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD;</DefineConstants>
     <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\netstandard1.4\NChronicle.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -19,6 +20,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DebugType>none</DebugType>
     <DebugSymbols>False</DebugSymbols>
+    <DocumentationFile>bin\Release\netstandard1.4\NChronicle.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

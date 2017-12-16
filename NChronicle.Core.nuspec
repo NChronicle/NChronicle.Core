@@ -3,7 +3,7 @@
   <metadata>
     <id>NChronicle.Core</id>
     <title>NChronicle.Core</title>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <authors>Andy James</authors>
     <owners>Andy James</owners>
     <licenseUrl>https://git.npanda.io/NChronicle/NChronicle.Core/raw/master/LICENSE</licenseUrl>
@@ -40,13 +40,15 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     </frameworkAssemblies>
     <language>en-US</language>
     <releaseNotes>
-Added support for .NET Standard
+Added documentation to intellisense
     </releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output</tags>
   </metadata>
   <files>
+    <file src="bin/Release/netfx4.0/NChronicle.Core.XML" target="lib\net40" />
     <file src="bin/Release/netfx4.0/NChronicle.Core.dll" target="lib\net40" />
     <file src="bin/Release/netstandard1.4/NChronicle.Core.dll" target="lib\netstandard1.4" />
+    <file src="bin/Release/netstandard1.4/NChronicle.Core.xml" target="lib\netstandard1.4" />
   </files>
 </package>

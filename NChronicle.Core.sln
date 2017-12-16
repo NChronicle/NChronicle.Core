@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NChronicle.Core_NetFx", "NChronicle.Core_NetFx.csproj", "{EB62629E-D250-47CB-81F6-7493244583BC}"
 EndProject
@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{9E00CCD6-1
 	EndProjectSection
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "NChronicle.Core", "NChronicle.Core.shfbproj", "{43BD469C-FFD9-4C4D-8E03-C567B9FECFEF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EB62629E-D250-47CB-81F6-7493244583BC} = {EB62629E-D250-47CB-81F6-7493244583BC}
+		{1E6775D7-E18D-4CF8-8B0B-8BCCBD77BF23} = {1E6775D7-E18D-4CF8-8B0B-8BCCBD77BF23}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NChronicle.Core_NetStandard", "NChronicle.Core_NetStandard.csproj", "{1E6775D7-E18D-4CF8-8B0B-8BCCBD77BF23}"
 EndProject
@@ -46,5 +50,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{43BD469C-FFD9-4C4D-8E03-C567B9FECFEF} = {9E00CCD6-1198-45DE-85BE-64C7F8C19DEF}
 		{172EFD30-97BB-4D89-88AE-A2B80CCE78DC} = {9E00CCD6-1198-45DE-85BE-64C7F8C19DEF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEF832B9-2959-4AD5-9191-A59DA47DEA02}
 	EndGlobalSection
 EndGlobal
