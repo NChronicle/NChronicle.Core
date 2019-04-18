@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>NChronicle.Core</RootNamespace>
+    <AssemblyName>NChronicle.Core</AssemblyName>
+    <LangVersion>8.0</LangVersion>
+    <Version>2.0.0-prerelease1</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright 2019</Copyright>
+    <PackageReleaseNotes>Removed support for .NET Framework 4.6.0 and below. Referencing projects must now target .NET Standard 1.4 compatible implementations.
+
+NChronicle is now released under the MIT license.</PackageReleaseNotes>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageTags>NChronicle Events Audit Logging Log Trail Recording History Tracking Output</PackageTags>
+    <PackageProjectUrl>https://git.ksharp.net/NChronicle/NChronicle.Core</PackageProjectUrl>
+    <RepositoryUrl>https://git.ksharp.net/NChronicle/NChronicle.Core</RepositoryUrl>
+    <PackageIconUrl>https://git.ksharp.net/uploads/-/system/project/avatar/9/NChronicle_Logo.png</PackageIconUrl>
+    <RepositoryType></RepositoryType>
+    <Description>NChronicle is an extensible logging and output library allowing centralized management and distribution of log messages to a number of logging destinations (known as 'Libraries').
+
+NChronicle.Core is the core functionality and abstraction layer for all of these Libraries.
+NChronicle.Core supports multiple levels of logging (Success, Info, Debug, Warning, Error, and Critical) and custom tagging of messages so logs are more findable and manageable. NChronicle allows configuration programmatically or via a live monitored XML configuration file.
+
+NChronicle.Console is available as a highly configurable NChronicle Library dispatching log messages to STDOUT / the Console.
+NChronicle.File is also available as a extensive NChronicle Library writing log message to a file with flexible retention controls. 
+NChronicle.SMTP is a comprehensive SMTP email NChronicle Library sending log messages in customizable email messages.
+Further Libraries planned for the NChronicle logging framework include NChronicle.EventVwr, NChronicle.API and NChronicle.Owin.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Andy James</Authors>
+    <Company />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\netstandard1.4\NChronicle.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+    <DocumentationFile>bin\Release\netstandard1.4\NChronicle.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="**\*" />
+    <Compile Include="Delegates\ChronicleConfigurationDelegate.cs" />
+    <Compile Include="Delegates\ConfigurationSubscriberDelegate.cs" />
+    <Compile Include="Model\ChronicleConfiguration.cs" />
+    <Compile Include="Model\ChronicleLevel.cs" />
+    <Compile Include="Model\Chronicle.cs" />
+    <Compile Include="Interfaces\IChronicle.cs" />
+    <Compile Include="Interfaces\IChronicleLibrary.cs" />
+    <Compile Include="Model\ChronicleRecord.cs" />
+    <Compile Include="NChronicle.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.3.0" />
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Timer" Version="4.3.0" />
+    <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

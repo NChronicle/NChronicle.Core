@@ -5,11 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using NChronicle.Core.Delegates;
 using NChronicle.Core.Model;
-#if NETFX
-using System.Timers;
-#else
 using System.Threading;
-#endif
 
 namespace NChronicle.Core {
 
@@ -47,25 +43,14 @@ namespace NChronicle.Core {
 		/// <param name="watchBufferTime">Time in milliseconds to wait after a change to the file until reconfiguring.</param>
 		public static void ConfigureFrom (string path, bool watch = true, int watchBufferTime = 1000) {
 			if (_updateTimer != null) {
-#if NETFX
-                _updateTimer.Stop ();
-#else
                 _updateTimer.Change(Timeout.Infinite, Timeout.Infinite);
-#endif
                 _updateTimer.Dispose ();
                 _updateTimer = null;
 			}
 			if (watch) {
-#if NETFX
-                _updateTimer = new Timer(watchBufferTime) {
-                    AutoReset = false
-                };
-                _updateTimer.Elapsed += (a, b) => ConfigureFrom(path, true);
-#else
                 var autoResetEvent = new AutoResetEvent(false);
 				TimerCallback callBack = (s) => ConfigureFrom (path, true);
 				_updateTimer = new Timer (callBack, null, watchBufferTime, Timeout.Infinite);
-#endif
 				var directory = Path.GetDirectoryName (path);
 				if (string.IsNullOrEmpty (directory)) {
 					directory = Directory.GetCurrentDirectory();
@@ -74,12 +59,7 @@ namespace NChronicle.Core {
 				var watcher = new FileSystemWatcher (directory);
 				watcher.Filter = Path.GetFileName (path);
                 FileSystemEventHandler resetUpdateTimer = (sender, args) => {
-#if NETFX
-                    _updateTimer.Stop ();
-					_updateTimer.Start ();
-#else
                     _updateTimer.Change(watchBufferTime, Timeout.Infinite);
-#endif
                 };
                 watcher.Created += resetUpdateTimer;
                 watcher.Changed += resetUpdateTimer;
@@ -94,12 +74,8 @@ namespace NChronicle.Core {
 		/// </summary>
 		/// <param name="path">Path to the XML file.</param>
 		public static void SaveConfigurationTo (string path) {
-#if NETFX
-            using (var textWriter = new XmlTextWriter (path, Encoding.UTF8)) {
-#else
             using (var fileStream = new FileStream(path, FileMode.Create))
             using (var textWriter = XmlWriter.Create(fileStream, new XmlWriterSettings() { Encoding = Encoding.UTF8 })) {
-#endif
                 new XmlSerializer(typeof(ChronicleConfiguration)).Serialize(textWriter, _configuration);
             }
         }
@@ -116,12 +92,8 @@ namespace NChronicle.Core {
 			var xmlSerializer = new XmlSerializer (typeof (ChronicleConfiguration));
 			ChronicleConfiguration config = null;
 			try {
-#if NETFX
-                using (var textReader = new XmlTextReader (path)) {
-#else
                 using (var fileStream = new FileStream(path, FileMode.Open))
                 using (var textReader = XmlReader.Create(fileStream)) {
-#endif
                     config = xmlSerializer.Deserialize (textReader) as ChronicleConfiguration;
 				}
 			}

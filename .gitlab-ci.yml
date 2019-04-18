@@ -1,37 +1,6 @@
-stages:
-  - Build
-  - Documentation
-  - Package
-
-NET Framework 4.0:
-  stage: Build
-  script: "msbuild NChronicle.Core_NetFx.csproj /p:Configuration=Release"
+Build:
+  stage: build
+  script: "dotnet build -c Release"
   artifacts:
     paths:
-    - bin/Release/netfx4.0/
-
-NET Standard 1.4:
-  stage: Build
-  script: "dotnet build NChronicle.Core_NetStandard.csproj -c Release"
-  artifacts:
-    paths:
-    - bin/Release/netstandard1.4/
-
-Documentation:
-  stage: Documentation
-  script: "msbuild NChronicle.Core.shfbproj /p:Configuration=Release"
-  dependencies:
-  - NET Framework 4.0
-  artifacts:
-    paths:
-    - _Wiki/
-
-Package:
-  stage: Package
-  script: "nuget pack NChronicle.Core.nuspec"
-  dependencies:
-  - NET Framework 4.0
-  - NET Standard 1.4
-  artifacts:
-    paths:
-    - NChronicle.Core.*.nupkg
+    - bin/Release/

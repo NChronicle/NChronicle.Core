@@ -79,12 +79,8 @@ namespace NChronicle.Core.Model {
                                             if (type == null)
                                                 throw new TypeLoadException
                                                     ($"Unexpected library configuration, type {typeStr} could not be found.");
-#if NETFX
-                                            if (!typeof(IChronicleLibrary).IsAssignableFrom(type))
-#else
                                             if (!typeof(IChronicleLibrary).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
-#endif
-                                                    throw new TypeLoadException
+                                                throw new TypeLoadException
                                                     ($"Unexpected library configuration, type {type.Name} does not implement {nameof(IChronicleLibrary)}.");
                                             IChronicleLibrary library = null;
                                             try {
