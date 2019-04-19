@@ -1,6 +1,6 @@
 Build:
   stage: build
-  script: "dotnet build -c Release"
+  script: "dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false"
   artifacts:
     paths:
     - bin/Release/
