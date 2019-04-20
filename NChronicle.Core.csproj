@@ -6,7 +6,9 @@
     <RootNamespace>NChronicle.Core</RootNamespace>
     <AssemblyName>NChronicle.Core</AssemblyName>
     <LangVersion>8.0</LangVersion>
-    <Version>2.0.0-prerelease1</Version>
+    <Version>2.0.0</Version>
+    <Version Condition=" '$(BuildNumber)' != '' ">$(Version).$(BuildNumber)</Version>
+    <Version Condition=" '$(PreReleaseSuffix)' != '' ">$(Version)-$(PreReleaseSuffix)</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright></Copyright>
     <PackageReleaseNotes>Removed support for .NET Framework 4.6.0 and below. Referencing projects must now target .NET Standard 1.4 compatible implementations.
@@ -34,6 +36,7 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     <AssemblyOriginatorKeyFile>public.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <NoWarn>NU5105</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
