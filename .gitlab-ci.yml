@@ -1,27 +1,57 @@
 stages:
 - Build
+- Test
+- Pack
 - Publish
 
 Build:
     stage: Build
-    script: dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false -p:BuildNumber=$CI_BUILD_ID
+    script: dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false -p:GeneratePackageOnBuild=false -p:BuildNumber=$CI_PIPELINE_ID
     artifacts:
         paths:
-        - bin/Release/
+        - "*/bin/Release"
     only:
-    - $CI_BUILD_REF_NAME =~ /^master$|release\\.*/i
+    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
 
-Build:
+Build: # Build with a prerelease suffix if it's not on master or a release/ branch
     stage: Build
-    script: dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false -p:BuildNumber=$CI_BUILD_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
+    script: dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false -p:GeneratePackageOnBuild=false -p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
     artifacts:
         paths:
-        - bin/Release/
+        - "*/bin/Release"
     except:
-    - $CI_BUILD_REF_NAME =~ /^master$|release\\.*/i
+    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
+  
+Test:
+    stage: Test
+    script: dotnet test -c Release --no-build
+    dependencies:
+    - Build
+
+Pack:
+    stage: Pack
+    script: dotnet pack -c Release -p:BuildNumber=$CI_PIPELINE_ID
+    dependencies:
+    - Build
+    artifacts:
+        paths:
+        - "*/bin/Release"
+    only:
+    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
+
+Pack: # Pack with a prerelease suffix if it's not on master or a release/ branch
+    stage: Pack
+    script: dotnet pack -c Release -p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
+    dependencies:
+    - Build
+    artifacts:
+        paths:
+        - "*/bin/Release"
+    except:
+    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
 
 Publish:
     stage: Publish
-    script: dotnet nuget push -k $nuget_publish_key -s https://nuget.ksharp.net/v3/index.json bin/Release/NChronicle.Core.*.nupkg
+    script: dotnet nuget push -k $nuget_publish_key -s https://nuget.ksharp.net/v3/index.json NChronicle.Core/bin/Release/NChronicle.Core.*.nupkg
     dependencies:
-    - Build
+    - Pack

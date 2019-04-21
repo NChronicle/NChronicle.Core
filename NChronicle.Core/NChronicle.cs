@@ -20,6 +20,7 @@ namespace NChronicle.Core {
 		private static Timer _updateTimer {
 			get; set;
 		}
+
 		internal static event ConfigurationSubscriberDelegate ConfigurationChanged;
 
 		static NChronicle () {

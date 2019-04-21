@@ -20,7 +20,7 @@ namespace NChronicle.Core.Model {
         /// <param name="tags">Tags to append to this record. Optional.</param>
         public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, params string[] tags) {
             this.Message = message;
-            this.Tags = new ConcurrentQueue <string>(tags);
+            this.Tags = new ConcurrentBag <string>(tags);
             this.Exception = exception;
             this.Level = level;
         }
