@@ -10,6 +10,7 @@ Build:
     artifacts:
         paths:
         - "*/bin/Release"
+        - "*/obj"
     only:
     - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
 
@@ -19,6 +20,7 @@ Build: # Build with a prerelease suffix if it's not on master or a release/ bran
     artifacts:
         paths:
         - "*/bin/Release"
+        - "*/obj"
     except:
     - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
   
@@ -30,7 +32,7 @@ Test:
 
 Pack:
     stage: Pack
-    script: dotnet pack -c Release -p:BuildNumber=$CI_PIPELINE_ID
+    script: dotnet pack -c Release --no-build -p:BuildNumber=$CI_PIPELINE_ID
     dependencies:
     - Build
     artifacts:
@@ -41,7 +43,7 @@ Pack:
 
 Pack: # Pack with a prerelease suffix if it's not on master or a release/ branch
     stage: Pack
-    script: dotnet pack -c Release -p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
+    script: dotnet pack -c Release --no-build -p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
     dependencies:
     - Build
     artifacts:

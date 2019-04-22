@@ -8,19 +8,28 @@ using System.Linq;
 
 namespace NChronicle.Core.Tests
 {
-    public class WhenUsingAChronicleTestBase
+    public abstract class WhenUsingAChronicleTestBase
     {
+
+        protected static IEnumerable<object[]> _chronicleLevel => Enum.GetNames(typeof(ChronicleLevel)).Select(levelName => new object[] { Enum.Parse<ChronicleLevel>(levelName) });
 
         protected IChronicleLibrary _fakeLibrary;
         protected Chronicle _chronicle;
-        protected static IEnumerable<object[]> _chronicleLevel => Enum.GetNames(typeof(ChronicleLevel)).Select(levelName => new object[] { Enum.Parse<ChronicleLevel>(levelName) });
+        protected string _message;
+        protected string[] _tags;
+        protected ChronicleRecord _receivedRecord;
 
         [TestInitialize]
-        public void Init()
+        public virtual void Init()
         {
             this._fakeLibrary = Substitute.For<IChronicleLibrary>();
             NChronicle.Configure(c => c.WithLibrary(_fakeLibrary)); // todo: Shouldn't be needed to test Chronicle
             this._chronicle = new Chronicle();
+
+            // Arrange
+            this._fakeLibrary.Store(Arg.Do<ChronicleRecord>(record => this._receivedRecord = record));
+            this._message = "This is a test message.";
+            this._tags = new[] { "test1", "Tr1angl3" };
         }
 
         protected void CallAction(ChronicleLevel level, string message = null, Exception exception = null, params string[] tags)
