@@ -4,26 +4,18 @@ stages:
 - Pack
 - Publish
 
+variables:
+    versioning_params: '$( [[ "${CI_BUILD_REF_NAME^^}" =~ ^MASTER$|RELEASE\/.* ]] && echo "-p:BuildNumber=$CI_PIPELINE_ID" || echo "-p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG" )'
+    full_sign_params: -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false
+
 Build:
     stage: Build
-    script: dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false -p:GeneratePackageOnBuild=false -p:BuildNumber=$CI_PIPELINE_ID
+    script: dotnet build -c Release -p:GeneratePackageOnBuild=false $full_sign_params $(eval $versioning_params)
     artifacts:
         paths:
         - "*/bin/Release"
         - "*/obj"
-    only:
-    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
-
-Build: # Build with a prerelease suffix if it's not on master or a release/ branch
-    stage: Build
-    script: dotnet build -c Release -p:AssemblyOriginatorKeyFile=$signing_key_path -p:DelaySign=false -p:GeneratePackageOnBuild=false -p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
-    artifacts:
-        paths:
-        - "*/bin/Release"
-        - "*/obj"
-    except:
-    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
-  
+        
 Test:
     stage: Test
     script: dotnet test -c Release --no-build
@@ -32,25 +24,12 @@ Test:
 
 Pack:
     stage: Pack
-    script: dotnet pack -c Release --no-build -p:BuildNumber=$CI_PIPELINE_ID
+    script: dotnet pack -c Release --no-build $(eval $versioning_params)
     dependencies:
     - Build
     artifacts:
         paths:
         - "*/bin/Release"
-    only:
-    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
-
-Pack: # Pack with a prerelease suffix if it's not on master or a release/ branch
-    stage: Pack
-    script: dotnet pack -c Release --no-build -p:BuildNumber=$CI_PIPELINE_ID -p:PreReleaseSuffix=$CI_BUILD_REF_SLUG
-    dependencies:
-    - Build
-    artifacts:
-        paths:
-        - "*/bin/Release"
-    except:
-    - $CI_BUILD_REF_NAME =~ /^master$|release\/.*/i
 
 Publish:
     stage: Publish
