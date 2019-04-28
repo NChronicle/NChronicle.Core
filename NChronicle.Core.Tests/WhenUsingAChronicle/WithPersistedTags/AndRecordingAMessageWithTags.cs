@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NChronicle.Core.Tests
+namespace NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {

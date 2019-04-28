@@ -4,7 +4,7 @@ using NChronicle.Core.Model;
 using NSubstitute;
 using System.Collections.Generic;
 
-namespace NChronicle.Core.Tests
+namespace NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {
@@ -13,7 +13,7 @@ namespace NChronicle.Core.Tests
         public class AndUpdatingNChronicleConfiguration : WhenUsingAChronicleTestBase
         {
 
-            private ChronicleRecord _newReceivedRecord;
+            private IChronicleRecord _newReceivedRecord;
 
             private new static IEnumerable<object[]> _chronicleLevel => WhenUsingAChronicleTestBase._chronicleLevel;
 
@@ -24,7 +24,7 @@ namespace NChronicle.Core.Tests
 
                 this._newReceivedRecord = null;
                 var newLibrary = Substitute.For<IChronicleLibrary>();
-                newLibrary.Store(Arg.Do<ChronicleRecord>(r => this._newReceivedRecord = r));
+                newLibrary.Handle(Arg.Do<IChronicleRecord>(record => this._newReceivedRecord = record));
                 NChronicle.Configure(c => c.WithLibrary(newLibrary));
             }
 

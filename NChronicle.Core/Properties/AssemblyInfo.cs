@@ -1,36 +1,3 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.CompilerServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("NChronicle.Core")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NChronicle.Core")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("eb62629e-d250-47cb-81f6-7493244583bc")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.3.0")]
-[assembly: AssemblyFileVersion("1.0.3.0")]
+[assembly: InternalsVisibleTo("NChronicle.Core.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001005d989f11dbf8cfd32e55294cc0515e56417855330486c42ac17ff01338c180473761a9da69269c6b6becae685818a5ba84552c2c4d737f421ae98a3cb1bd452a7b3a368b90f56ad6700965eabf1d3ad962129e3a03f9fae065e1012133dd52edc6d75a984bdc2b18cf906a7f21c15fe3630f338b5310d8f44292e3ebdec80ace")]

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NChronicle.Core.Tests
+namespace NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {
@@ -90,8 +90,8 @@ namespace NChronicle.Core.Tests
                 }
 
                 // Assert
-                Assert.IsNotNull(_receivedRecord, "No ChronicleRecord was received.");
-                Assert.AreEqual(exception, this._receivedRecord.Exception, "Exception in received ChronicleRecord is not as recorded.");
+                Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received.");
+                Assert.AreEqual(new ChronicleException(exception), this._receivedRecord.Exception, "Exception in received ChronicleRecord is not as recorded.");
             }
 
             [TestMethod]

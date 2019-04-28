@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NChronicle.Core.Tests
+namespace NChronicle.Core.Tests.ForChronicle
 {
     public abstract class WhenUsingAChronicleTestBase
     {
@@ -17,7 +17,7 @@ namespace NChronicle.Core.Tests
         protected Chronicle _chronicle;
         protected string _message;
         protected string[] _tags;
-        protected ChronicleRecord _receivedRecord;
+        protected IChronicleRecord _receivedRecord;
 
         [TestInitialize]
         public virtual void Init()
@@ -27,7 +27,7 @@ namespace NChronicle.Core.Tests
             this._chronicle = new Chronicle();
 
             // Arrange
-            this._fakeLibrary.Store(Arg.Do<ChronicleRecord>(record => this._receivedRecord = record));
+            this._fakeLibrary.Handle(Arg.Do<IChronicleRecord>(record => this._receivedRecord = record));
             this._message = "This is a test message.";
             this._tags = new[] { "test1", "Tr1angl3" };
         }

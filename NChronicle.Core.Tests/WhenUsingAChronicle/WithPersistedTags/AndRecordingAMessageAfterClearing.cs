@@ -3,7 +3,7 @@ using NChronicle.Core.Model;
 using NSubstitute;
 using System.Collections.Generic;
 
-namespace NChronicle.Core.Tests
+namespace NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {

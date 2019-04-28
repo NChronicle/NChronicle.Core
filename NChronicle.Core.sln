@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{9E00CCD6-1
 		.gitlab-ci.yml = .gitlab-ci.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NChronicle.Core", "NChronicle.Core\NChronicle.Core.csproj", "{1E6775D7-E18D-4CF8-8B0B-8BCCBD77BF23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NChronicle.Core", "NChronicle.Core\NChronicle.Core.csproj", "{1E6775D7-E18D-4CF8-8B0B-8BCCBD77BF23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NChronicle.Core.Tests", "NChronicle.Core.Tests\NChronicle.Core.Tests.csproj", "{33688A95-1768-401A-A19B-F3C23BFBB7B0}"
 EndProject

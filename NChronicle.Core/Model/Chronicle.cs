@@ -86,7 +86,7 @@ namespace NChronicle.Core.Model
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Critical(string message, Exception exception, params string[] tags)
         {
-            ChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Critical, message, exception, tags);
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Critical, message, exception, tags);
             this.SendToLibraries(chronicleRecord);
         }
         #endregion
@@ -120,7 +120,7 @@ namespace NChronicle.Core.Model
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Warning(string message, Exception exception, params string[] tags)
         {
-            ChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Warning, message, exception, tags);
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Warning, message, exception, tags);
             this.SendToLibraries(chronicleRecord);
         }
         #endregion
@@ -154,7 +154,7 @@ namespace NChronicle.Core.Model
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Debug(string message, Exception exception, params string[] tags)
         {
-            ChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Debug, message, exception, tags);
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Debug, message, exception, tags);
             this.SendToLibraries(chronicleRecord);
         }
         #endregion
@@ -188,7 +188,7 @@ namespace NChronicle.Core.Model
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Success(string message, Exception exception, params string[] tags)
         {
-            ChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Success, message, exception, tags);
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Success, message, exception, tags);
             this.SendToLibraries(chronicleRecord);
         }
         #endregion
@@ -222,24 +222,24 @@ namespace NChronicle.Core.Model
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Info(string message, Exception exception, params string[] tags)
         {
-            ChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Info, message, exception, tags);
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Info, message, exception, tags);
             this.SendToLibraries(chronicleRecord);
         }
         #endregion
 
         #endregion
 
-        private ChronicleRecord BuildRecord(ChronicleLevel level, string message, Exception exception, IEnumerable<string> tags)
+        private IChronicleRecord BuildRecord(ChronicleLevel level, string message, Exception exception, IEnumerable<string> tags)
         {
             IEnumerable<string> allTags = tags.Concat(this._tags);
             return new ChronicleRecord(level, message, exception, allTags.ToArray());
         }
 
-        private void SendToLibraries(ChronicleRecord record)
+        private void SendToLibraries(IChronicleRecord record)
         {
             foreach (var library in this._configuration.Libraries)
             {
-                library.Store(record);
+                library.Handle(record);
             }
         }
 

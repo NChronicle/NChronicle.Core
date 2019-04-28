@@ -1,11 +1,13 @@
 ﻿using System;
 
-namespace NChronicle.Core.Interfaces {
+namespace NChronicle.Core.Interfaces
+{
 
     /// <summary>
     /// A container for primary recording methods.
     /// </summary>
-    public interface IChronicle {
+    public interface IChronicle
+    {
 
         /// <summary>
         /// Record a <see cref="Model.ChronicleLevel.Critical"/> level message with the specified <paramref name="tags"/>.
