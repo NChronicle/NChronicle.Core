@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <RootNamespace>NChronicle.Core</RootNamespace>
+    <RootNamespace>KSharp.NChronicle.Core</RootNamespace>
     <AssemblyName>NChronicle.Core</AssemblyName>
     <LangVersion>7.3</LangVersion>
     <NullableReferenceTypes>enable</NullableReferenceTypes>
@@ -64,11 +64,11 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     <Compile Include="Model\ChronicleConfiguration.cs" />
     <Compile Include="Model\ChronicleException.cs" />
     <Compile Include="Model\ChronicleLevel.cs" />
-    <Compile Include="Model\Chronicle.cs" />
+    <Compile Include="Chronicle.cs" />
     <Compile Include="Interfaces\IChronicle.cs" />
     <Compile Include="Interfaces\IChronicleLibrary.cs" />
     <Compile Include="Model\ChronicleRecord.cs" />
-    <Compile Include="NChronicle.cs" />
+    <Compile Include="StaticChronicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 

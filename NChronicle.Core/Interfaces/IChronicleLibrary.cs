@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Model;
 
-namespace NChronicle.Core.Interfaces
+namespace KSharp.NChronicle.Core.Interfaces
 {
 
     /// <summary>

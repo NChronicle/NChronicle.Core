@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Interfaces;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Model;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NChronicle.Core.Tests.ForChronicle
+namespace KSharp.NChronicle.Core.Tests.ForChronicle
 {
     public abstract class WhenUsingAChronicleTestBase
     {
@@ -23,7 +23,7 @@ namespace NChronicle.Core.Tests.ForChronicle
         public virtual void Init()
         {
             this._fakeLibrary = Substitute.For<IChronicleLibrary>();
-            NChronicle.Configure(c => c.WithLibrary(_fakeLibrary)); // todo: Shouldn't be needed to test Chronicle
+            Chronicle.Configure(c => c.WithLibrary(_fakeLibrary)); // todo: Shouldn't be needed to test Chronicle
             this._chronicle = new Chronicle();
 
             // Arrange

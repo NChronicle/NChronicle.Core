@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Model;
 using System.Linq;
 
-namespace NChronicle.Core.Tests.ForChronicleException
+namespace KSharp.NChronicle.Core.Tests.ForChronicleException
 {
     public partial class WhenUsingChronicleException
     {

@@ -1,11 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Model;
-using NSubstitute;
-using System;
+using KSharp.NChronicle.Core.Model;
 using System.Collections.Generic;
-using System.Linq;
+using KSharp.NChronicle.Core.Tests.ForChronicle;
 
-namespace NChronicle.Core.Tests.ForChronicle
+namespace KSharp.NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {

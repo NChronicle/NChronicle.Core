@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace NChronicle.Core.Tests.ForChronicle
+namespace KSharp.NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {
@@ -99,7 +98,18 @@ namespace NChronicle.Core.Tests.ForChronicle
             public void ThenThereAreNoTags(ChronicleLevel level)
             {
                 // Act
-                CallAction(level, _message);
+                Exception exception;
+                try
+                {
+                    throw new DivideByZeroException("You cannot divide by 0.");
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+
+                    // Act
+                    CallAction(level, this._message, e);
+                }
 
                 // Assert
                 Assert.IsNotNull(_receivedRecord, "No ChronicleRecord was received.");

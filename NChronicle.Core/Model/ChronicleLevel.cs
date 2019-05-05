@@ -1,11 +1,9 @@
-﻿using System.Security;
-
-namespace NChronicle.Core.Model {
+﻿namespace KSharp.NChronicle.Core.Model
+{
 
     /// <summary>
     /// Level/severity of a Chronicle record
     /// </summary>
-    [SecurityCritical]
     public enum ChronicleLevel {
 
         /// <summary>

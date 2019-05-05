@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Model;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace NChronicle.Core.Tests.ForChronicleRecord
+namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
 {
     public partial class WhenUsingChronicleRecord
     {

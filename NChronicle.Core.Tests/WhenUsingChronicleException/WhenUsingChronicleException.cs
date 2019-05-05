@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Model;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace NChronicle.Core.Tests.ForChronicleException
+namespace KSharp.NChronicle.Core.Tests.ForChronicleException
 {
 
     [TestClass]

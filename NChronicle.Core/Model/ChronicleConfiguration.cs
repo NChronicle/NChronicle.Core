@@ -3,12 +3,11 @@ using System.Collections.Concurrent;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using NChronicle.Core.Interfaces;
-#if !NETFX
 using System.Reflection;
-#endif
+using KSharp.NChronicle.Core.Interfaces;
 
-namespace NChronicle.Core.Model {
+namespace KSharp.NChronicle.Core.Model
+{
 
     /// <summary>
     /// Container for <see cref="Chronicle"/> configuration.

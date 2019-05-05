@@ -1,8 +1,8 @@
-﻿using NChronicle.Core.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using KSharp.NChronicle.Core.Model;
 
-namespace NChronicle.Core.Interfaces
+namespace KSharp.NChronicle.Core.Interfaces
 {
 
     /// <summary>
@@ -37,4 +37,5 @@ namespace NChronicle.Core.Interfaces
         IEnumerable<string> Tags { get; }
 
     }
+
 }

@@ -3,28 +3,31 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NChronicle.Core.Delegates;
-using NChronicle.Core.Model;
 using System.Threading;
+using KSharp.NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Delegates;
+using NChronicle.Core.Delegates;
 
-namespace NChronicle.Core {
+namespace KSharp.NChronicle.Core
+{
 
-	/// <summary>
-	/// Container for NChronicle functions and base configuration.
-	/// </summary>
-	public static class NChronicle {
+    /// <summary>
+    /// Container for NChronicle functions and base configuration.
+    /// </summary>
+    public partial class Chronicle {
 
-		private static ChronicleConfiguration _configuration {
+		private static ChronicleConfiguration _globalConfiguration {
 			get; set;
 		}
+
 		private static Timer _updateTimer {
 			get; set;
 		}
 
 		internal static event ConfigurationSubscriberDelegate ConfigurationChanged;
 
-		static NChronicle () {
-			_configuration = new ChronicleConfiguration ();
+		static Chronicle () {
+            _globalConfiguration = new ChronicleConfiguration ();
 		}
 
 		/// <summary>
@@ -32,7 +35,7 @@ namespace NChronicle.Core {
 		/// </summary> 
 		/// <param name="configurationDelegate">A function to set <see cref="NChronicle"/> configuration.</param>
 		public static void Configure (ChronicleConfigurationDelegate configurationDelegate) {
-			configurationDelegate.Invoke (_configuration);
+			configurationDelegate.Invoke (_globalConfiguration);
 			ConfigurationChanged?.Invoke ();
 		}
 
@@ -77,7 +80,7 @@ namespace NChronicle.Core {
 		public static void SaveConfigurationTo (string path) {
             using (var fileStream = new FileStream(path, FileMode.Create))
             using (var textWriter = XmlWriter.Create(fileStream, new XmlWriterSettings() { Encoding = Encoding.UTF8 })) {
-                new XmlSerializer(typeof(ChronicleConfiguration)).Serialize(textWriter, _configuration);
+                new XmlSerializer(typeof(ChronicleConfiguration)).Serialize(textWriter, _globalConfiguration);
             }
         }
 
@@ -107,20 +110,20 @@ namespace NChronicle.Core {
 			if (config == null) {
 				throw new XmlException ($"Could not serialize NChronicle Configuration from file {path}.");
 			}
-			_configuration.Dispose ();
-			_configuration = config;
+            _globalConfiguration.Dispose ();
+            _globalConfiguration = config;
 			ConfigurationChanged?.Invoke ();
 		}
 
 		private static void ClearConfiguration () {
-			var oldConfig = _configuration;
-			_configuration = new ChronicleConfiguration ();
+			var oldConfig = _globalConfiguration;
+            _globalConfiguration = new ChronicleConfiguration ();
 			ConfigurationChanged?.Invoke ();
 			oldConfig.Dispose ();
 		}
 
 		internal static ChronicleConfiguration GetConfiguration () {
-			return _configuration.Clone ();
+			return _globalConfiguration.Clone ();
 		}
 
 	}

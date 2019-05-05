@@ -1,11 +1,12 @@
-﻿using NChronicle.Core.Converters;
-using NChronicle.Core.Interfaces;
+﻿using KSharp.NChronicle.Core.Converters;
+using KSharp.NChronicle.Core.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NChronicle.Core.Model {
+namespace KSharp.NChronicle.Core.Model
+{
 
     /// <summary>
     /// Container of information regarding a chronicle record.

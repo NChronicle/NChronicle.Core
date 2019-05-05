@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NChronicle.Core.Tests.ForChronicle
+namespace KSharp.NChronicle.Core.Tests.ForChronicle
 {
     public abstract class WithPersistedTagsTestBase : WhenUsingAChronicleTestBase
     {

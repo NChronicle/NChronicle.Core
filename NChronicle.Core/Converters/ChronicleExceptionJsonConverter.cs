@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace NChronicle.Core.Converters
+namespace KSharp.NChronicle.Core.Converters
 {
     internal class ChronicleExceptionJsonConverter : JsonConverter
     {

@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using NChronicle.Core.Converters;
+using KSharp.NChronicle.Core.Converters;
 using Newtonsoft.Json;
 
-namespace NChronicle.Core.Model
+namespace KSharp.NChronicle.Core.Model
 {
 
     /// <summary>

@@ -2,15 +2,16 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Model;
 
-namespace NChronicle.Core.Model
+namespace KSharp.NChronicle.Core
 {
 
     /// <summary>
     /// NChronicle container for primary recording methods.
     /// </summary>
-    public class Chronicle : IChronicle
+    public partial class Chronicle : IChronicle
     {
 
         private ChronicleConfiguration _configuration;
@@ -21,14 +22,14 @@ namespace NChronicle.Core.Model
         /// </summary>
         public Chronicle()
         {
-            this._configuration = NChronicle.GetConfiguration();
-            NChronicle.ConfigurationChanged += this.ConfigurationChangedHandler;
+            this._configuration = Chronicle.GetConfiguration();
+            Chronicle.ConfigurationChanged += this.ConfigurationChangedHandler;
             this._tags = new ConcurrentBag<string>();
         }
 
         private void ConfigurationChangedHandler()
         {
-            this._configuration = NChronicle.GetConfiguration();
+            this._configuration = Chronicle.GetConfiguration();
         }
 
         #region Tags
@@ -350,7 +351,7 @@ namespace NChronicle.Core.Model
         /// </summary>
         ~Chronicle()
         {
-            NChronicle.ConfigurationChanged -= this.ConfigurationChangedHandler;
+            Chronicle.ConfigurationChanged -= this.ConfigurationChangedHandler;
         }
 
     }

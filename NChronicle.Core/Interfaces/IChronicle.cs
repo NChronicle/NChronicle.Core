@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NChronicle.Core.Interfaces
+namespace KSharp.NChronicle.Core.Interfaces
 {
 
     /// <summary>

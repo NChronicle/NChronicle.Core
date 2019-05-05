@@ -1,16 +1,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NChronicle.Core.Interfaces;
-using NChronicle.Core.Model;
+using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Model;
 using NSubstitute;
 using System.Collections.Generic;
 
-namespace NChronicle.Core.Tests.ForChronicle
+namespace KSharp.NChronicle.Core.Tests.ForChronicle
 {
     public partial class WhenUsingAChronicle
     {
 
         [TestClass]
-        public class AndUpdatingNChronicleConfiguration : WhenUsingAChronicleTestBase
+        public class AndUpdatingGlobalChronicleConfiguration : WhenUsingAChronicleTestBase
         {
 
             private IChronicleRecord _newReceivedRecord;
@@ -25,7 +25,7 @@ namespace NChronicle.Core.Tests.ForChronicle
                 this._newReceivedRecord = null;
                 var newLibrary = Substitute.For<IChronicleLibrary>();
                 newLibrary.Handle(Arg.Do<IChronicleRecord>(record => this._newReceivedRecord = record));
-                NChronicle.Configure(c => c.WithLibrary(newLibrary));
+                Chronicle.Configure(c => c.WithLibrary(newLibrary));
             }
 
             [TestMethod]
