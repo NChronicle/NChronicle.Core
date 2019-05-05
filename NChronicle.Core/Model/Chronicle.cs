@@ -57,6 +57,74 @@ namespace NChronicle.Core.Model
 
         #region Recorders
 
+        #region Emergency
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Emergency"/> level message with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="message">Message to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Emergency(string message, params string[] tags)
+        {
+            this.Emergency(message, null, tags);
+        }
+
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Emergency"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Emergency(Exception exception, params string[] tags)
+        {
+            this.Emergency(exception.Message, exception, tags);
+        }
+
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Emergency"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="message">Message to be recorded.</param>
+        /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Emergency(string message, Exception exception, params string[] tags)
+        {
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Emergency, message, exception, tags);
+            this.SendToLibraries(chronicleRecord);
+        }
+        #endregion
+
+        #region Fatal
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Fatal"/> level message with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="message">Message to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Fatal(string message, params string[] tags)
+        {
+            this.Fatal(message, null, tags);
+        }
+
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Fatal"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Fatal(Exception exception, params string[] tags)
+        {
+            this.Fatal(exception.Message, exception, tags);
+        }
+
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Fatal"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="message">Message to be recorded.</param>
+        /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Fatal(string message, Exception exception, params string[] tags)
+        {
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Fatal, message, exception, tags);
+            this.SendToLibraries(chronicleRecord);
+        }
+        #endregion
+
         #region Critical
         /// <summary>
         /// Record a <see cref="ChronicleLevel.Critical"/> level message with the specified <paramref name="tags"/>.
@@ -223,6 +291,40 @@ namespace NChronicle.Core.Model
         public void Info(string message, Exception exception, params string[] tags)
         {
             IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Info, message, exception, tags);
+            this.SendToLibraries(chronicleRecord);
+        }
+        #endregion
+
+        #region Trace
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Trace"/> level message with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="message">Message to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Trace(string message, params string[] tags)
+        {
+            this.Trace(message, null, tags);
+        }
+
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Trace"/> level <see cref="Exception"/> with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Trace(Exception exception, params string[] tags)
+        {
+            this.Trace(exception.Message, exception, tags);
+        }
+
+        /// <summary>
+        /// Record a <see cref="ChronicleLevel.Trace"/> level message and <see cref="Exception"/> with the specified <paramref name="tags"/>.
+        /// </summary>
+        /// <param name="message">Message to be recorded.</param>
+        /// <param name="exception"><see cref="Exception"/> to be recorded.</param>
+        /// <param name="tags">Tags to be appended to this record.</param>
+        public void Trace(string message, Exception exception, params string[] tags)
+        {
+            IChronicleRecord chronicleRecord = BuildRecord(ChronicleLevel.Trace, message, exception, tags);
             this.SendToLibraries(chronicleRecord);
         }
         #endregion

@@ -1,9 +1,22 @@
-﻿namespace NChronicle.Core.Model {
+﻿using System.Security;
+
+namespace NChronicle.Core.Model {
 
     /// <summary>
     /// Level/severity of a Chronicle record
     /// </summary>
+    [SecurityCritical]
     public enum ChronicleLevel {
+
+        /// <summary>
+        /// An emergency level record - best used only in catastrophic events that indicate real world emergency such as significant financial loss or threat to life.
+        /// </summary>
+        Emergency,
+
+        /// <summary>
+        /// A fatal level record - best used in events that induce complete application/service failure.
+        /// </summary>
+        Fatal,
 
         /// <summary>
         /// A critical level record - best used in events of paramount importance.
@@ -28,7 +41,12 @@
         /// <summary>
         /// A debug level record - best used with less notable information for later debugging.
         /// </summary>
-        Debug
+        Debug,
+
+        /// <summary>
+        /// A trace level record - best used with high verbosity and/or meticulous messages.
+        /// </summary>
+        Trace
 
     }
 

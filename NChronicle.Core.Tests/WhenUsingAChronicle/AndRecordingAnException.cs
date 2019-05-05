@@ -102,7 +102,18 @@ namespace NChronicle.Core.Tests.ForChronicle
             public void ThenThereAreNoTags(ChronicleLevel level)
             {
                 // Act
-                CallAction(level, _message);
+                Exception exception;
+                try
+                {
+                    throw new DivideByZeroException("You cannot divide by 0.");
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+
+                    // Act
+                    CallAction(level, exception: e);
+                }
 
                 // Assert
                 Assert.IsNotNull(_receivedRecord, "No ChronicleRecord was received.");

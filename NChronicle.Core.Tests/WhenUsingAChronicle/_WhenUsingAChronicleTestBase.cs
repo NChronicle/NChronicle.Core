@@ -38,33 +38,42 @@ namespace NChronicle.Core.Tests.ForChronicle
             {
                 switch (level)
                 {
+                    case ChronicleLevel.Emergency: this._chronicle.Emergency(message, exception, tags); break;
+                    case ChronicleLevel.Fatal: this._chronicle.Fatal(message, exception, tags); break;
                     case ChronicleLevel.Critical: this._chronicle.Critical(message, exception, tags); break;
                     case ChronicleLevel.Debug: this._chronicle.Debug(message, exception, tags); break;
                     case ChronicleLevel.Info: this._chronicle.Info(message, exception, tags); break;
                     case ChronicleLevel.Success: this._chronicle.Success(message, exception, tags); break;
                     case ChronicleLevel.Warning: this._chronicle.Warning(message, exception, tags); break;
+                    case ChronicleLevel.Trace: this._chronicle.Trace(message, exception, tags); break;
                 }
             }
             else if (message != null)
             {
                 switch (level)
                 {
+                    case ChronicleLevel.Emergency: this._chronicle.Emergency(message, tags); break;
+                    case ChronicleLevel.Fatal: this._chronicle.Fatal(message, tags); break;
                     case ChronicleLevel.Critical: this._chronicle.Critical(message, tags); break;
                     case ChronicleLevel.Debug: this._chronicle.Debug(message, tags); break;
                     case ChronicleLevel.Info: this._chronicle.Info(message, tags); break;
                     case ChronicleLevel.Success: this._chronicle.Success(message, tags); break;
                     case ChronicleLevel.Warning: this._chronicle.Warning(message, tags); break;
+                    case ChronicleLevel.Trace: this._chronicle.Trace(message, tags); break;
                 }
             }
             else if (exception != null)
             {
                 switch (level)
                 {
+                    case ChronicleLevel.Emergency: this._chronicle.Emergency(exception, tags); break;
+                    case ChronicleLevel.Fatal: this._chronicle.Fatal(exception, tags); break;
                     case ChronicleLevel.Critical: this._chronicle.Critical(exception, tags); break;
                     case ChronicleLevel.Debug: this._chronicle.Debug(exception, tags); break;
                     case ChronicleLevel.Info: this._chronicle.Info(exception, tags); break;
                     case ChronicleLevel.Success: this._chronicle.Success(exception, tags); break;
                     case ChronicleLevel.Warning: this._chronicle.Warning(exception, tags); break;
+                    case ChronicleLevel.Trace: this._chronicle.Trace(exception, tags); break;
                 }
             }
         }
