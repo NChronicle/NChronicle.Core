@@ -271,7 +271,7 @@ namespace KSharp.NChronicle.Core.Abstractions
 
         private string MessageKeyHandler(ChronicleRecord record)
         {
-            return record.Message != record.Exception?.Message ? record.Message : string.Empty;
+            return record.Message;
         }
 
         private string ExceptionKeyHandler(ChronicleRecord record)

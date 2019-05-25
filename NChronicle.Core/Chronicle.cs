@@ -76,7 +76,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Emergency(Exception exception, params string[] tags)
         {
-            this.Emergency(exception.Message, exception, tags);
+            this.Emergency(null, exception, tags);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Fatal(Exception exception, params string[] tags)
         {
-            this.Fatal(exception.Message, exception, tags);
+            this.Fatal(null, exception, tags);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Critical(Exception exception, params string[] tags)
         {
-            this.Critical(exception.Message, exception, tags);
+            this.Critical(null, exception, tags);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Warning(Exception exception, params string[] tags)
         {
-            this.Warning(exception.Message, exception, tags);
+            this.Warning(null, exception, tags);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Debug(Exception exception, params string[] tags)
         {
-            this.Debug(exception.Message, exception, tags);
+            this.Debug(null, exception, tags);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Success(Exception exception, params string[] tags)
         {
-            this.Success(exception.Message, exception, tags);
+            this.Success(null, exception, tags);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Info(Exception exception, params string[] tags)
         {
-            this.Info(exception.Message, exception, tags);
+            this.Info(null, exception, tags);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace KSharp.NChronicle.Core
         /// <param name="tags">Tags to be appended to this record.</param>
         public void Trace(Exception exception, params string[] tags)
         {
-            this.Trace(exception.Message, exception, tags);
+            this.Trace(null, exception, tags);
         }
 
         /// <summary>

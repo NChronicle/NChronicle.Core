@@ -57,7 +57,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
 
                 [TestMethod]
                 [DynamicData(nameof(_chronicleLevel))]
-                public void ThenTheMessageIsTheExceptionMessage(ChronicleLevel level)
+                public void ThenTheMessageIsNull(ChronicleLevel level)
                 {
                     Exception exception;
                     try
@@ -74,7 +74,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
 
                     // Assert
                     Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received.");
-                    Assert.AreEqual(exception.Message, this._receivedRecord.Message, "Message in received ChronicleRecord is not exception message.");
+                    Assert.IsNull(this._receivedRecord.Message, "Message in received ChronicleRecord is not null.");
                 }
 
                 [TestMethod]
