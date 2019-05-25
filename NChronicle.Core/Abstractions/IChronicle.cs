@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KSharp.NChronicle.Core.Interfaces
+namespace KSharp.NChronicle.Core.Abstractions
 {
 
     /// <summary>

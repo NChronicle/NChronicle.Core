@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using KSharp.NChronicle.Core.Converters;
 using Newtonsoft.Json;
 
@@ -140,6 +141,31 @@ namespace KSharp.NChronicle.Core.Model
                 hash = hash * 23 + this.ExceptionType.GetHashCode();
                 return hash;
             }
+        }
+
+        /// <summary>
+        /// Creates and returns a string representation of the current exception.
+        /// </summary>
+        /// <returns>A string representation of the current exception.</returns>
+        public override string ToString() {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(this.HResult);
+            stringBuilder.Append(": ");
+            stringBuilder.Append(this.Message);
+            if (!string.IsNullOrEmpty(this.StackTrace))
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append(this.StackTrace);
+            }
+            if (this.InnerExceptions?.Any() ?? false)
+            {
+                foreach (var exception in this.InnerExceptions)
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(exception);
+                }
+            }
+            return stringBuilder.ToString();
         }
 
     }

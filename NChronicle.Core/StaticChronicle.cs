@@ -7,6 +7,7 @@ using System.Threading;
 using KSharp.NChronicle.Core.Model;
 using KSharp.NChronicle.Core.Delegates;
 using NChronicle.Core.Delegates;
+using KSharp.NChronicle.Core.Abstractions;
 
 namespace KSharp.NChronicle.Core
 {
@@ -31,7 +32,7 @@ namespace KSharp.NChronicle.Core
 		}
 
 		/// <summary>
-		/// Configure all new and existing <see cref="Chronicle"/> instances with the specified options and <see cref="Interfaces.IChronicleLibrary"/>s.
+		/// Configure all new and existing <see cref="Chronicle"/> instances with the specified options and <see cref="IChronicleLibrary"/>s.
 		/// </summary> 
 		/// <param name="configurationDelegate">A function to set <see cref="NChronicle"/> configuration.</param>
 		public static void Configure (ChronicleConfigurationDelegate configurationDelegate) {

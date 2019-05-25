@@ -56,17 +56,18 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
 
   <ItemGroup>
     <None Remove="**\*" />
+    <Compile Include="Abstractions\ChronicleLibrary.cs" />
     <Compile Include="Converters\ChronicleExceptionJsonConverter.cs" />
     <Compile Include="Converters\ChronicleRecordJsonConverter.cs" />
     <Compile Include="Delegates\ChronicleConfigurationDelegate.cs" />
     <Compile Include="Delegates\ConfigurationSubscriberDelegate.cs" />
-    <Compile Include="Interfaces\IChronicleRecord.cs" />
+    <Compile Include="Abstractions\IChronicleRecord.cs" />
     <Compile Include="Model\ChronicleConfiguration.cs" />
     <Compile Include="Model\ChronicleException.cs" />
     <Compile Include="Model\ChronicleLevel.cs" />
     <Compile Include="Chronicle.cs" />
-    <Compile Include="Interfaces\IChronicle.cs" />
-    <Compile Include="Interfaces\IChronicleLibrary.cs" />
+    <Compile Include="Abstractions\IChronicle.cs" />
+    <Compile Include="Abstractions\IChronicleLibrary.cs" />
     <Compile Include="Model\ChronicleRecord.cs" />
     <Compile Include="StaticChronicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +82,7 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
     <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
     <PackageReference Include="System.Threading.Timer" Version="4.3.0" />
     <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.0" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />

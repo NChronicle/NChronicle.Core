@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Reflection;
-using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Abstractions;
 
 namespace KSharp.NChronicle.Core.Model
 {
@@ -58,7 +58,7 @@ namespace KSharp.NChronicle.Core.Model
         /// Populate configuration from XML via the specified <see cref="XmlReader" />.
         /// </summary>
         /// <param name="reader"><see cref="XmlReader" /> stream from the configuration file.</param>
-        /// <seealso cref="NChronicle.ConfigureFrom(string, bool, int)"/>
+        /// <seealso cref="Chronicle.ConfigureFrom(string, bool, int)"/>
         public void ReadXml (XmlReader reader) {
             if (reader.Name != nameof(ChronicleConfiguration))
                 throw new XmlException($"Unexpected node '{reader.Name}', expected '{nameof(ChronicleConfiguration)}'.");
@@ -120,7 +120,7 @@ namespace KSharp.NChronicle.Core.Model
         /// Write configuration to XML via the specified <see cref="XmlWriter" />.
         /// </summary>
         /// <param name="writer"><see cref="XmlWriter" /> stream to the configuration file.</param>
-        /// <seealso cref="NChronicle.SaveConfigurationTo(string)"/>
+        /// <seealso cref="Chronicle.SaveConfigurationTo(string)"/>
         public void WriteXml (XmlWriter writer) {
             writer.WriteStartElement(nameof(this.Libraries));
             foreach (var library in this.Libraries) {

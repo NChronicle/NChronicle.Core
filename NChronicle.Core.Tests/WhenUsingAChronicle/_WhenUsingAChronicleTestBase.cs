@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Abstractions;
 using KSharp.NChronicle.Core.Model;
 using NSubstitute;
 using System;

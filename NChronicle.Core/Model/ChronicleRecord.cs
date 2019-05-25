@@ -1,5 +1,5 @@
 ﻿using KSharp.NChronicle.Core.Converters;
-using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Abstractions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using KSharp.NChronicle.Core.Model;
 
-namespace KSharp.NChronicle.Core.Interfaces
+namespace KSharp.NChronicle.Core.Abstractions
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ namespace KSharp.NChronicle.Core.Interfaces
         /// <summary>
         /// Handle the specified <see cref="IChronicleRecord"/> in this library.
         /// </summary>
-        /// <param name="record">The NChronicle record to store</param>
+        /// <param name="record">The <see cref="IChronicleRecord"/> to store</param>
         void Handle(IChronicleRecord record);
 
     }

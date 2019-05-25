@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using KSharp.NChronicle.Core.Model;
 
-namespace KSharp.NChronicle.Core.Interfaces
+namespace KSharp.NChronicle.Core.Abstractions
 {
 
     /// <summary>

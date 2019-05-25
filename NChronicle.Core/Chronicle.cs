@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using KSharp.NChronicle.Core.Interfaces;
+using KSharp.NChronicle.Core.Abstractions;
 using KSharp.NChronicle.Core.Model;
 
 namespace KSharp.NChronicle.Core
