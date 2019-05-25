@@ -55,6 +55,13 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 }
 
                 [TestMethod]
+                public void AndAllButTheThreadIdAreEqualThenTheChronicleRecordsAreNotEqual()
+                {
+                    this._recordOne.ThreadId = 99;
+                    Assert.IsFalse(this._recordOne.Equals(this._recordTwo), "The records are incorrectly considered equal.");
+                }
+
+                [TestMethod]
                 public void AndAllButTheExceptionsAreEqualThenTheChronicleRecordsAreNotEqual()
                 {
                     this._recordOne.Exception = new ChronicleException(new DriveNotFoundException());

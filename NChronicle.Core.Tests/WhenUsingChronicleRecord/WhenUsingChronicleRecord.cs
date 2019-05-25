@@ -50,6 +50,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
             Assert.IsNotNull(deserializedRecord.Exception, "The exception was not deserialized.");
             Assert.IsNotNull(deserializedRecord.Tags, "The tags were not deserialized.");
 
+            Assert.AreEqual(originalRecord.ThreadId, deserializedRecord.ThreadId, "The message was deserialized but incorrectly.");
             Assert.AreEqual(originalRecord.Message, deserializedRecord.Message, "The message was deserialized but incorrectly.");
             Assert.AreEqual(originalRecord.UtcTime, deserializedRecord.UtcTime, "The time was not deserialized correctly.");
             Assert.AreEqual(originalRecord.Level, deserializedRecord.Level, "The level was not deserialized correctly.");

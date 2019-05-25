@@ -286,7 +286,7 @@ namespace KSharp.NChronicle.Core.Abstractions
 
         private string ThreadKeyHandler(ChronicleRecord record)
         {
-            return Thread.CurrentThread.ManagedThreadId.ToString();
+            return record.ThreadId.ToString();
         }
 
         private string TagsKeyHandler(ChronicleRecord record)

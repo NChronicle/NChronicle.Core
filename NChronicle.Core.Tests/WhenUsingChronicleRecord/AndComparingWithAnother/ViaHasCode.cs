@@ -47,6 +47,13 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 }
 
                 [TestMethod]
+                public void AndAllButTheThreadIdAreEqualThenTheHashCodesAreEqual()
+                {
+                    this._recordOne.ThreadId = 99;
+                    Assert.AreEqual(this._recordOne.GetHashCode(), this._recordTwo.GetHashCode(), "The hash codes are not equal.");
+                }
+
+                [TestMethod]
                 public void AndAllButTheTimeAreEqualThenTheHashCodesAreEqual()
                 {
                     this._recordOne.UtcTime = DateTime.UtcNow;

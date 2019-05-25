@@ -12,6 +12,11 @@ namespace KSharp.NChronicle.Core.Abstractions
     {
 
         /// <summary>
+        /// The managed thread Id for the thread on which this record was created. 
+        /// </summary>
+        int ThreadId { get; }
+
+        /// <summary>
         /// The date and time of when this record was created in UTC.
         /// </summary>
         DateTime UtcTime { get; }

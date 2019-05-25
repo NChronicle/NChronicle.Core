@@ -43,7 +43,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
             public void ThenTheDefaultPatternIsAsExpected()
             {
                 var result = this._library.ResolveMessageOutputWithDefaultPattern(this._record, TimeZoneInfo.Utc);
-                Assert.AreEqual($"{this._record.UtcTime.ToString("yyyy/MM/dd HH:mm:ss.fff")} [{Thread.CurrentThread.ManagedThreadId}] {this._record.Message} \n{this._record.Exception}\n[{String.Join(", ", this._record.Tags)}]", result);
+                Assert.AreEqual($"{this._record.UtcTime.ToString("yyyy/MM/dd HH:mm:ss.fff")} [{this._record.ThreadId}] {this._record.Message} \n{this._record.Exception}\n[{String.Join(", ", this._record.Tags)}]", result);
             }
 
             [TestMethod]
@@ -57,7 +57,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
             public void ThenRecordThreadCanBeRendered()
             {
                 var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{TH}");
-                Assert.AreEqual(Thread.CurrentThread.ManagedThreadId.ToString(), result);
+                Assert.AreEqual(this._record.ThreadId.ToString(), result);
             }
 
             [TestMethod]
@@ -122,7 +122,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
             {
                 this._record = new ChronicleRecord(ChronicleLevel.Debug, null, this._exception);
                 var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{EXC?{TH}}{MSG?{LVL}}");
-                Assert.AreEqual(Thread.CurrentThread.ManagedThreadId.ToString(), result);
+                Assert.AreEqual(this._record.ThreadId.ToString(), result);
             }
 
             [TestMethod]

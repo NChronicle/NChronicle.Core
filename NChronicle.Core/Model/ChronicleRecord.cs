@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace KSharp.NChronicle.Core.Model
 {
@@ -17,6 +18,7 @@ namespace KSharp.NChronicle.Core.Model
 
         internal ChronicleRecord()
         {
+            this.ThreadId = Thread.CurrentThread.ManagedThreadId;
             this.UtcTime = DateTime.UtcNow;
             this.Message = null;
             this.Tags = new List<string>().AsReadOnly();
@@ -35,12 +37,18 @@ namespace KSharp.NChronicle.Core.Model
         /// <param name="tags">Tags to append to this record. Optional.</param>
         public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, params string[] tags)
         {
+            this.ThreadId = Thread.CurrentThread.ManagedThreadId;
             this.UtcTime = DateTime.UtcNow;
             this.Message = message;
             this.Tags = tags?.ToList().AsReadOnly() ?? new List<string>().AsReadOnly();
             this.Exception = exception == null ? null : new ChronicleException(exception);
             this.Level = level;
         }
+
+        /// <summary>
+        /// The managed thread Id for the thread on which this record was created. 
+        /// </summary>
+        public int ThreadId { get; internal set; }
 
         /// <summary>
         /// The date and time of when this record was created in UTC.
@@ -66,6 +74,7 @@ namespace KSharp.NChronicle.Core.Model
         /// Related <see cref="System.Exception"/> for this record. May be absent.
         /// </summary>
         public ChronicleException Exception { get; internal set; }
+
 
         /// <summary>
         /// Get a boolean value indicating whether this Chronicle Record can
@@ -99,6 +108,7 @@ namespace KSharp.NChronicle.Core.Model
                 && (this.Exception == null) == (anotherRecord.Exception == null)
                 && (this.Exception == null || this.Exception.Equals(anotherRecord.Exception))
                 && this.Message == anotherRecord.Message
+                && this.ThreadId == anotherRecord.ThreadId
                 && this.Level == anotherRecord.Level
                 && (this.Tags == null) == (anotherRecord.Tags == null)
                 && (this.Tags == null || new HashSet<string>(this.Tags).SetEquals(anotherRecord.Tags));
