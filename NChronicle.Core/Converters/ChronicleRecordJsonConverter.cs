@@ -13,15 +13,18 @@ namespace KSharp.NChronicle.Core.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            ChronicleRecord chronicleRecord = new ChronicleRecord();
-            JObject record = JObject.Load(reader);
+            var chronicleRecord = new ChronicleRecord();
+            var record = JObject.Load(reader);
 
-            JToken utcTime = record["UtcTime"];
-            JToken exception = record["Exception"];
-            JToken level = record["Level"];
-            JToken message = record["Message"];
-            JToken tags = record["Tags"];
+            var threadId = record["threadId"];
+            var utcTime = record["utcTime"];
+            var exception = record["exception"];
+            var level = record["level"];
+            var message = record["message"];
+            var tags = record["tags"];
 
+            if (threadId != null)
+                chronicleRecord.ThreadId = threadId.Value<int>();
             if (utcTime != null)
                 chronicleRecord.UtcTime = utcTime.ToObject<DateTime>();
             if (exception != null)
@@ -38,17 +41,18 @@ namespace KSharp.NChronicle.Core.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            ChronicleRecord record = value as ChronicleRecord;
-            JObject json = new JObject();
+            var record = value as ChronicleRecord;
+            var json = new JObject();
 
-            json.Add("UtcTime", JToken.FromObject(record.UtcTime));
-            json.Add("Level", JToken.FromObject(record.Level));
+            json.Add("threadId", JToken.FromObject(record.ThreadId));
+            json.Add("utcTime", JToken.FromObject(record.UtcTime));
+            json.Add("level", JToken.FromObject(record.Level));
             if (record.Exception != null)
-                json.Add("Exception", JToken.FromObject(record.Exception));
+                json.Add("exception", JToken.FromObject(record.Exception));
             if (record.Message != null)
-                json.Add("Message", JToken.FromObject(record.Message));
+                json.Add("message", JToken.FromObject(record.Message));
             if (record.Tags != null)
-                json.Add("Tags", JToken.FromObject(record.Tags));
+                json.Add("tags", JToken.FromObject(record.Tags));
 
             json.WriteTo(writer);
         }

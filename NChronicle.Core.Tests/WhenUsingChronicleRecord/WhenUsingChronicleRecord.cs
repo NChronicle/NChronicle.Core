@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
 {
@@ -42,7 +43,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
             (string json, ChronicleRecord originalRecord) = GetSerializedChronicleRecord();
 
             // Act
-            ChronicleRecord deserializedRecord = JsonConvert.DeserializeObject<ChronicleRecord>(json);
+            ChronicleRecord deserializedRecord = Task.Run(() => JsonConvert.DeserializeObject<ChronicleRecord>(json)).Result;
 
             // Assert
             Assert.IsNotNull(deserializedRecord, "The record was not deserialized at all.");
@@ -50,10 +51,10 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
             Assert.IsNotNull(deserializedRecord.Exception, "The exception was not deserialized.");
             Assert.IsNotNull(deserializedRecord.Tags, "The tags were not deserialized.");
 
-            Assert.AreEqual(originalRecord.ThreadId, deserializedRecord.ThreadId, "The message was deserialized but incorrectly.");
-            Assert.AreEqual(originalRecord.Message, deserializedRecord.Message, "The message was deserialized but incorrectly.");
-            Assert.AreEqual(originalRecord.UtcTime, deserializedRecord.UtcTime, "The time was not deserialized correctly.");
-            Assert.AreEqual(originalRecord.Level, deserializedRecord.Level, "The level was not deserialized correctly.");
+            Assert.AreEqual(originalRecord.ThreadId, deserializedRecord.ThreadId, "The message was deserialized but incorrectly; the ThreadId was incorrect.");
+            Assert.AreEqual(originalRecord.Message, deserializedRecord.Message, "The message was deserialized but incorrectly; the message was incorrect.");
+            Assert.AreEqual(originalRecord.UtcTime, deserializedRecord.UtcTime, "The time was not deserialized correctly; the time was incorrect.");
+            Assert.AreEqual(originalRecord.Level, deserializedRecord.Level, "The level was not deserialized correctly; the level was incorrect.");
 
             Assert.AreEqual(originalRecord.Tags.Count(), deserializedRecord.Tags.Count(), "The tags were not deserialized correctly.");
             foreach (string tag in originalRecord.Tags)
