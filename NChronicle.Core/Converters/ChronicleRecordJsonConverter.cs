@@ -21,6 +21,7 @@ namespace KSharp.NChronicle.Core.Converters
             var exception = record["exception"];
             var level = record["level"];
             var message = record["message"];
+            var verbosity = record["verbosity"];
             var tags = record["tags"];
 
             if (threadId != null)
@@ -33,6 +34,8 @@ namespace KSharp.NChronicle.Core.Converters
                 chronicleRecord.Level = level.ToObject<ChronicleLevel>();
             if (message != null)
                 chronicleRecord.Message = message.Value<string>();
+            if (verbosity != null)
+                chronicleRecord.Verbosity = verbosity.Value<int>();
             if (tags != null)
                 chronicleRecord.Tags = tags.ToObject<ReadOnlyCollection<string>>();
 
@@ -46,6 +49,7 @@ namespace KSharp.NChronicle.Core.Converters
 
             json.Add("threadId", JToken.FromObject(record.ThreadId));
             json.Add("utcTime", JToken.FromObject(record.UtcTime));
+            json.Add("verbosity", JToken.FromObject(record.Verbosity));
             json.Add("level", JToken.FromObject(record.Level));
             if (record.Exception != null)
                 json.Add("exception", JToken.FromObject(record.Exception));

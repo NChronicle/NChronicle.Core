@@ -12,6 +12,11 @@ namespace KSharp.NChronicle.Core.Abstractions
     {
 
         /// <summary>
+        /// The scope depth from which this record was created.
+        /// </summary>
+        int Verbosity { get; }
+
+        /// <summary>
         /// The managed thread Id for the thread on which this record was created. 
         /// </summary>
         int ThreadId { get; }

@@ -22,6 +22,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 private Exception _exception;
                 private string[] _tags;
                 private ChronicleLevel _level;
+                private int _verbosity;
 
                 [TestInitialize]
                 public void Init()
@@ -30,7 +31,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                     this._exception = new IOException();
                     this._tags = new[] { "Tag1", "Tag2" };
                     this._level = ChronicleLevel.Critical;
-                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, this._tags);
+                    this._verbosity = 3;
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, this._verbosity, this._tags);
                 }
 
                 [TestMethod]
@@ -51,6 +53,13 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                     Assert.AreEqual(this._message, this._chronicleRecord.Message, "The message is not as given.");
                 }
 
+
+                [TestMethod]
+                public void ThenTheVerbosityIsAsGiven()
+                {
+                    Assert.AreEqual(this._verbosity, this._chronicleRecord.Verbosity, "The verbosity is not as given.");
+                }
+
                 [TestMethod]
                 public void ThenTheTagsAreAsGiven()
                 {
@@ -66,7 +75,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 [TestMethod]
                 public void ThenTheTagsAreEmptyIfGivenNull()
                 {
-                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, null);
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, 0, null);
 
                     Assert.IsFalse(this._chronicleRecord.Tags.Any(), "The tags are not empty.");
                 }
@@ -74,7 +83,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 [TestMethod]
                 public void ThenTheMessageIsNullIfGivenNull()
                 {
-                    this._chronicleRecord = new ChronicleRecord(this._level, null, this._exception, this._tags);
+                    this._chronicleRecord = new ChronicleRecord(this._level, null, this._exception, 0, this._tags);
 
                     Assert.IsNull(this._chronicleRecord.Message, "The message is not null.");
                 }
@@ -82,7 +91,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 [TestMethod]
                 public void ThenTheExceptionIsNullIfGivenNull()
                 {
-                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, null, this._tags);
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, null, 0, this._tags);
 
                     Assert.IsNull(this._chronicleRecord.Exception, "The exception is not null.");
                 }

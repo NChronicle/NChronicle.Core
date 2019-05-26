@@ -69,6 +69,7 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     <Compile Include="Abstractions\IChronicle.cs" />
     <Compile Include="Abstractions\IChronicleLibrary.cs" />
     <Compile Include="Model\ChronicleRecord.cs" />
+    <Compile Include="Model\ChronicleScope.cs" />
     <Compile Include="StaticChronicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

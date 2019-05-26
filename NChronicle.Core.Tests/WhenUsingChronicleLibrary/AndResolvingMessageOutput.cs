@@ -36,7 +36,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
                 {
                     this._exception = e;
                 }
-                this._record = new ChronicleRecord(ChronicleLevel.Critical, "This is a test message", this._exception, "Tag1", "Tag2");
+                this._record = new ChronicleRecord(ChronicleLevel.Critical, "This is a test message", this._exception, 3, "Tag1", "Tag2");
             }
 
             [TestMethod]

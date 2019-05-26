@@ -35,6 +35,12 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 }
 
                 [TestMethod]
+                public void ThenTheVerbosityIsZero()
+                {
+                    Assert.AreEqual(0, this._chronicleRecord.Verbosity, "The verbosity is not 0");
+                }
+
+                [TestMethod]
                 public void ThenTheMessageIsNull()
                 {
                     Assert.IsNull(this._chronicleRecord.Message, "The message is not null");

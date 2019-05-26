@@ -35,7 +35,7 @@ namespace KSharp.NChronicle.Core.Model
         /// <param name="message">Developer message for this record. Optional.</param>
         /// <param name="exception">Related <see cref="System.Exception"/> for this record. Optional.</param>
         /// <param name="tags">Tags to append to this record. Optional.</param>
-        public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, params string[] tags)
+        public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, int verbosity = 0, params string[] tags)
         {
             this.ThreadId = Thread.CurrentThread.ManagedThreadId;
             this.UtcTime = DateTime.UtcNow;
@@ -43,7 +43,13 @@ namespace KSharp.NChronicle.Core.Model
             this.Tags = tags?.ToList().AsReadOnly() ?? new List<string>().AsReadOnly();
             this.Exception = exception == null ? null : new ChronicleException(exception);
             this.Level = level;
+            this.Verbosity = verbosity;
         }
+
+        /// <summary>
+        /// The scope depth from which this record was created.
+        /// </summary>
+        public int Verbosity { get; internal set; }
 
         /// <summary>
         /// The managed thread Id for the thread on which this record was created. 

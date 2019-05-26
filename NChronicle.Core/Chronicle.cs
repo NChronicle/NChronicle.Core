@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using KSharp.NChronicle.Core.Abstractions;
 using KSharp.NChronicle.Core.Model;
 
@@ -16,6 +17,7 @@ namespace KSharp.NChronicle.Core
 
         private ChronicleConfiguration _configuration;
         private ConcurrentBag<string> _tags;
+        private int _currentVerbosity;
 
         /// <summary>
         /// Create Chronicle configured with the NChronicle base configuration.
@@ -27,9 +29,16 @@ namespace KSharp.NChronicle.Core
             this._tags = new ConcurrentBag<string>();
         }
 
-        private void ConfigurationChangedHandler()
+        public IDisposable ScopeIn()
         {
-            this._configuration = Chronicle.GetConfiguration();
+            Interlocked.Increment(ref this._currentVerbosity);
+            return new ChronicleScope(this);
+        }
+
+        public void ScopeOut()
+        {
+            if (this._currentVerbosity > 0)
+                Interlocked.Decrement(ref this._currentVerbosity);
         }
 
         #region Tags
@@ -335,7 +344,7 @@ namespace KSharp.NChronicle.Core
         private IChronicleRecord BuildRecord(ChronicleLevel level, string message, Exception exception, IEnumerable<string> tags)
         {
             IEnumerable<string> allTags = tags.Concat(this._tags);
-            return new ChronicleRecord(level, message, exception, allTags.ToArray());
+            return new ChronicleRecord(level, message, exception, this._currentVerbosity, allTags.ToArray());
         }
 
         private void SendToLibraries(IChronicleRecord record)
@@ -344,6 +353,11 @@ namespace KSharp.NChronicle.Core
             {
                 library.Handle(record);
             }
+        }
+
+        private void ConfigurationChangedHandler()
+        {
+            this._configuration = Chronicle.GetConfiguration();
         }
 
         /// <summary>
