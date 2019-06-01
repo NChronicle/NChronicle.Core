@@ -9,6 +9,14 @@ namespace KSharp.NChronicle.Core.Abstractions
     public interface IChronicle
     {
 
+        IChronicleScope CurrentScope { get; }
+
+        IChronicleScope ScopeIn();
+
+        void ScopeIn(IChronicleScope scope);
+
+        void ScopeOut();
+
         /// <summary>
         /// Record a <see cref="Model.ChronicleLevel.Emergency"/> level message with the specified <paramref name="tags"/>.
         /// </summary>

@@ -15,9 +15,13 @@ namespace KSharp.NChronicle.Core
     public partial class Chronicle : IChronicle
     {
 
+        [ThreadStatic]
+        private static IChronicleScope _currentScope;
+
+        public IChronicleScope CurrentScope => _currentScope;
+
         private ChronicleConfiguration _configuration;
         private ConcurrentBag<string> _tags;
-        private int _currentVerbosity;
 
         /// <summary>
         /// Create Chronicle configured with the NChronicle base configuration.
@@ -29,16 +33,19 @@ namespace KSharp.NChronicle.Core
             this._tags = new ConcurrentBag<string>();
         }
 
-        public IDisposable ScopeIn()
+        public IChronicleScope ScopeIn()
         {
-            Interlocked.Increment(ref this._currentVerbosity);
-            return new ChronicleScope(this);
+            return _currentScope = new ChronicleScope(this, CurrentScope);
+        }
+
+        public void ScopeIn(IChronicleScope scope)
+        {
+            _currentScope = scope;
         }
 
         public void ScopeOut()
         {
-            if (this._currentVerbosity > 0)
-                Interlocked.Decrement(ref this._currentVerbosity);
+            _currentScope = CurrentScope?.Parent;
         }
 
         #region Tags
@@ -344,7 +351,7 @@ namespace KSharp.NChronicle.Core
         private IChronicleRecord BuildRecord(ChronicleLevel level, string message, Exception exception, IEnumerable<string> tags)
         {
             IEnumerable<string> allTags = tags.Concat(this._tags);
-            return new ChronicleRecord(level, message, exception, this._currentVerbosity, allTags.ToArray());
+            return new ChronicleRecord(level, message, exception, CurrentScope?.Verbosity ?? 0, allTags.ToArray());
         }
 
         private void SendToLibraries(IChronicleRecord record)

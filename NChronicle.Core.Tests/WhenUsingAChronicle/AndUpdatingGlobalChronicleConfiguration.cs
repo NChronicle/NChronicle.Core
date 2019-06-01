@@ -47,7 +47,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                 CallAction(level, _message);
 
                 // Assert
-                Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received by the existing library.");
+                Assert.IsNotNull(this._lastReceivedRecord, "No ChronicleRecord was received by the existing library.");
             }
 
         }

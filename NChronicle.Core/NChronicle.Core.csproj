@@ -5,7 +5,7 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <RootNamespace>KSharp.NChronicle.Core</RootNamespace>
     <AssemblyName>NChronicle.Core</AssemblyName>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <NullableReferenceTypes>enable</NullableReferenceTypes>
     <Version>2.0.0</Version>
     <Version Condition=" '$(BuildNumber)' != '' ">$(Version).$(BuildNumber)</Version>
@@ -70,7 +70,8 @@ Further Libraries planned for the NChronicle logging framework include NChronicl
     <Compile Include="Abstractions\IChronicleLibrary.cs" />
     <Compile Include="Model\ChronicleRecord.cs" />
     <Compile Include="Model\ChronicleScope.cs" />
-    <Compile Include="StaticChronicle.cs" />
+    <Compile Include="Abstractions\IChronicleScope.cs" />
+    <Compile Include="ChronicleConfigure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 

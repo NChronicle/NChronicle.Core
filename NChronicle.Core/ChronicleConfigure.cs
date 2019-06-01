@@ -17,7 +17,7 @@ namespace KSharp.NChronicle.Core
     /// </summary>
     public partial class Chronicle {
 
-		private static ChronicleConfiguration _globalConfiguration {
+        private static ChronicleConfiguration _globalConfiguration {
 			get; set;
 		}
 

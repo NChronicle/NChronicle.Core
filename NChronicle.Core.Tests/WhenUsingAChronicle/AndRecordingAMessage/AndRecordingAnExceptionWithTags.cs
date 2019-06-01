@@ -30,7 +30,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                 }
 
                 // Assert
-                Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received.");
+                Assert.IsNotNull(this._lastReceivedRecord, "No ChronicleRecord was received.");
             }
 
             [TestMethod]
@@ -48,8 +48,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                 }
 
                 // Assert
-                Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received.");
-                Assert.AreEqual(level, this._receivedRecord.Level, "Incorrect ChronicleLevel on received ChronicleRecord.");
+                Assert.IsNotNull(this._lastReceivedRecord, "No ChronicleRecord was received.");
+                Assert.AreEqual(level, this._lastReceivedRecord.Level, "Incorrect ChronicleLevel on received ChronicleRecord.");
             }
 
             [TestMethod]
@@ -70,8 +70,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                 }
 
                 // Assert
-                Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received.");
-                Assert.IsNull(this._receivedRecord.Message, "Message in received ChronicleRecord is not null.");
+                Assert.IsNotNull(this._lastReceivedRecord, "No ChronicleRecord was received.");
+                Assert.IsNull(this._lastReceivedRecord.Message, "Message in received ChronicleRecord is not null.");
             }
 
             [TestMethod]
@@ -92,8 +92,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                 }
 
                 // Assert
-                Assert.IsNotNull(this._receivedRecord, "No ChronicleRecord was received.");
-                Assert.AreEqual(new ChronicleException(exception), this._receivedRecord.Exception, "Exception in received ChronicleRecord is not as recorded.");
+                Assert.IsNotNull(this._lastReceivedRecord, "No ChronicleRecord was received.");
+                Assert.AreEqual(new ChronicleException(exception), this._lastReceivedRecord.Exception, "Exception in received ChronicleRecord is not as recorded.");
             }
 
             [TestMethod]
@@ -110,8 +110,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                     CallAction(level, exception: e, tags: this._tags);
                 }
 
-                Assert.IsNotNull(_receivedRecord, "No ChronicleRecord was received.");
-                string[] receivedTags = _receivedRecord.Tags.ToArray();
+                Assert.IsNotNull(_lastReceivedRecord, "No ChronicleRecord was received.");
+                string[] receivedTags = _lastReceivedRecord.Tags.ToArray();
                 Assert.AreEqual(this._tags.Length, receivedTags.Length, "There are more or less tags on received ChronicleRecord than there are record tags.");
             }
 
@@ -129,8 +129,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
                     CallAction(level, exception: e, tags: this._tags);
                 }
 
-                Assert.IsNotNull(_receivedRecord, "No ChronicleRecord was received.");
-                string[] receivedTags = _receivedRecord.Tags.ToArray();
+                Assert.IsNotNull(_lastReceivedRecord, "No ChronicleRecord was received.");
+                string[] receivedTags = _lastReceivedRecord.Tags.ToArray();
                 foreach (string tag in this._tags)
                 {
                     Assert.IsTrue(receivedTags.Contains(tag), "Tags on received ChronicleRecord do not include a recorded tag.");

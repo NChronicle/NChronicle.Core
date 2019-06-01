@@ -17,7 +17,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
         protected Chronicle _chronicle;
         protected string _message;
         protected string[] _tags;
-        protected IChronicleRecord _receivedRecord;
+        protected IChronicleRecord _lastReceivedRecord;
 
         [TestInitialize]
         public virtual void Init()
@@ -27,9 +27,18 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicle
             this._chronicle = new Chronicle();
 
             // Arrange
-            this._fakeLibrary.Handle(Arg.Do<IChronicleRecord>(record => this._receivedRecord = record));
+            this._fakeLibrary.Handle(Arg.Do<IChronicleRecord>(record => this._lastReceivedRecord = record));
             this._message = "This is a test message.";
             this._tags = new[] { "test1", "Tr1angl3" };
+        }
+
+        [TestCleanup]
+        public virtual void Cleanup()
+        {
+            while (this._chronicle.CurrentScope != null)
+            {
+                this._chronicle.ScopeOut();
+            }
         }
 
         protected void CallAction(ChronicleLevel level, string message = null, Exception exception = null, params string[] tags)

@@ -1,16 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
-
     <LangVersion>latest</LangVersion>
-
     <SignAssembly>true</SignAssembly>
-
     <AssemblyOriginatorKeyFile>public.snk</AssemblyOriginatorKeyFile>
-
     <DelaySign>true</DelaySign>
   </PropertyGroup>
 
