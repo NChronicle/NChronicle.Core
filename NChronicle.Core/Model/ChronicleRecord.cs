@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace KSharp.NChronicle.Core.Model
 {
@@ -16,45 +17,25 @@ namespace KSharp.NChronicle.Core.Model
     public class ChronicleRecord : IChronicleRecord, IEquatable<IChronicleRecord>
     {
 
-        internal ChronicleRecord()
-        {
-            this.ThreadId = Thread.CurrentThread.ManagedThreadId;
-            this.UtcTime = DateTime.UtcNow;
-            this.Message = null;
-            this.Tags = new List<string>().AsReadOnly();
-            this.Exception = null;
-            this.Level = ChronicleLevel.Info;
-        }
-
-        /// <summary>
-        /// Create a new Chronicle Record with the specified <paramref name="level"/>,
-        /// <paramref name="message"/> (optional), <paramref name="exception"/> (optional), 
-        /// and <paramref name="tags"/> (optional).
-        /// </summary>
-        /// <param name="level">Level/severity of this record.</param>
-        /// <param name="message">Developer message for this record. Optional.</param>
-        /// <param name="exception">Related <see cref="System.Exception"/> for this record. Optional.</param>
-        /// <param name="tags">Tags to append to this record. Optional.</param>
-        public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, int verbosity = 0, params string[] tags)
-        {
-            this.ThreadId = Thread.CurrentThread.ManagedThreadId;
-            this.UtcTime = DateTime.UtcNow;
-            this.Message = message;
-            this.Tags = tags?.ToList().AsReadOnly() ?? new List<string>().AsReadOnly();
-            this.Exception = exception == null ? null : new ChronicleException(exception);
-            this.Level = level;
-            this.Verbosity = verbosity;
-        }
-
-        /// <summary>
-        /// The scope depth from which this record was created.
-        /// </summary>
-        public int Verbosity { get; internal set; }
+        // note: When adding new members here, ensure you add it to the interface, add serializability
+        // of the member and it's type, add equality for it in Equals, constructor assignment, messenger
+        // render keys and automated tests for all of the above.
 
         /// <summary>
         /// The managed thread Id for the thread on which this record was created. 
         /// </summary>
         public int ThreadId { get; internal set; }
+
+        /// <summary>
+        /// The scope depth from which this record was created.
+        /// Equivalent to the item count of <see cref="ScopeStack"/>.
+        /// </summary>
+        public int Verbosity { get; internal set; }
+
+        /// <summary>
+        /// The stack of scopes by name from which this record was created.
+        /// </summary>
+        public IEnumerable<string> ScopeStack { get; internal set; }
 
         /// <summary>
         /// The date and time of when this record was created in UTC.
@@ -80,6 +61,38 @@ namespace KSharp.NChronicle.Core.Model
         /// Related <see cref="System.Exception"/> for this record. May be absent.
         /// </summary>
         public ChronicleException Exception { get; internal set; }
+
+        internal ChronicleRecord()
+        {
+            this.ThreadId = Thread.CurrentThread.ManagedThreadId;
+            this.UtcTime = DateTime.UtcNow;
+            this.Message = null;
+            this.Tags = new List<string>().AsReadOnly();
+            this.Exception = null;
+            this.Level = ChronicleLevel.Info;
+        }
+
+        /// <summary>
+        /// Create a new Chronicle Record with the specified <paramref name="level"/>,
+        /// <paramref name="message"/> (optional), <paramref name="exception"/> (optional), 
+        /// and <paramref name="tags"/> (optional).
+        /// </summary>
+        /// <param name="level">Level/severity of this record.</param>
+        /// <param name="message">Developer message for this record. Optional.</param>
+        /// <param name="exception">Related <see cref="System.Exception"/> for this record. Optional.</param>
+        /// <param name="scopeStack">The scope stack for this record. Optional.</param>
+        /// <param name="tags">Tags to append to this record. Optional.</param>
+        public ChronicleRecord(ChronicleLevel level, string message = null, Exception exception = null, string[] scopeStack = null, params string[] tags)
+        {
+            this.ThreadId = Thread.CurrentThread.ManagedThreadId;
+            this.Verbosity = scopeStack?.Length ?? 0;
+            this.ScopeStack = scopeStack != null ? new ReadOnlyCollection<string>(scopeStack) : new ReadOnlyCollection<string>(new string[0]);
+            this.UtcTime = DateTime.UtcNow;
+            this.Message = message;
+            this.Tags = tags != null ? new ReadOnlyCollection<string>(tags) : new ReadOnlyCollection<string>(new string[0]);
+            this.Exception = exception == null ? null : new ChronicleException(exception);
+            this.Level = level;
+        }
 
 
         /// <summary>
@@ -116,6 +129,8 @@ namespace KSharp.NChronicle.Core.Model
                 && this.Message == anotherRecord.Message
                 && this.ThreadId == anotherRecord.ThreadId
                 && this.Level == anotherRecord.Level
+                && (this.ScopeStack == null) == (anotherRecord.ScopeStack == null)
+                && (this.ScopeStack == null || new HashSet<string>(this.ScopeStack).SetEquals(anotherRecord.ScopeStack))
                 && (this.Tags == null) == (anotherRecord.Tags == null)
                 && (this.Tags == null || new HashSet<string>(this.Tags).SetEquals(anotherRecord.Tags));
         }

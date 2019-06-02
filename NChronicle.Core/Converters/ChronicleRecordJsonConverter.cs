@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using KSharp.NChronicle.Core.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,7 +22,7 @@ namespace KSharp.NChronicle.Core.Converters
             var exception = record["exception"];
             var level = record["level"];
             var message = record["message"];
-            var verbosity = record["verbosity"];
+            var scopeStack = record["scopeStack"];
             var tags = record["tags"];
 
             if (threadId != null)
@@ -34,10 +35,19 @@ namespace KSharp.NChronicle.Core.Converters
                 chronicleRecord.Level = level.ToObject<ChronicleLevel>();
             if (message != null)
                 chronicleRecord.Message = message.Value<string>();
-            if (verbosity != null)
-                chronicleRecord.Verbosity = verbosity.Value<int>();
+            if (scopeStack != null)
+            {
+                var scopeStackValue = scopeStack.ToObject<ReadOnlyCollection<string>>();
+                if (scopeStackValue != null)
+                    chronicleRecord.ScopeStack = scopeStackValue;
+                chronicleRecord.Verbosity = chronicleRecord.ScopeStack.Count();
+            }
             if (tags != null)
-                chronicleRecord.Tags = tags.ToObject<ReadOnlyCollection<string>>();
+            {
+                var tagsValue = tags.ToObject<ReadOnlyCollection<string>>();
+                if (tagsValue != null)
+                    chronicleRecord.Tags = tagsValue;
+            }
 
             return chronicleRecord;
         }
@@ -49,12 +59,13 @@ namespace KSharp.NChronicle.Core.Converters
 
             json.Add("threadId", JToken.FromObject(record.ThreadId));
             json.Add("utcTime", JToken.FromObject(record.UtcTime));
-            json.Add("verbosity", JToken.FromObject(record.Verbosity));
             json.Add("level", JToken.FromObject(record.Level));
             if (record.Exception != null)
                 json.Add("exception", JToken.FromObject(record.Exception));
             if (record.Message != null)
                 json.Add("message", JToken.FromObject(record.Message));
+            if (record.ScopeStack != null)
+                json.Add("scopeStack", JToken.FromObject(record.ScopeStack));
             if (record.Tags != null)
                 json.Add("tags", JToken.FromObject(record.Tags));
 

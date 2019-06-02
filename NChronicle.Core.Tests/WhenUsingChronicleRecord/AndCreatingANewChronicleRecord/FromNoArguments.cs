@@ -47,6 +47,12 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 }
 
                 [TestMethod]
+                public void ThenTheScopeStackIsEmpty()
+                {
+                    Assert.IsFalse(this._chronicleRecord.Tags.Any(), "The scope stack is not empty");
+                }
+
+                [TestMethod]
                 public void ThenTheTagsAreEmpty()
                 {
                     Assert.IsFalse(this._chronicleRecord.Tags.Any(), "The tags are not empty");

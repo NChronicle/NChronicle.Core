@@ -9,12 +9,31 @@ namespace KSharp.NChronicle.Core.Abstractions
     public interface IChronicle
     {
 
+        /// <summary>
+        /// The current <see cref="IChronicleScope"/> for the calling thread.
+        /// </summary>
         IChronicleScope CurrentScope { get; }
 
-        IChronicleScope ScopeIn();
+        /// <summary>
+        /// Create a new child scope with the given <paramref name="scopeName"/> (optional) 
+        /// from the current scope, and set it as the current scope, increasing the 
+        /// verbosity level of records created on this thread.
+        /// </summary>
+        /// <param name="scopeName">The name for the new scope.</param>
+        IChronicleScope ScopeIn(string scopeName = null);
 
+        /// <summary>
+        /// Restore the current scope to the given <paramref name="scope"/>, setting
+        /// the verbosity level of records created on this thread to that of the given <paramref name="scope"/>.
+        /// Use this when using scopes in a multi-threaded and/or asynchronous context.
+        /// </summary>
+        /// <param name="scope">The name for the new scope.</param>
         void ScopeIn(IChronicleScope scope);
 
+        /// <summary>
+        /// Restore the parent of the current scope as the new current scope, 
+        /// decreasing the verbosity level of records created on this thread.
+        /// </summary>
         void ScopeOut();
 
         /// <summary>

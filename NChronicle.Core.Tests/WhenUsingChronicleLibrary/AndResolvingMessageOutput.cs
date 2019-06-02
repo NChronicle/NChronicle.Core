@@ -3,7 +3,6 @@ using KSharp.NChronicle.Core.Model;
 using KSharp.NChronicle.Core.Abstractions;
 using System;
 using System.IO;
-using System.Threading;
 
 namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
 {
@@ -36,14 +35,14 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
                 {
                     this._exception = e;
                 }
-                this._record = new ChronicleRecord(ChronicleLevel.Critical, "This is a test message", this._exception, 3, "Tag1", "Tag2");
+                this._record = new ChronicleRecord(ChronicleLevel.Critical, "This is a test message", this._exception, new[] { "ascope", "innerscope" }, "Tag1", "Tag2");
             }
 
             [TestMethod]
             public void ThenTheDefaultPatternIsAsExpected()
             {
                 var result = this._library.ResolveMessageOutputWithDefaultPattern(this._record, TimeZoneInfo.Utc);
-                Assert.AreEqual($"{this._record.UtcTime.ToString("yyyy/MM/dd HH:mm:ss.fff")} [{this._record.ThreadId}] {this._record.Message} \n{this._record.Exception}\n[{String.Join(", ", this._record.Tags)}]", result);
+                Assert.AreEqual($"{this._record.UtcTime.ToString("yyyy/MM/dd HH:mm:ss.fff")} [{this._record.ThreadId}] [{String.Join(" › ", this._record.ScopeStack)}] {this._record.Message} \n{this._record.Exception}\n[{String.Join(", ", this._record.Tags)}]", result);
             }
 
             [TestMethod]
@@ -72,6 +71,35 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleLibrary
             {
                 var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{MSG}");
                 Assert.AreEqual(this._record.Message, result);
+            }
+
+            [TestMethod]
+            public void ThenRecordVerbosityCanBeRendered()
+            {
+                var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{VERBOSITY}");
+                Assert.AreEqual(this._record.Verbosity.ToString(), result);
+            }
+
+            [TestMethod]
+            public void ThenRecordScopeStackCanBeRendered()
+            {
+                var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{SCOPE}");
+                Assert.AreEqual(string.Join(" › ", this._record.ScopeStack), result);
+            }
+
+            [TestMethod]
+            public void ThenRecordScopeStackCanBeRenderedWithAnAlternateDelimiter()
+            {
+                var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{SCOPE|.}");
+                Assert.AreEqual(string.Join(".", this._record.ScopeStack), result);
+            }
+
+            [TestMethod]
+            public void ThenRecordScopeStackRendersUsingVerbosityForStacksWithNoName()
+            {
+                this._record.ScopeStack = new[] { "ascope", "innerscope", null, "currentscope" };
+                var result = this._library.ResolveMessageOutput(this._record, TimeZoneInfo.Utc, "{SCOPE}");
+                Assert.AreEqual("ascope › innerscope › 3 › currentscope", result);
             }
 
             [TestMethod]

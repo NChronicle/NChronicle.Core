@@ -13,8 +13,14 @@ namespace KSharp.NChronicle.Core.Abstractions
 
         /// <summary>
         /// The scope depth from which this record was created.
+        /// Equivilent to <c>ScopeStack.Length</c>.
         /// </summary>
         int Verbosity { get; }
+
+        /// <summary>
+        /// The stack of scopes by name from which this record was created.
+        /// </summary>
+        IEnumerable<string> ScopeStack { get; }
 
         /// <summary>
         /// The managed thread Id for the thread on which this record was created. 

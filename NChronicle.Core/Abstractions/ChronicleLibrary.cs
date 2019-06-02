@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Xml;
@@ -47,6 +48,7 @@ namespace KSharp.NChronicle.Core.Abstractions
         protected ChronicleLibrary()
         {
             this.FunctionalKeywordHandlers = new Dictionary<string, FunctionalKeyworkdHandler> {
+                {"SCOPE", this.ScopeMethodHandler},
                 {"TAGS", this.TagsMethodHandler}
             };
             this.StandardKeywordHandlers = new Dictionary<string, StandardKeywordHandler> {
@@ -54,6 +56,8 @@ namespace KSharp.NChronicle.Core.Abstractions
                 {"EXC", this.ExceptionKeyHandler},
                 {"EMSG", this.ExceptionMessageKeyHandler},
                 {"TH", this.ThreadKeyHandler},
+                {"VERBOSITY", this.VerbosityKeyHandler},
+                {"SCOPE", this.ScopeKeyHandler},
                 {"TAGS", this.TagsKeyHandler},
                 {"LVL", this.LevelKeyHandler}
             };
@@ -92,12 +96,14 @@ namespace KSharp.NChronicle.Core.Abstractions
         /// Standard keywords available are:
         /// </para>
         /// <list>
-        ///     <c>LVL</c>     The level of this record.
-        ///     <c>TAGS</c>    The tags for the record delimited by a comma and a space (<c>, </c>). 
-        ///     <c>TH</c>      The thread ID the record was created in.
-        ///     <c>MSG</c>     The developer message for the record if any. May be absent.
-        ///     <c>EMSG</c>    The exception message for the record if any. May be absent.
-        ///     <c>EXC</c>     The full exception for the record if any. May be absent.
+        ///     <c>LVL</c>         The level of this record.
+        ///     <c>VERBOSITY</c>   The scope stack depth for the record. 
+        ///     <c>SCOPE</c>       The scope stack for the record with scopes delimited by a spaced single right pointing angle (<c> › </c>). 
+        ///     <c>TAGS</c>        The tags for the record delimited by a comma and a space (<c>, </c>). 
+        ///     <c>TH</c>          The thread ID the record was created in.
+        ///     <c>MSG</c>         The developer message for the record if any. May be absent.
+        ///     <c>EMSG</c>        The exception message for the record if any. May be absent.
+        ///     <c>EXC</c>         The full exception for the record if any. May be absent.
         /// </list>
         /// <para>
         /// Functional tokens are tokens which may take in extra arguments to render; these
@@ -108,6 +114,7 @@ namespace KSharp.NChronicle.Core.Abstractions
         /// Functional keywords available are:
         /// </para>
         /// <list>
+        ///     <c>SCOPE</c>    The scope stack for the record, taking 1 string argument to be used as the delimiter. 
         ///     <c>TAGS</c>     Prints all the tags for the record, taking 1 string argument to be used as the delimiter.
         /// </list>
         /// <para>
@@ -122,7 +129,7 @@ namespace KSharp.NChronicle.Core.Abstractions
         /// The default output pattern is:
         /// </para>
         /// <code>
-        /// "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS}]}"
+        /// "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {SCOPE?[{SCOPE}]} {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS}]}"
         /// </code>
         /// </remarks>
         /// <example>
@@ -180,7 +187,7 @@ namespace KSharp.NChronicle.Core.Abstractions
         /// <param name="pattern">The output pattern in which to render the record (see Remarks).</param>
         /// <param name="timeZone">The time zone to which any date/times should be localised and rendered.</param>
         /// <returns></returns>
-        protected string ResolveOutput(ChronicleRecord record, TimeZoneInfo timeZone, string pattern = "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS}]}")
+        protected string ResolveOutput(ChronicleRecord record, TimeZoneInfo timeZone, string pattern = "{%yyyy/MM/dd HH:mm:ss.fff} [{TH}] {SCOPE?[{SCOPE}]} {MSG?{MSG} {EXC?\n}}{EXC?{EXC}\n}{TAGS?[{TAGS}]}")
         {
             var output = pattern;
             var currentTime = TimeZoneInfo.ConvertTime(record.UtcTime, TimeZoneInfo.Utc, timeZone);
@@ -264,6 +271,11 @@ namespace KSharp.NChronicle.Core.Abstractions
             return output;
         }
 
+        private string ScopeMethodHandler(ChronicleRecord record, params string[] parameters)
+        {
+            return parameters.Length < 1 ? string.Empty : string.Join(parameters[0], record.ScopeStack.Select((s, i) => s ?? (i + 1).ToString()));
+        }
+
         private string TagsMethodHandler(ChronicleRecord record, params string[] parameters)
         {
             return parameters.Length < 1 ? string.Empty : string.Join(parameters[0], record.Tags);
@@ -287,6 +299,16 @@ namespace KSharp.NChronicle.Core.Abstractions
         private string ThreadKeyHandler(ChronicleRecord record)
         {
             return record.ThreadId.ToString();
+        }
+
+        private string VerbosityKeyHandler(ChronicleRecord record)
+        {
+            return record.Verbosity.ToString();
+        }
+
+        private string ScopeKeyHandler(ChronicleRecord record)
+        {
+            return this.ScopeMethodHandler(record, " › ");
         }
 
         private string TagsKeyHandler(ChronicleRecord record)

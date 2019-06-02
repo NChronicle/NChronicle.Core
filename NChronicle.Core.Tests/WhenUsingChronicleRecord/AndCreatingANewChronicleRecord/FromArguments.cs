@@ -22,7 +22,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 private Exception _exception;
                 private string[] _tags;
                 private ChronicleLevel _level;
-                private int _verbosity;
+                private string[] _scopeStack;
 
                 [TestInitialize]
                 public void Init()
@@ -31,8 +31,8 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                     this._exception = new IOException();
                     this._tags = new[] { "Tag1", "Tag2" };
                     this._level = ChronicleLevel.Critical;
-                    this._verbosity = 3;
-                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, this._verbosity, this._tags);
+                    this._scopeStack = new[] { "ascope", "innerscope" };
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, this._scopeStack, this._tags);
                 }
 
                 [TestMethod]
@@ -53,11 +53,30 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                     Assert.AreEqual(this._message, this._chronicleRecord.Message, "The message is not as given.");
                 }
 
+                [TestMethod]
+                public void ThenTheScopeStackIsAsGiven()
+                {
+                    Assert.IsTrue(new HashSet<string>(this._scopeStack).SetEquals(this._chronicleRecord.ScopeStack), "The scope stack is not as given.");
+                }
 
                 [TestMethod]
-                public void ThenTheVerbosityIsAsGiven()
+                public void ThenTheScopeStackIsReadOnly()
                 {
-                    Assert.AreEqual(this._verbosity, this._chronicleRecord.Verbosity, "The verbosity is not as given.");
+                    Assert.IsInstanceOfType(this._chronicleRecord.ScopeStack, typeof(IReadOnlyCollection<string>), "The scope stack is not a type of IReadOnlyCollection.");
+                }
+
+                [TestMethod]
+                public void ThenTheScopeStackIsEmptyIfGivenNull()
+                {
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, null, null);
+
+                    Assert.IsFalse(this._chronicleRecord.ScopeStack.Any(), "The scope stack is not empty.");
+                }
+
+                [TestMethod]
+                public void ThenTheVerbosityIsTheDepthOfTheScopeStack()
+                {
+                    Assert.AreEqual(this._chronicleRecord.ScopeStack.Count(), this._chronicleRecord.Verbosity, "The verbosity is not the depth/length of the call stack.");
                 }
 
                 [TestMethod]
@@ -75,7 +94,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 [TestMethod]
                 public void ThenTheTagsAreEmptyIfGivenNull()
                 {
-                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, 0, null);
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, this._exception, null, null);
 
                     Assert.IsFalse(this._chronicleRecord.Tags.Any(), "The tags are not empty.");
                 }
@@ -83,7 +102,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 [TestMethod]
                 public void ThenTheMessageIsNullIfGivenNull()
                 {
-                    this._chronicleRecord = new ChronicleRecord(this._level, null, this._exception, 0, this._tags);
+                    this._chronicleRecord = new ChronicleRecord(this._level, null, this._exception, null, this._tags);
 
                     Assert.IsNull(this._chronicleRecord.Message, "The message is not null.");
                 }
@@ -91,7 +110,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 [TestMethod]
                 public void ThenTheExceptionIsNullIfGivenNull()
                 {
-                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, null, 0, this._tags);
+                    this._chronicleRecord = new ChronicleRecord(this._level, this._message, null, null, this._tags);
 
                     Assert.IsNull(this._chronicleRecord.Exception, "The exception is not null.");
                 }

@@ -83,6 +83,13 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
                 }
 
                 [TestMethod]
+                public void AndAllButTheScopeStackAreEqualThenTheChronicleRecordsAreNotEqual()
+                {
+                    this._recordOne.ScopeStack = new string[] { "random1", "World 50" };
+                    Assert.IsFalse(this._recordOne.Equals(this._recordTwo), "The records are incorrectly considered equal.");
+                }
+
+                [TestMethod]
                 public void AndAllButTheTagsAreEqualThenTheChronicleRecordsAreNotEqual()
                 {
                     this._recordOne.Tags = new string[] { "random1", "World 50" };

@@ -18,6 +18,9 @@ namespace KSharp.NChronicle.Core
         [ThreadStatic]
         private static IChronicleScope _currentScope;
 
+        /// <summary>
+        /// The current <see cref="IChronicleScope"/> for the calling thread.
+        /// </summary>
         public IChronicleScope CurrentScope => _currentScope;
 
         private ChronicleConfiguration _configuration;
@@ -33,16 +36,32 @@ namespace KSharp.NChronicle.Core
             this._tags = new ConcurrentBag<string>();
         }
 
-        public IChronicleScope ScopeIn()
+        /// <summary>
+        /// Create a new child scope with the given <paramref name="scopeName"/> (optional) 
+        /// from the current scope, and set it as the current scope, increasing the 
+        /// verbosity level of records created on this thread.
+        /// </summary>
+        /// <param name="scopeName">The name for the new scope.</param>
+        public IChronicleScope ScopeIn(string scopeName = null)
         {
-            return _currentScope = new ChronicleScope(this, CurrentScope);
+            return _currentScope = new ChronicleScope(this, CurrentScope, scopeName);
         }
 
+        /// <summary>
+        /// Restore the current scope to the given <paramref name="scope"/>, setting
+        /// the verbosity level of records created on this thread to that of the given <paramref name="scope"/>.
+        /// Use this when using scopes in a multi-threaded and/or asynchronous context.
+        /// </summary>
+        /// <param name="scope">The name for the new scope.</param>
         public void ScopeIn(IChronicleScope scope)
         {
             _currentScope = scope;
         }
 
+        /// <summary>
+        /// Restore the parent of the current scope as the new current scope, 
+        /// decreasing the verbosity level of records created on this thread.
+        /// </summary>
         public void ScopeOut()
         {
             _currentScope = CurrentScope?.Parent;
@@ -351,7 +370,8 @@ namespace KSharp.NChronicle.Core
         private IChronicleRecord BuildRecord(ChronicleLevel level, string message, Exception exception, IEnumerable<string> tags)
         {
             IEnumerable<string> allTags = tags.Concat(this._tags);
-            return new ChronicleRecord(level, message, exception, CurrentScope?.Verbosity ?? 0, allTags.ToArray());
+            var scopeStack = CurrentScope?.Reverse().Select(s => s.Name).ToArray();
+            return new ChronicleRecord(level, message, exception, scopeStack, allTags.ToArray());
         }
 
         private void SendToLibraries(IChronicleRecord record)

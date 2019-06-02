@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
 {
@@ -51,15 +52,13 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
             Assert.IsNotNull(deserializedRecord.Exception, "The exception was not deserialized.");
             Assert.IsNotNull(deserializedRecord.Tags, "The tags were not deserialized.");
 
-            Assert.AreEqual(originalRecord.Verbosity, deserializedRecord.Verbosity, "The message was deserialized but incorrectly; the verbosity was incorrect.");
             Assert.AreEqual(originalRecord.ThreadId, deserializedRecord.ThreadId, "The message was deserialized but incorrectly; the ThreadId was incorrect.");
             Assert.AreEqual(originalRecord.Message, deserializedRecord.Message, "The message was deserialized but incorrectly; the message was incorrect.");
             Assert.AreEqual(originalRecord.UtcTime, deserializedRecord.UtcTime, "The time was not deserialized correctly; the time was incorrect.");
             Assert.AreEqual(originalRecord.Level, deserializedRecord.Level, "The level was not deserialized correctly; the level was incorrect.");
-
-            Assert.AreEqual(originalRecord.Tags.Count(), deserializedRecord.Tags.Count(), "The tags were not deserialized correctly.");
-            foreach (string tag in originalRecord.Tags)
-                Assert.IsTrue(deserializedRecord.Tags.Contains(tag), "The tags were not deserialized correctly.");
+            Assert.AreEqual(originalRecord.Verbosity, deserializedRecord.Verbosity, "The message was deserialized but incorrectly; the verbosity was incorrect.");
+            CollectionAssert.AreEqual(originalRecord.ScopeStack as ICollection, deserializedRecord.ScopeStack as ICollection, "The message was deserialized but incorrectly; the scope stack was incorrect.");
+            CollectionAssert.AreEquivalent(originalRecord.Tags as ICollection, deserializedRecord.Tags as ICollection, "The message was deserialized but incorrectly; the tags were incorrect.");
 
             Assert.AreEqual(originalRecord.Exception.Message, deserializedRecord.Exception.Message, "The exception was deserialized but incorrectly; the message is incorrect.");
             Assert.AreEqual(originalRecord.Exception.HResult, deserializedRecord.Exception.HResult, "The exception was deserialized but incorrectly; the HResult is incorrect.");
@@ -107,7 +106,7 @@ namespace KSharp.NChronicle.Core.Tests.ForChronicleRecord
             string[] tags = new[] { "Tag1", "Tag2" };
             ChronicleLevel level = ChronicleLevel.Critical;
 
-            ChronicleRecord chronicleRecord = new ChronicleRecord(level, message, exception, 2, tags);
+            ChronicleRecord chronicleRecord = new ChronicleRecord(level, message, exception, new [] { "ascope", "aninnerscope" }, tags);
 
             return (JsonConvert.SerializeObject(chronicleRecord), chronicleRecord);
         }
