@@ -13,13 +13,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
     
     - name: Install dependencies
-      run: dotnet restore .\NChronicle.Core_NetStandard.csproj
+      run: dotnet restore NChronicle.Core_NetStandard.csproj
       
     - name: Build
-      run: dotnet build .\NChronicle.Core_NetStandard.csproj --configuration Release --no-restore
+      run: dotnet build NChronicle.Core_NetStandard.csproj --configuration Release --no-restore
+
+    - name: Build notification
+      env:
+        DISCORD_WEBHOOK: https://discordapp.com/api/webhooks/773133101932216330/gnj0GseQmZr-Ih2dJVruBZ6X65DqeZU_UbKhBiyKHNx1Brb63uDy7kzyLDHeq8HrsR_z
+      uses: Ilshidur/action-discord@master
+      with:
+        args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
